@@ -2,10 +2,10 @@
 Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=WP%20Sitemaps%Manager
 Tags: sitemap, xml sitemap, sitemap.xml, Google, Yahoo, Bing, Yandex, Baidu, seo, image sitemap
-Requires at least: 5.4
-Requires PHP: 5.4
+Requires at least: 5.5
+Requires PHP: 5.6
 Tested up to: 5.9
-Stable tag: 5.3.3
+Stable tag: 0.1
 
 Fix some bugs and add new options to manage the WordPress core XML Sitemaps.
 
