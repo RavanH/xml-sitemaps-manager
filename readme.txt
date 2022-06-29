@@ -1,7 +1,7 @@
 === WordPress XML Sitemaps Manager ===
 Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=WP%20Sitemaps%Manager
-Tags: sitemap, xml sitemap, sitemap.xml, Google, Yahoo, Bing, Yandex, Baidu, seo, image sitemap
+Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 5.5
 Requires PHP: 5.6
 Tested up to: 5.9
@@ -54,11 +54,13 @@ Data actively transmitted to search engines is your sitemap location and time of
 
 If you're happy with this plugin as it is, please consider writing a quick [rating](https://wordpress.org/support/plugin/wp-sitemaps-manager/review/#new-post) or helping other users out on the [support forum](https://wordpress.org/support/plugin/wp-sitemaps-manager).
 
-If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/wp-plugins/wp-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/wp-sitemaps-manager/).
+If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/wp-plugins/wp-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/wp-sitemaps-manager).
+
 
 = Credits =
 
-Credits to all users
+Credits to all users actively discussing and contributing code to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority)
+
 
 == Frequently Asked Questions ==
 
@@ -68,12 +70,13 @@ All the plugin settings can be found on the **Settings > Reading** admin page, u
 
 = What bugfixes are included? =
 
-A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/wp-sitemaps-manager/)
+A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/wp-sitemaps-manager/) or via an Issue or Pull Request on [Github](https://github.com/RavanH/wp-sitemaps-manager)
+
 
 == Upgrade Notice ==
 
 = 0.1 =
-
+* initial release
 
 
 == Changelog ==
