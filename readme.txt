@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 5.5
 Requires PHP: 5.6
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: 0.1
 
 Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
