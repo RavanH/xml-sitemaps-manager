@@ -1,4 +1,4 @@
-<fieldset id="wpsm_sitemaps">
+<fieldset id="xml_sitemaps">
 	<legend class="screen-reader-text">
 		<?php echo esc_html( translate( 'XML Sitemap' ) ); ?>
 	</legend>
@@ -10,7 +10,6 @@
 	<?php if ( $xmlsm_sitemaps_enabled ) : ?>
 		<span class="description">
 			&nbsp;&ndash;&nbsp;
-			<!-- <a href="<?php echo admin_url( 'options-general.php' ); ?>?page=wpsm" id="wpsm_link"><?php echo esc_html( translate( 'Settings' ) ); ?></a> | -->
 			<a href="<?php echo get_sitemap_url( 'index' ); ?>" target="_blank"><?php echo esc_html( translate( 'View' ) ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 		</span>
 
@@ -48,9 +47,11 @@
 </fieldset>
 <script>
 jQuery( 'document' ).ready( function( $ ) {
-	if ( window.location.hash === '#wpsm_sitemaps' ) {
-		let wpsm_sitemaps = $( '#wpsm_sitemaps' );
-		$( 'html, body' ).animate( { scrollTop: wpsm_sitemaps.offset().top-40 }, 800, function(){wpsm_sitemaps.closest( 'td' ).addClass( 'highlight' );} );
+	if ( window.location.hash ) {
+		let loc = $( window.location.hash );
+		if (loc.length) {
+			$( 'html, body' ).animate( { scrollTop: loc.offset().top-40 }, 800, 'swing', function(){ loc.closest( 'td' ).addClass( 'highlight' ); } );
+		}
 	}
 } );
 </script>

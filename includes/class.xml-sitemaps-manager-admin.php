@@ -68,7 +68,7 @@ class XML_Sitemaps_Manager_Admin
 
 		// Field.
 		add_settings_field(
-			'wpsm_sitemaps',
+			'xml_sitemaps',
 			translate( 'XML Sitemap' ),
 			array( $this, 'sitemaps_settings_field' ),
 			'reading'
@@ -200,7 +200,7 @@ class XML_Sitemaps_Manager_Admin
 	 * @since 0.1
 	 */
 	public function add_action_link( $links ) {
-		$settings_link = '<a href="' . admin_url( 'options-reading.php' ) . '#wpsm_sitemaps">' . esc_html( translate( 'Settings' ) ) . '</a>';
+		$settings_link = '<a href="' . admin_url( 'options-reading.php' ) . '#xml_sitemaps">' . esc_html( translate( 'Settings' ) ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}

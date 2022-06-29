@@ -172,9 +172,9 @@ class XML_Sitemaps_Manager
 			return $provider;
 		}
 
-		$excluded = (array) get_option( 'wpsm_exclude_providers', array() );
+		$enabled = (array) get_option( 'xmlsm_sitemap_providers', array() );
 
-		return ! in_array( $name, $excluded ) ? $provider : false;
+		return in_array( $name, $enabled ) ? $provider : false;
 	}
 
 	/**
@@ -221,7 +221,7 @@ class XML_Sitemaps_Manager
 				if ( $this->_do_lastmod( 'users' ) && '1' == $page ) {
 					$entry['lastmod'] = get_date_from_gmt( get_lastpostdate( 'GMT', 'post' ), DATE_W3C ); // Absolute last post date.
 				}
-				// TODO make this wpsm_user_archive_post_type filter compatible.
+				// TODO make this xmlsm_user_archive_post_type filter compatible.
 				break;
 
 			default:
@@ -275,11 +275,11 @@ class XML_Sitemaps_Manager
 		/**
 		 * Allow exclusion of individual posts via meta data.
 		 */
-		/*if ( get_option( 'wpsm_exclude_posts' ) ) {
+		/*if ( get_option( 'xmlsm_exclude_posts' ) ) {
 			// Exclude posts based on meta data.
 			$args['meta_query'] = array(
 				array(
-					'key' => '_wpsm_exclude',
+					'key' => '_xml_sitemap_exclude',
 					'compare' => 'NOT EXISTS'
 				)
 			);
@@ -611,7 +611,7 @@ class XML_Sitemaps_Manager
 		 * @param string $post_type Post type slug. Default 'post'.
 		 * @return string|array
 		 */
-		$post_type = apply_filters( 'wpsm_user_archive_post_type', 'post' );
+		$post_type = apply_filters( 'xmlsm_user_archive_post_type', 'post' );
 
 		$posts = get_posts(
 			array(

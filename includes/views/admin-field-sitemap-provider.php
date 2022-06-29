@@ -1,4 +1,4 @@
-<fieldset id="wpsm_sitemaps">
+<fieldset>
 	<legend class="screen-reader-text">
 		<?php echo $provider_nice_name; ?>
 	</legend>
@@ -36,11 +36,11 @@
 						</span>
 						<br>
 
-	<!--				<label>
+<!--					<label>
 							<?php //echo esc_html( translate( 'Priority' ) ); ?>
 							<input name="wpsm_sitemaps_priority[<?php //echo $type; ?>][<?php //echo $subtype->name; ?>]" type="number" step="0.1" min="0" max="1" id="wpsm_sitemaps_priority_<?php //echo $type; ?>_<?php //echo $subtype->name; ?>" value="<?php //echo ! empty( $wpsm_sitemaps_priority[$type] ) && is_array( $wpsm_sitemaps_priority[$type] ) && array_key_exists( $subtype->name, $wpsm_sitemaps_priority[$type] ) ? $wpsm_sitemaps_priority[$type][$subtype->name] : ''; ?>" class="small-text">
 						</label>
-	-->
+-->
 					<?php endif; ?>
 				</li>
 				<?php endforeach; ?>

@@ -34,13 +34,13 @@ if ( ! defined( 'WPINC' ) ) die;
  *
  * @return array[]
  */
-function wpsm_posts_query_args( $args ) {
+function xmlsm_posts_query_args( $args ) {
 	// Ignore stickyness.
 	$args['ignore_sticky_posts'] = true;
 
 	return $args;
 }
-add_filter( 'wp_sitemaps_posts_query_args', 'wpsm_posts_query_args' );
+add_filter( 'wp_sitemaps_posts_query_args', 'xmlsm_posts_query_args' );
 
 /**
  * Reduce DB queries by fetching WP_Term objects, not an array of IDs.
@@ -53,13 +53,13 @@ add_filter( 'wp_sitemaps_posts_query_args', 'wpsm_posts_query_args' );
  *
  * @return array[]
  */
-function wpsm_taxonomies_query_args( $args ) {
+function xmlsm_taxonomies_query_args( $args ) {
 	// Set the taxonomy query 'fields' argument back to 'all' as originally intended.
 	$args['fields'] = 'all';
 
 	return $args;
 }
-add_filter( 'wp_sitemaps_taxonomies_query_args', 'wpsm_taxonomies_query_args' );
+add_filter( 'wp_sitemaps_taxonomies_query_args', 'xmlsm_taxonomies_query_args' );
 
 if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 	/**
