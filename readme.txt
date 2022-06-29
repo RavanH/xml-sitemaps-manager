@@ -1,4 +1,4 @@
-=== WP XML Sitemaps Manager ===
+=== XML Sitemaps Manager ===
 Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=WP%20Sitemaps%Manager
 Tags: sitemap, xml sitemap, sitemap.xml
@@ -11,7 +11,7 @@ Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
 
 == Description ==
 
-The light-weight WP XML Sitemaps Manager allows you to deactivate WordPress core XML sitemaps, change the maximum number of URLs per sitemap and add Last Modified dates.
+The light-weight XML Sitemaps Manager allows you to de/activate WordPress core XML sitemaps, change the maximum number of URLs per sitemap and add Last Modified dates.
 
 It also contains some bugfixes and improvents to the core XML Sitemap.
 
