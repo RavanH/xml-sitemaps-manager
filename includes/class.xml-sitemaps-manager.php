@@ -1,12 +1,12 @@
 <?php
 /**
- * WP_Sitemaps_Manager class
+ * XML_Sitemaps_Manager class
  *
- * @package WP Sitemap Manager
+ * @package XML Sitemap Manager
  * @since 0.1
  */
 
-class WP_Sitemaps_Manager
+class XML_Sitemaps_Manager
 {
 	/**
 	 * class WP_Sitemaps_Manager constructor
@@ -106,7 +106,7 @@ class WP_Sitemaps_Manager
 	 */
 	public function sitemaps_enabled()
 	{
-		return get_option( 'wpsm_sitemaps_enabled', true );
+		return get_option( 'xmlsm_sitemaps_enabled', true );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class WP_Sitemaps_Manager
 	 */
 	public function upgrade()
 	{
-		$db_version = get_option( 'wpsm_version', null );
+		$db_version = get_option( 'xmlsm_version', null );
 		if ( ! version_compare( WPSM_VERSION, $db_version, '=' ) ) {
 			include_once WPSM_DIR . '/upgrade.php';
 			new WP_Sitemaps_Manager_Upgrade( $db_version );
@@ -130,7 +130,7 @@ class WP_Sitemaps_Manager
 	 */
 	public function fixes()
 	{
-		if ( get_option( 'wpsm_sitemaps_fixes', true ) ) {
+		if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
 			include_once __DIR__ . '/wp-sitemaps-fixes.php';
 		}
 	}
@@ -147,7 +147,7 @@ class WP_Sitemaps_Manager
 	 */
 	function max_urls( $max_urls, $object_type )
 	{
-		$max = get_option( 'wpsm_sitemaps_max_urls', array() );
+		$max = get_option( 'xmlsm_sitemaps_max_urls', array() );
 
 		if ( is_array( $max ) && ! empty( $max[$object_type] ) ) {
 			$max = $max[$object_type];
@@ -242,7 +242,7 @@ class WP_Sitemaps_Manager
 	 */
 	public function exclude_post_types( $post_types )
 	{
-		$disabled_subtypes = (array) get_option( 'wpsm_disabled_subtypes', array() );
+		$disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
 		$exclude = array_key_exists( 'posts', $disabled_subtypes ) ? (array) $disabled_subtypes['posts'] : array();
 		foreach ( $post_types as $post_type => $object ) {
 			if ( in_array( $post_type, $exclude ) ) {
@@ -362,7 +362,7 @@ class WP_Sitemaps_Manager
 	 */
 	public function exclude_taxonomies( $taxonomies )
 	{
-		$disabled_subtypes = (array) get_option( 'wpsm_disabled_subtypes', array() );
+		$disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
 		$exclude = array_key_exists( 'taxonomies', $disabled_subtypes ) ? (array) $disabled_subtypes['taxonomies'] : array();
 		foreach ( $taxonomies as $tax_type => $object ) {
 			if ( in_array( $tax_type, $exclude ) ) {
@@ -662,7 +662,7 @@ class WP_Sitemaps_Manager
 	 */
 	protected function _do_lastmod( $provider )
 	{
-		$sitemaps_lastmod = get_option( 'wpsm_sitemaps_lastmod', array() );
+		$sitemaps_lastmod = get_option( 'xmlsm_sitemaps_lastmod', array() );
 
 		return is_array( $sitemaps_lastmod ) && in_array( $provider, $sitemaps_lastmod );
 	}

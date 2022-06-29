@@ -27,7 +27,7 @@ class XMLSitemapFeed_Uninstall {
 		// Check if it is a multisite and not a large one.
 		if ( is_multisite() ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'Clearing XML Sitemap Feeds settings from each site before uninstall:');
+				error_log( 'Clearing XML Sitemaps Manager settings from each site before uninstall:');
 			}
 			$field = 'blog_id';
 			$table = $wpdb->prefix.'blogs';
@@ -69,19 +69,20 @@ class XMLSitemapFeed_Uninstall {
 		/**
 		 * Remove plugin settings.
 		 */
-		delete_option('wpsm_sitemaps_enabled');
-		delete_option('wpsm_sitemaps_fixes');
-		delete_option('wpsm_sitemaps_max_urls');
-		delete_option('wpsm_sitemaps_lastmod');
-		delete_option('wpsm_sitemap_providers');
-		delete_option('wpsm_disabled_subtypes');
+		delete_option('xmlsm_version');
+		delete_option('xmlsm_sitemaps_enabled');
+		delete_option('xmlsm_sitemaps_fixes');
+		delete_option('xmlsm_sitemaps_max_urls');
+		delete_option('xmlsm_sitemaps_lastmod');
+		delete_option('xmlsm_sitemap_providers');
+		delete_option('xmlsm_disabled_subtypes');
 
 		// Kilroy was here
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			if ( $blog_id )
-				error_log( 'XML Sitemap Feeds settings cleared for blog ID:' . $blog_id );
+				error_log( 'XML Sitemaps Manager settings cleared for blog ID:' . $blog_id );
 			else
-				error_log( 'XML Sitemap Feeds settings cleared on uninstall.' );
+				error_log( 'XML Sitemaps Manager settings cleared on uninstall.' );
 		}
 	}
 }

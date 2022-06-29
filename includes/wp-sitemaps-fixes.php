@@ -1,6 +1,6 @@
 <?php
 /**
- * WordPress XML Sitemaps Manager: Fixes
+ * XML Sitemaps Manager: Fixes
  *
  * Patch bugs:
  * - 404 response code on certain sitemaps. @see https://core.trac.wordpress.org/ticket/51912
@@ -18,7 +18,7 @@
  * - Shave off N database queries from taxonomy sitemap requests, where N is the number of terms in that taxonomy.
  * - Shave off 12 database queries from user sitemap requests.
  *
- * @package WordPress XML Sitemaps Manager
+ * @package XML Sitemaps Manager
  * @since 1.0
  */
 

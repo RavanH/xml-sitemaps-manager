@@ -14,12 +14,12 @@ class WP_Sitemaps_Manager_Upgrade {
 	 * @var array Array of options and their default setting.
 	 */
 	private $options = array(
-		'wpsm_sitemaps_enabled'   => true,
-		'wpsm_sitemaps_fixes'     => true,
-		'wpsm_sitemaps_max_urls'  => 2000,
-		'wpsm_sitemaps_lastmod'   => false,
-		'wpsm_sitemap_providers'  => array( 'posts', 'taxonomies', 'users' ),
-		'wpsm_disabled_subtypes'  => '',
+		'xmlsm_sitemaps_enabled'   => true,
+		'xmlsm_sitemaps_fixes'     => true,
+		'xmlsm_sitemaps_max_urls'  => 2000,
+		'xmlsm_sitemaps_lastmod'   => false,
+		'xmlsm_sitemap_providers'  => array( 'posts', 'taxonomies', 'users' ),
+		'xmlsm_disabled_subtypes'  => '',
 	);
 
 	/**
@@ -34,7 +34,7 @@ class WP_Sitemaps_Manager_Upgrade {
 		else
 			$this->install();
 
-		update_option( 'wpsm_version', WPSM_VERSION );
+		update_option( 'xmlsm_version', WPSM_VERSION );
 	}
 
 	/**

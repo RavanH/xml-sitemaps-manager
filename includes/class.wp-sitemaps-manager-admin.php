@@ -1,15 +1,15 @@
 <?php
 /**
- * WP_Sitemaps_Manager_Admin class
+ * XML Sitemaps Manager Admin class
  *
- * @package WP Sitemap Manager
+ * @package XML Sitemap Manager
  * @since 0.1
  */
 
-class WP_Sitemaps_Manager_Admin
+class XML_Sitemaps_Manager_Admin
 {
 	/**
-	 * class WP_Sitemaps_Manager_Admin constructor
+	 * class XML_Sitemaps_Manager_Admin constructor
 	 *
 	 * @since 0.1
 	 */
@@ -37,32 +37,32 @@ class WP_Sitemaps_Manager_Admin
 		// Settings.
 		register_setting(
 			'reading',
-			'wpsm_sitemaps_enabled',
+			'xmlsm_sitemaps_enabled',
 			'boolval'
 		);
 		register_setting(
 			'reading',
-			'wpsm_sitemaps_fixes',
+			'xmlsm_sitemaps_fixes',
 			'boolval'
 		);
 		register_setting(
 			'reading',
-			'wpsm_sitemaps_lastmod',
+			'xmlsm_sitemaps_lastmod',
 			array( $this, 'sanitize_checkbox_array_deep' )
 		);
 		register_setting(
 			'reading',
-			'wpsm_sitemaps_max_urls',
+			'xmlsm_sitemaps_max_urls',
 			array( $this, 'sanitize_intval_array_deep' )
 		);
 		register_setting(
 			'reading',
-			'wpsm_sitemap_providers',
+			'xmlsm_sitemap_providers',
 			array( $this, 'sanitize_checkbox_array_deep' )
 		);
 		register_setting(
 			'reading',
-			'wpsm_disabled_subtypes',
+			'xmlsm_disabled_subtypes',
 			array( $this, 'sanitize_checkbox_array_deep' )
 		);
 
@@ -147,12 +147,12 @@ class WP_Sitemaps_Manager_Admin
 			return;
 		}
 
-		$wpsm_sitemaps_enabled  = (bool)  get_option( 'wpsm_sitemaps_enabled',  true );
-		$wpsm_sitemaps_fixes    = (bool)  get_option( 'wpsm_sitemaps_fixes',    true );
-		$wpsm_sitemap_providers = (array) get_option( 'wpsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
-		$wpsm_sitemaps_lastmod  = (array) get_option( 'wpsm_sitemaps_lastmod',  array() );
-		$wpsm_sitemaps_max_urls = (array) get_option( 'wpsm_sitemaps_max_urls', array() );
-		$wpsm_disabled_subtypes = (array) get_option( 'wpsm_disabled_subtypes', array() );
+		$xmlsm_sitemaps_enabled  = (bool)  get_option( 'xmlsm_sitemaps_enabled',  true );
+		$xmlsm_sitemaps_fixes    = (bool)  get_option( 'xmlsm_sitemaps_fixes',    true );
+		$xmlsm_sitemap_providers = (array) get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
+		$xmlsm_sitemaps_lastmod  = (array) get_option( 'xmlsm_sitemaps_lastmod',  array() );
+		$xmlsm_sitemaps_max_urls = (array) get_option( 'xmlsm_sitemaps_max_urls', array() );
+		$xmlsm_disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
 		$provider_names = array(
 			'posts'      => translate( 'Post types' ),
 			'taxonomies' => translate( 'Taxonomies' ),

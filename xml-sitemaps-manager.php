@@ -19,9 +19,9 @@ define( 'WPSM_BASENAME', plugin_basename(__FILE__) );
 
 // Load WP core sitemaps manager.
 require_once __DIR__ . '/includes/class.wp-sitemaps-manager.php';
-new WP_Sitemaps_Manager;
+new XML_Sitemaps_Manager;
 
 if ( is_admin() ) {
     require_once __DIR__ . '/includes/class.wp-sitemaps-manager-admin.php';
-	new WP_Sitemaps_Manager_Admin;
+	new XML_Sitemaps_Manager_Admin;
 }

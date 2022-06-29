@@ -3,11 +3,11 @@
 		<?php echo esc_html( translate( 'XML Sitemap' ) ); ?>
 	</legend>
 	<label>
-		<input name="wpsm_sitemaps_enabled" type="checkbox" id="wpsm_sitemaps_enabled" value="1"<?php checked( $wpsm_sitemaps_enabled ); ?> />
+		<input name="xmlsm_sitemaps_enabled" type="checkbox" id="xmlsm_sitemaps_enabled" value="1"<?php checked( $xmlsm_sitemaps_enabled ); ?> />
 		<?php esc_html_e( 'XML Sitemaps enabled', 'wp-sitemaps-manager' ); ?>
 	</label>
 
-	<?php if ( $wpsm_sitemaps_enabled ) : ?>
+	<?php if ( $xmlsm_sitemaps_enabled ) : ?>
 		<span class="description">
 			&nbsp;&ndash;&nbsp;
 			<!-- <a href="<?php echo admin_url( 'options-general.php' ); ?>?page=wpsm" id="wpsm_link"><?php echo esc_html( translate( 'Settings' ) ); ?></a> | -->
@@ -17,7 +17,7 @@
 		<br>
 
 		<label>
-			<input name="wpsm_sitemaps_fixes" type="checkbox" id="wpsm_sitemaps_fixes" value="1"<?php checked( $wpsm_sitemaps_fixes ); ?> />
+			<input name="xmlsm_sitemaps_fixes" type="checkbox" id="xmlsm_sitemaps_fixes" value="1"<?php checked( $xmlsm_sitemaps_fixes ); ?> />
 			<?php esc_html_e( 'Apply bugfixes and optimizations', 'wp-sitemaps-manager' ); ?>
 		</label>
 		<p class="description">
