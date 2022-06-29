@@ -1,3 +1,3 @@
-# WordPress XML Sitemaps Manager
+# XML Sitemaps Manager
 
-Fix some bugs and add new options to manage the WordPress core XML Sitemaps.
+Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
