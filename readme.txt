@@ -7,14 +7,13 @@ Requires PHP: 5.6
 Tested up to: 5.9
 Stable tag: 0.1
 
-Fix some bugs and add new options to manage the WordPress core XML Sitemaps.
+Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
 
 == Description ==
 
+The light-weight WordPress XML Sitemaps Manager allows you to deactivate sitemaps, change the maximum number of URLs per sitemap and add Last Modified dates.
 
-
-
-
+It also contains some bugfixes and improvents to the core XML Sitemap.
 
 **Fixes**
 
@@ -59,13 +58,17 @@ If you wish to help build this plugin, you're very welcome to [translate it into
 
 = Credits =
 
-
+Credits to all users
 
 == Frequently Asked Questions ==
 
 = Where are the options? =
 
+All the plugin settings can be found on the **Settings > Reading** admin page, under **Search engine visibility**.
 
+= What bugfixes are included? =
+
+A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/wp-sitemaps-manager/)
 
 == Upgrade Notice ==
 

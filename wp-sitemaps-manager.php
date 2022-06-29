@@ -13,8 +13,15 @@ Author URI: https://status301.net/
 
 defined( 'WPINC' ) || die;
 
-// Load WP core sitemaps bugfixes and optimizations.
-require_once dirname(__FILE__) . '/includes/wp-sitemaps-fixes.php';
+define( 'WPSM_VERSION', '0.1' );
+define( 'WPSM_DIR', dirname(__FILE__) );
+define( 'WPSM_BASENAME', plugin_basename(__FILE__) );
 
-// Load WP core sitemaps options.
-// TODO
+// Load WP core sitemaps manager.
+require_once __DIR__ . '/includes/class.wp-sitemaps-manager.php';
+new WP_Sitemaps_Manager;
+
+if ( is_admin() ) {
+    require_once __DIR__ . '/includes/class.wp-sitemaps-manager-admin.php';
+	new WP_Sitemaps_Manager_Admin;
+}

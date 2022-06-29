@@ -26,6 +26,7 @@ if ( ! defined( 'WPINC' ) ) die;
 
 /**
  * Remove sticky posts from the first posts sitemap.
+ * This patch should not be needed after WP 6.1 release.
  *
  * @see https://core.trac.wordpress.org/ticket/55633
  *
@@ -43,7 +44,7 @@ add_filter( 'wp_sitemaps_posts_query_args', 'wpsm_posts_query_args' );
 
 /**
  * Reduce DB queries by fetching WP_Term objects, not an array of IDs.
- * This patch should not be needed after WP 6.0.0 release.
+ * This patch should not be needed after WP 6.0 release.
  *
  * @see https://core.trac.wordpress.org/ticket/55239
  * @see https://core.trac.wordpress.org/changeset/52834
@@ -165,48 +166,3 @@ if ( ! function_exists( 'is_sitemap_stylesheet' ) ) :
 		return property_exists( $wp_query, 'is_sitemap_stylesheet' ) ? $wp_query->is_sitemap_stylesheet : false;
 	}
 endif;
-
-/**
- * Usage info for debugging.
- *
- * @since 1.0
- */
-function wpsm_usage() {
-	global $wpdb, $EZSQL_ERROR;
-
-	if ( ! is_sitemap() || ! ( defined('WP_DEBUG') && WP_DEBUG ) ) {
-		return;
-	}
-
-	// Get memory usage.
-	$mem = function_exists('memory_get_peak_usage') ? round( memory_get_peak_usage()/1024/1024, 2 ) . 'M' : false;
-
-	// Get query errors.
-	$errors = '';
-	if ( is_array($EZSQL_ERROR) && count($EZSQL_ERROR) ) {
-		$i = 1;
-		foreach ( $EZSQL_ERROR AS $e ) {
-			$errors .= PHP_EOL . $i . ': ' . implode( PHP_EOL, $e ) . PHP_EOL;
-			$i += 1;
-		}
-	}
-	// Get saved queries.
-	$saved = '';
-	if ( defined('SAVEQUERIES') && SAVEQUERIES ) {
-		$saved .= PHP_EOL . print_r( $wpdb->queries, true );
-	}
-
-	// Get system load.
-	$load = function_exists('sys_getloadavg') ? sys_getloadavg() : false;
-
-	// Print debug info.
-?>
-<!-- Queries executed: <?php echo get_num_queries(); ?> | Peak memory usage: <?php echo $mem ? $mem : 'Not availabe.'; ?> | Memory limit: <?php echo ini_get('memory_limit'); ?> -->
-<!-- Queries: <?php echo ! empty( $saved ) ? $saved : 'Set SAVEQUERIES to show saved database queries here.'; ?> -->
-<!-- Query errors: <?php echo ! empty( $errors ) ? $errors : 'None encountered.'; ?> -->
-<!-- Average system load during the last minute: <?php echo $load ? $load[0] : 'Not available.'; ?> -->
-<!-- Is a sitemap? <?php echo is_sitemap() ? 'Yes' : 'No'; ?> -->
-<!-- <?php print_r( get_taxonomies( array( 'public'   => true ) ) ); ?> -->
-<?php
-}
-add_action( 'shutdown', 'wpsm_usage' );
