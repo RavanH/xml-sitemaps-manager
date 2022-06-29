@@ -6,6 +6,8 @@ Requires at least: 5.5
 Requires PHP: 5.6
 Tested up to: 6.0
 Stable tag: 0.1
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
 
