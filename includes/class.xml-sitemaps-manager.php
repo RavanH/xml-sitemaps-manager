@@ -694,7 +694,7 @@ class XML_Sitemaps_Manager
 		// Get saved queries.
 		$saved = '';
 		if ( defined('SAVEQUERIES') && SAVEQUERIES ) {
-			$saved .= PHP_EOL . print_r( $wpdb->queries, true );
+			$saved = $wpdb->queries;
 		}
 
 		// Get system load.
