@@ -32,7 +32,7 @@
 		<ul class="export-filters">
 			<?php foreach ( wp_get_sitemap_providers() as $type => $provider ) :
 				$subtypes = $provider->get_object_subtypes();
-				$provider_nice_name = array_key_exists( $type, $provider_names ) ? $provider_names[$type] : sprintf( /* translators: %s: Sitemap slug. */ esc_html__( 'Sitemap provider: %s', 'wp-sitemaps-manager' ), $type );
+				$provider_nice_name = array_key_exists( $type, $provider_names ) ? $provider_names[$type] : sprintf( /* translators: %s: Sitemap slug. */ __( 'Sitemap provider: %s', 'wp-sitemaps-manager' ), $type );
 				$object_type = array_key_exists( $type, $provider_object_types ) ? $provider_object_types[$type] : 'unkown_object_type'; ?>
 			<li>
 				<?php
