@@ -15,7 +15,13 @@ Options to manage the WordPress core XML Sitemaps, optimize and fix some bugs.
 
 The light-weight XML Sitemaps Manager allows you to de/activate WordPress core XML sitemaps, change the maximum number of URLs per sitemap and add Last Modified dates.
 
-It also contains some bugfixes and improvents to the core XML Sitemap.
+= Features =
+
+* **Last Modified** dates for post types, term and user archives plus the first sitemap of each type in the index.
+* Conditional **is_sitemap()**, [ticket](https://core.trac.wordpress.org/ticket/51543).
+* Conditional **is_sitemap_stylesheet()** for good measure.
+* Multisite compatible. On uninstallation, all sub-site options will be cleared from the database as long as is_large_network() does not return true.
+* Additional fixes and improvents to the core XML Sitemap:
 
 **Fixes**
 
@@ -31,12 +37,6 @@ Reduces the number of database queries for:
 - the sitemap index by 5;
 - taxonomy sitemap by the number of terms in that taxonomy;
 - user sitemap requests by the number of users.
-
-**Additional features**
-
-* **Last Modified** dates for post types, term and user archives plus the first sitemap of each type in the index.
-* Conditional **is_sitemap()**, [ticket](https://core.trac.wordpress.org/ticket/51543).
-* Conditional **is_sitemap_stylesheet()** for good measure.
 
 
 = Privacy / GDPR =
@@ -79,7 +79,6 @@ A selection of community proposed fixes to [Sitemap component bugs](https://core
 == Upgrade Notice ==
 
 = 0.2 =
-
 * Simplified admin and bugfixes.
 
 
