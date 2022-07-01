@@ -54,9 +54,9 @@ There is no data actively transmitted to search engines or other third parties.
 
 = Contribute =
 
-If you're happy with this plugin as it is, please consider writing a quick [rating](https://wordpress.org/support/plugin/xml-sitemaps-manager/review/#new-post) or helping other users out on the [support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager).
+If you're happy with this plugin as it is, please consider writing a quick [rating](https://wordpress.org/support/plugin/xml-sitemaps-manager/reviews/#new-post) or helping other users out on the [support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager).
 
-If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/xml-plugins/xml-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/xml-sitemaps-manager).
+If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/wp-plugins/xml-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/xml-sitemaps-manager).
 
 
 = Credits =
