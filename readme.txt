@@ -61,7 +61,8 @@ If you wish to help build this plugin, you're very welcome to [translate it into
 
 = Credits =
 
-Credits to all users actively discussing and contributing code to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority)
+Credits to all users actively discussing and contributing code to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority).
+Explicit credits to [@Tkama](https://core.trac.wordpress.org/ticket/51912#comment:9).
 
 
 == Frequently Asked Questions ==
