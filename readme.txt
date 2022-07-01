@@ -19,24 +19,24 @@ It also contains some bugfixes and improvents to the core XML Sitemap.
 
 **Fixes**
 
-* 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912)
-* Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542)
-* Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117)
-* Ignore stickyness, [ticket](https://core.trac.wordpress.org/ticket/55633)
+* 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912).
+* Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542).
+* Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117).
+* Ignore stickyness, [ticket](https://core.trac.wordpress.org/ticket/55633).
 
 **Improvements**
 
 Reduces the number of database queries for:
-- post type sitemap by 4
-- the sitemap index by 5
-- taxonomy sitemap by the number of terms in that taxonomy
+- post type sitemap by 4;
+- the sitemap index by 5;
+- taxonomy sitemap by the number of terms in that taxonomy;
 - user sitemap requests by the number of users.
 
 **Additional features**
 
 * **Last Modified** dates for post types, term and user archives plus the first sitemap of each type in the index.
-* **is_sitemap()** conditional tag, [ticket](https://core.trac.wordpress.org/ticket/51543)
-* **is_sitemap_stylesheet()** conditional tag for good measure.
+* Conditional **is_sitemap()**, [ticket](https://core.trac.wordpress.org/ticket/51543).
+* Conditional **is_sitemap_stylesheet()** for good measure.
 
 
 = Privacy / GDPR =
