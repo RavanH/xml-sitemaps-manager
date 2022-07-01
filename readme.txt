@@ -5,7 +5,7 @@ Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 5.5
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,10 +26,11 @@ It also contains some bugfixes and improvents to the core XML Sitemap.
 
 **Improvements**
 
-* Reduces 4 database queries for post type sitemap requests.
-* Reduces 5 database queries for the sitemap index request.
-* Reduces N database queries for taxonomy sitemap requests, where N is the number of terms in that taxonomy.
-* Reduces 12 database queries from user sitemap requests.
+Reduces the number of database queries for:
+* post type sitemap by 4
+* the sitemap index by 5
+* taxonomy sitemap by the number of terms in that taxonomy
+* user sitemap requests by the number of users.
 
 **Additional features**
 
@@ -56,7 +57,7 @@ Data actively transmitted to search engines is your sitemap location and time of
 
 If you're happy with this plugin as it is, please consider writing a quick [rating](https://wordpress.org/support/plugin/xml-sitemaps-manager/review/#new-post) or helping other users out on the [support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager).
 
-If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/xml-plugins/wp-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/xml-sitemaps-manager).
+If you wish to help build this plugin, you're very welcome to [translate it into your language](https://translate.wordpress.org/projects/xml-plugins/xml-sitemaps-manager/) or contribute code on [Github](https://github.com/RavanH/xml-sitemaps-manager).
 
 
 = Credits =
@@ -77,11 +78,17 @@ A selection of community proposed fixes to [Sitemap component bugs](https://core
 
 == Upgrade Notice ==
 
-= 0.1 =
-* initial release
+= 0.2 =
+
+* Simplified admin and bugfixes.
 
 
 == Changelog ==
 
+= 0.2 =
+* Simplify admin
+* Fix: Textdomain xml-sitemaps-manager
+* Fix: All settings empty when blog not public
+
 = 0.1 =
-* initial release
+* Initial release
