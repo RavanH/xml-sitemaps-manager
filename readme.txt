@@ -19,23 +19,24 @@ It also contains some bugfixes and improvents to the core XML Sitemap.
 
 **Fixes**
 
-* 404 Response code on certain sitemaps @see https://core.trac.wordpress.org/ticket/51912
-* Don't set is_home() true @see https://core.trac.wordpress.org/ticket/51542
-* Don't execute main query @see https://core.trac.wordpress.org/ticket/51117
-* Ignore stickyness @see https://core.trac.wordpress.org/ticket/55633
+* 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912)
+* Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542)
+* Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117)
+* Ignore stickyness, [ticket](https://core.trac.wordpress.org/ticket/55633)
 
 **Improvements**
 
 Reduces the number of database queries for:
-* post type sitemap by 4
-* the sitemap index by 5
-* taxonomy sitemap by the number of terms in that taxonomy
-* user sitemap requests by the number of users.
+- post type sitemap by 4
+- the sitemap index by 5
+- taxonomy sitemap by the number of terms in that taxonomy
+- user sitemap requests by the number of users.
 
 **Additional features**
 
-* is_sitemap() conditional tag @see https://core.trac.wordpress.org/ticket/51543
-* is_sitemap_stylesheet() conditional tag for good measure.
+* **Last Modified** dates for post types, term and user archives plus the first sitemap of each type in the index.
+* **is_sitemap()** conditional tag, [ticket](https://core.trac.wordpress.org/ticket/51543)
+* **is_sitemap_stylesheet()** conditional tag for good measure.
 
 
 = Privacy / GDPR =
@@ -44,13 +45,11 @@ This plugin does not collect any user or visitor data nor set browser cookies. U
 
 **Data that is published**
 
-An XML Sitemap index, referencing other sitemaps containing your web site's public post URLs of selected post types that are already public, along with their last modification date and associated image URLs, and any selected public archive URLs.
-
-An author sitemap can be included, which will contain links to author archive pages. These urls contain author/user slugs, and the author archives can contain author bio information. If you wish to keep this out of public domain, then deactivate the author sitemap and use an SEO plugin to add noindex headers.
+An XML Sitemap index, referencing other sitemaps containing your web site's public post URLs of selected public post types, optionally with their last modification date, and any selected public archive URLs.
 
 **Data that is transmitted**
 
-Data actively transmitted to search engines is your sitemap location and time of publication. This happens upon each post publication when at least one of the Ping options on Settings > Writing is enabled. In this case, the selected search engines are alerted of the location and updated state of your sitemap.
+There is no data actively transmitted to search engines or other third parties.
 
 
 = Contribute =
