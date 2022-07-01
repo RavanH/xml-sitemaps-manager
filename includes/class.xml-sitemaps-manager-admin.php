@@ -34,38 +34,6 @@ class XML_Sitemaps_Manager_Admin
 	 */
 	public function register_settings()
 	{
-		// Settings.
-		register_setting(
-			'reading',
-			'xmlsm_sitemaps_enabled',
-			'boolval'
-		);
-		register_setting(
-			'reading',
-			'xmlsm_sitemaps_fixes',
-			'boolval'
-		);
-		register_setting(
-			'reading',
-			'xmlsm_sitemaps_lastmod',
-			array( $this, 'sanitize_checkbox_array_deep' )
-		);
-		register_setting(
-			'reading',
-			'xmlsm_sitemaps_max_urls',
-			array( $this, 'sanitize_intval_array_deep' )
-		);
-		register_setting(
-			'reading',
-			'xmlsm_sitemap_providers',
-			array( $this, 'sanitize_checkbox_array_deep' )
-		);
-		register_setting(
-			'reading',
-			'xmlsm_disabled_subtypes',
-			array( $this, 'sanitize_checkbox_array_deep' )
-		);
-
 		// Field.
 		add_settings_field(
 			'xml_sitemaps',
@@ -79,6 +47,45 @@ class XML_Sitemaps_Manager_Admin
 			'load-options-reading.php',
 			array( $this, 'sitemaps_help' )
 		);
+
+		// Don't register settings when blog not public.
+		if ( '1' !== get_option( 'blog_public' ) ) {
+			return;
+		}
+
+		// Settings.
+		register_setting(
+			'reading',
+			'xmlsm_sitemaps_enabled',
+			'boolval'
+		);
+
+		register_setting(
+			'reading',
+			'xmlsm_sitemaps_fixes',
+			'boolval'
+		);
+		register_setting(
+			'reading',
+			'xmlsm_lastmod',
+			'boolval'
+		);
+		register_setting(
+			'reading',
+			'xmlsm_max_urls',
+			'intval'
+		);
+		register_setting(
+			'reading',
+			'xmlsm_sitemap_providers',
+			array( $this, 'sanitize_checkbox_array_deep' )
+		);
+		register_setting(
+			'reading',
+			'xmlsm_disabled_subtypes',
+			array( $this, 'sanitize_checkbox_array_deep' )
+		);
+
 	}
 
 	/**
@@ -142,30 +149,25 @@ class XML_Sitemaps_Manager_Admin
 	 */
 	public function sitemaps_settings_field()
 	{
-		if ( '1' !== get_option('blog_public') ) {
-			esc_html_e( 'The XML Sitemap is disabled because of your site&#8217;s visibility settings (above).', 'wp-sitemaps-manager' );
+		if ( '1' !== get_option( 'blog_public' ) ) {
+			esc_html_e( 'The XML Sitemap is disabled because of your site&#8217;s visibility settings (above).', 'xml-sitemaps-manager' );
 			return;
 		}
 
-		$xmlsm_sitemaps_enabled  = (bool)  get_option( 'xmlsm_sitemaps_enabled',  true );
-		$xmlsm_sitemaps_fixes    = (bool)  get_option( 'xmlsm_sitemaps_fixes',    true );
-		$xmlsm_sitemap_providers = (array) get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
-		$xmlsm_sitemaps_lastmod  = (array) get_option( 'xmlsm_sitemaps_lastmod',  array() );
-		$xmlsm_sitemaps_max_urls = (array) get_option( 'xmlsm_sitemaps_max_urls', array() );
-		$xmlsm_disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
-		$provider_names = array(
+		$sitemaps_enabled  = (bool)  get_option( 'xmlsm_sitemaps_enabled',  true    );
+		$sitemaps_fixes    = (bool)  get_option( 'xmlsm_sitemaps_fixes',    true    );
+		$sitemap_providers = (array) get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
+		$lastmod           =         get_option( 'xmlsm_lastmod',           false   );
+		$max_urls          =         get_option( 'xmlsm_max_urls',                  );
+		$disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
+		$provider_nice_names = array(
 			'posts'      => translate( 'Post types' ),
 			'taxonomies' => translate( 'Taxonomies' ),
 			'users'      => translate( 'Users' ),
 		);
-		$provider_object_types = array(
-			'posts'      => 'post',
-			'taxonomies' => 'term',
-			'users'      => 'user',
-		);
 
 		// The actual fields for data entry
-		include WPSM_DIR . '/includes/views/admin-field-reading.php';
+		include WPSM_DIR . '/includes/views/admin-field.php';
 	}
 
 	/**
@@ -175,13 +177,12 @@ class XML_Sitemaps_Manager_Admin
 	 */
 	public function sitemaps_help()
 	{
-		if ( '1' !== get_option('blog_public') ) {
+		if ( '1' !== get_option( 'blog_public' ) ) {
 			return;
 		}
 
 		ob_start();
-		include WPSM_DIR . '/includes/views/admin-help-tab-reading.php';
-		include WPSM_DIR . '/includes/views/admin-help-tab-support.php';
+		include WPSM_DIR . '/includes/views/admin-help-tab.php';
 		$content = ob_get_clean();
 
 		get_current_screen()->add_help_tab(
@@ -212,8 +213,8 @@ class XML_Sitemaps_Manager_Admin
 	 */
 	public function plugin_meta_links( $links, $file ) {
 		if ( $file == WPSM_BASENAME ) {
-			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/wp-sitemaps-manager/">' .  esc_html__( 'Support', 'wp-sitemaps-manager' ) . '</a>';
-			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/wp-sitemaps-manager/reviews/?filter=5#new-post">' .  esc_html__( 'Rate ★★★★★', 'wp-sitemaps-manager' ) . '</a>';
+			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/xml-sitemaps-manager/">' .  esc_html__( 'Support', 'xml-sitemaps-manager' ) . '</a>';
+			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/xml-sitemaps-manager/reviews/?filter=5#new-post">' .  esc_html__( 'Rate ★★★★★', 'xml-sitemaps-manager' ) . '</a>';
 		}
 		return $links;
 	}

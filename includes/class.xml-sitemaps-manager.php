@@ -145,10 +145,11 @@ class XML_Sitemaps_Manager
 	 *
 	 * @return int    $max_urls
 	 */
-	function max_urls( $max_urls, $object_type )
+	function max_urls( $max_urls, $object_type = 'post' )
 	{
-		$max = get_option( 'xmlsm_sitemaps_max_urls', array() );
+		$max = get_option( 'xmlsm_max_urls' );
 
+		// Optionally split mas_urls per object type 'post', 'term' or 'user'
 		if ( is_array( $max ) && ! empty( $max[$object_type] ) ) {
 			$max = $max[$object_type];
 		}
@@ -192,17 +193,20 @@ class XML_Sitemaps_Manager
 	 */
 	public function lastmod_index_entry( $entry, $type, $subtype, $page )
 	{
+		if ( ! get_option( 'xmlsm_lastmod' ) ) {
+			return $entry;
+		}
 
 		// Add lastmod.
 		switch( $type ) {
 			case 'post':
-				if ( $this->_do_lastmod( 'posts' ) && '1' == $page ) {
+				if ( '1' == $page ) {
 					$entry['lastmod'] = get_date_from_gmt( get_lastpostmodified( 'GMT', $subtype ), DATE_W3C );
 				}
 				break;
 
 			case 'term':
-				if ( $this->_do_lastmod( 'taxonomies' ) && '1' == $page ) {
+				if ( '1' == $page ) {
 					$obj = get_taxonomy( $subtype );
 
 					$lastmodified = array();
@@ -218,7 +222,7 @@ class XML_Sitemaps_Manager
 				break;
 
 			case 'user':
-				if ( $this->_do_lastmod( 'users' ) && '1' == $page ) {
+				if ( '1' == $page ) {
 					$entry['lastmod'] = get_date_from_gmt( get_lastpostdate( 'GMT', 'post' ), DATE_W3C ); // Absolute last post date.
 				}
 				// TODO make this xmlsm_user_archive_post_type filter compatible.
@@ -268,7 +272,7 @@ class XML_Sitemaps_Manager
 		 * Order by modified date if Lastmod is activated.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
 		 */
-		if ( $this->_do_lastmod( 'posts' ) ) {
+		if ( get_option( 'xmlsm_lastmod' ) ) {
 			$args['orderby'] = 'modified';
 		}
 
@@ -304,7 +308,7 @@ class XML_Sitemaps_Manager
 	 */
 	public function lastmod_posts_entry( $entry, $post_object, $post_type )
 	{
-		if ( ! $this->_do_lastmod( 'posts' ) ) {
+		if ( ! get_option( 'xmlsm_lastmod' ) ) {
 			return $entry;
 		}
 
@@ -340,7 +344,7 @@ class XML_Sitemaps_Manager
 	 */
 	public function lastmod_posts_show_on_front_entry( $entry )
 	{
-		if ( ! $this->_do_lastmod( 'posts' ) ) {
+		if ( ! get_option( 'xmlsm_lastmod' ) ) {
 			return $entry;
 		}
 
@@ -388,7 +392,7 @@ class XML_Sitemaps_Manager
 		 * Order by modified date if Lastmod is activated.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
 		 */
-		if ( $this->_do_lastmod( 'taxonomies' ) ) {
+		if ( get_option( 'xmlsm_lastmod' ) ) {
 			$args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
@@ -422,7 +426,7 @@ class XML_Sitemaps_Manager
 	 */
 	public function lastmod_taxonomies_entry( $entry, $term, $taxonomy, $term_object = null )
 	{
-		if ( ! $this->_do_lastmod( 'taxonomies' ) || ! function_exists( 'get_metadata_raw' ) ) {
+		if ( ! get_option( 'xmlsm_lastmod' ) || ! function_exists( 'get_metadata_raw' ) ) {
 			return $entry;
 		}
 
@@ -535,7 +539,7 @@ class XML_Sitemaps_Manager
 		 * Order by modified date if Lastmod is activated.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
 		 */
-		if ( $this->_do_lastmod( 'users' ) ) {
+		if ( get_option( 'xmlsm_lastmod' ) ) {
 			$args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
@@ -568,7 +572,7 @@ class XML_Sitemaps_Manager
 	 */
 	public function lastmod_users_entry( $entry, $user_object )
 	{
-		if ( ! $this->_do_lastmod( 'users' ) || ! function_exists( 'get_metadata_raw' ) ) {
+		if ( ! get_option( 'xmlsm_lastmod' ) || ! function_exists( 'get_metadata_raw' ) ) {
 			return $entry;
 		}
 
@@ -649,22 +653,6 @@ class XML_Sitemaps_Manager
 		$user_id = get_post_field( 'post_author', $post );
 
 		update_user_meta( $user_id, 'user_modified_gmt', $time );
-	}
-
-	/**
-	 * Verifiy if the Last Modified option is activated.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string  $provider
-	 *
-	 * @return bool   True if the option Last Modified is activated for the sitemap provider.
-	 */
-	protected function _do_lastmod( $provider )
-	{
-		$sitemaps_lastmod = get_option( 'xmlsm_sitemaps_lastmod', array() );
-
-		return is_array( $sitemaps_lastmod ) && in_array( $provider, $sitemaps_lastmod );
 	}
 
 	/**
