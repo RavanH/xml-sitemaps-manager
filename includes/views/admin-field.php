@@ -78,7 +78,7 @@
 	<br>
 	<label>
 		<input name="xmlsm_sitemaps_fixes" type="checkbox" id="xmlsm_sitemaps_fixes" value="1"<?php checked( $sitemaps_fixes ); ?> />
-		<?php esc_html_e( 'Apply bugfixes and optimizations', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'Apply bug fixes and optimizations', 'xml-sitemaps-manager' ); ?>
 	</label>
 	<p class="description">
 		<?php

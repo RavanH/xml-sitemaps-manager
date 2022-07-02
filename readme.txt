@@ -71,18 +71,21 @@ Explicit credits to [@Tkama](https://core.trac.wordpress.org/ticket/51912#commen
 
 All the plugin settings can be found on the **Settings > Reading** admin page, under **Search engine visibility**.
 
-= What bugfixes are included? =
+= Which bug fixes are included? =
 
-A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager/) or via an Issue or Pull Request on [Github](https://github.com/RavanH/xml-sitemaps-manager).
+A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bug fix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager/) or via an Issue or Pull Request on [Github](https://github.com/RavanH/xml-sitemaps-manager).
 
 
 == Upgrade Notice ==
 
 = 0.2 =
-* Simplified admin and bugfixes.
+* Simplified admin and bug fixes.
 
 
 == Changelog ==
+
+= 0.3 =
+* Update some text strings
 
 = 0.2 =
 * Simplify admin

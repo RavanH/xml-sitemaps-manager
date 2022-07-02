@@ -36,7 +36,7 @@ class XML_Sitemaps_Manager
 		add_action( 'wp_sitemaps_enabled', array( $this, 'sitemaps_enabled' ) );
 
 		/**
-		 * WP core sitemaps bugfixes and optimizations.
+		 * WP core sitemaps bug fixes and optimizations.
 		 */
 		add_action( 'init', array( $this, 'fixes' ) );
 

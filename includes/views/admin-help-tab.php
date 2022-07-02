@@ -14,7 +14,7 @@
 	<?php esc_html_e( 'You can adapt the maximum number of URLs per sitemap. Decrease it if you encounter errors, increase it if your sitemap index contains too many sitemaps.', 'xml-sitemaps-manager' ); ?>
 </p>
 <p>
-	<?php esc_html_e( 'You can add Last Modified data to the sitemaps. Note that this will add some additional database queries to certain sitemaps. If you encounter errors, try decreasing the maximum number of URLs per sitemap or disable this option.', 'xml-sitemaps-manager' ); ?>
+	<?php esc_html_e( 'You can add Last Modified data to the sitemaps. Note that this will cause some additional database queries for certain sitemaps. If you encounter errors, try decreasing the maximum number of URLs per sitemap or disable this option.', 'xml-sitemaps-manager' ); ?>
 </p>
 <hr />
 <p class="description">
