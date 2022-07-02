@@ -33,10 +33,10 @@ The light-weight XML Sitemaps Manager allows you to de/activate WordPress core X
 **Improvements**
 
 Reduces the number of database queries for:
-- post type sitemap by 4;
+- the post type sitemap by 4;
 - the sitemap index by 5;
-- taxonomy sitemap by the number of terms in that taxonomy;
-- user sitemap requests by the number of users.
+- the taxonomy sitemap by the number of terms in that taxonomy;
+- the user sitemap requests by the number of users.
 
 
 = Privacy / GDPR =
@@ -73,7 +73,7 @@ All the plugin settings can be found on the **Settings > Reading** admin page, u
 
 = What bugfixes are included? =
 
-A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager/) or via an Issue or Pull Request on [Github](https://github.com/RavanH/xml-sitemaps-manager)
+A selection of community proposed fixes to [Sitemap component bugs](https://core.trac.wordpress.org/query?status=accepted&status=assigned&status=closed&status=new&status=reopened&status=reviewing&component=Sitemaps&order=priority) are included. ALong the way, others will be added, and fixed bugs will be removed. If you are looking for a specific bugfix to be included, please ask on this plugin [Support forum](https://wordpress.org/support/plugin/xml-sitemaps-manager/) or via an Issue or Pull Request on [Github](https://github.com/RavanH/xml-sitemaps-manager).
 
 
 == Upgrade Notice ==
