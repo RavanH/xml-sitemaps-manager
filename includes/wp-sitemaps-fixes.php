@@ -133,7 +133,7 @@ if ( ! function_exists( 'is_sitemap' ) ) :
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, __( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, translate( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
 			return false;
 		}
 
@@ -159,7 +159,7 @@ if ( ! function_exists( 'is_sitemap_stylesheet' ) ) :
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, __( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, translate( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
 			return false;
 		}
 
