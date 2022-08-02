@@ -158,7 +158,7 @@ class XML_Sitemaps_Manager_Admin
 		$sitemaps_fixes    = (bool)  get_option( 'xmlsm_sitemaps_fixes',    true    );
 		$sitemap_providers = (array) get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
 		$lastmod           =         get_option( 'xmlsm_lastmod',           false   );
-		$max_urls          =         get_option( 'xmlsm_max_urls',                  );
+		$max_urls          =         get_option( 'xmlsm_max_urls',          false   );
 		$disabled_subtypes = (array) get_option( 'xmlsm_disabled_subtypes', array() );
 		$provider_nice_names = array(
 			'posts'      => translate( 'Post types' ),
