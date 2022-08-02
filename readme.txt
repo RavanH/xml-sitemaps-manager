@@ -19,7 +19,7 @@ The light-weight XML Sitemaps Manager allows you to de/activate WordPress core X
 
 * Otions to disable the complete sitemap index or exclude certain post type sitemaps, taxonomy sitemaps or the user sitemap.
 * Change the maximum number of URLs in the sitemaps.
-* Add **Last Modified** dates to posts, terms and users plus the first sitemap of each type in the index.
+* Add **Last Modified** dates to posts, terms, users and the first sitemap of each type in the index.
 * Conditional **is_sitemap()**, [ticket](https://core.trac.wordpress.org/ticket/51543), and **is_sitemap_stylesheet()** for good measure.
 * Multisite compatible: Can be network activated. On uninstallation, all sub-site options will be cleared from the database as long as not is_large_network().
 * Additional fixes and improvents to the core XML Sitemap.
