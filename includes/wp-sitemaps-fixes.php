@@ -94,7 +94,7 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 		 */
 		$wp_query->is_sitemap_stylesheet = ! empty( $wp->query_vars['sitemap-stylesheet'] );
 
-		if ( ! is_sitemap() && ! is_sitemap_stylesheet() ) {
+		if ( ! $wp_query->is_sitemap && ! $wp_query->is_sitemap_stylesheet ) {
 			return;
 		}
 

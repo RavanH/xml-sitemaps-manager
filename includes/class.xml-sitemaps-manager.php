@@ -9,36 +9,26 @@
 class XML_Sitemaps_Manager
 {
 	/**
-	 * class WP_Sitemaps_Manager constructor
+	 * class WP_Sitemaps_Manager constructor, runs on init
 	 *
 	 * @since 0.1
 	 */
 	function __construct()
 	{
-		/**
-		 * Maybe install or upgrade.
-		 */
-		add_action( 'init', array( $this, 'upgrade' ) );
+		// Abort here if we're in the admin.
+		if ( is_admin() ) {
+			return;
+		}
 
 		/**
 		 * Usage info for debugging.
 		 */
 		add_action( 'shutdown', array( $this, 'usage' ) );
 
-		// Stop here if we're in the admin.
-		if ( is_admin() ) {
-			return;
-		}
-
 		/**
 		 * Maybe disable sitemaps.
 		 */
 		add_action( 'wp_sitemaps_enabled', array( $this, 'sitemaps_enabled' ) );
-
-		/**
-		 * WP core sitemaps bug fixes and optimizations.
-		 */
-		add_action( 'init', array( $this, 'fixes' ) );
 
 		/**
 		 * Maximum URLs per sitemap.
@@ -107,32 +97,6 @@ class XML_Sitemaps_Manager
 	public function sitemaps_enabled()
 	{
 		return get_option( 'xmlsm_sitemaps_enabled', true );
-	}
-
-	/**
-	 * Maybe upgrade or install.
-	 *
-	 * @since 0.1
-	 */
-	public function upgrade()
-	{
-		$db_version = get_option( 'xmlsm_version', null );
-		if ( ! version_compare( WPSM_VERSION, $db_version, '=' ) ) {
-			include_once WPSM_DIR . '/upgrade.php';
-			new WP_Sitemaps_Manager_Upgrade( $db_version );
-		}
-	}
-
-	/**
-	 * Init plugin fixes.
-	 *
-	 * @since 0.1
-	 */
-	public function fixes()
-	{
-		if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
-			include_once __DIR__ . '/wp-sitemaps-fixes.php';
-		}
 	}
 
 	/**
@@ -689,7 +653,7 @@ class XML_Sitemaps_Manager
 		$load = function_exists('sys_getloadavg') ? sys_getloadavg() : false;
 
 		// Print debug info.
-		include WPSM_DIR . '/includes/views/_usage.php';
+		include __DIR__ . '/views/_usage.php';
 	}
 
 }

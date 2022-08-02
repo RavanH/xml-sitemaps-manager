@@ -9,7 +9,7 @@
 class XML_Sitemaps_Manager_Admin
 {
 	/**
-	 * class XML_Sitemaps_Manager_Admin constructor
+	 * class XML_Sitemaps_Manager_Admin constructor, runs on admin_init.
 	 *
 	 * @since 0.1
 	 */
@@ -18,7 +18,7 @@ class XML_Sitemaps_Manager_Admin
 		/**
 		 * Register settings.
 		 */
-		add_action( 'admin_init', array( $this, 'register_settings' ), 0 );
+		$this->register_settings();
 
 		/**
 		 * Plugin action links.
@@ -167,7 +167,7 @@ class XML_Sitemaps_Manager_Admin
 		);
 
 		// The actual fields for data entry
-		include WPSM_DIR . '/includes/views/admin-field.php';
+		include __DIR__ . '/views/admin-field.php';
 	}
 
 	/**
@@ -182,7 +182,7 @@ class XML_Sitemaps_Manager_Admin
 		}
 
 		ob_start();
-		include WPSM_DIR . '/includes/views/admin-help-tab.php';
+		include __DIR__ . '/views/admin-help-tab.php';
 		$content = ob_get_clean();
 
 		get_current_screen()->add_help_tab(
