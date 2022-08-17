@@ -78,6 +78,9 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 
 == Changelog ==
 
+= 0.4 =
+* FIX failing wp_sitemaps_add_provider filter
+
 = 0.3 =
 * Update some text strings
 * Move class initiations to hooks plugins_loaded, init & admin_init
