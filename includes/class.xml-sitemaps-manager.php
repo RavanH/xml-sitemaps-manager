@@ -161,18 +161,22 @@ class XML_Sitemaps_Manager
 			return $entry;
 		}
 
+		// Skip if this is not the first sitemap. TODO make this possible for subsequent sitemaps.
+		if ( $page > 1 ) {
+			return $entry;
+		}
+
+		$subtype = apply_filters( 'xmlsm_index_entry_subtype', $subtype );
+
 		// Add lastmod.
 		switch( $type ) {
 			case 'post':
-				if ( '1' == $page ) {
-					$entry['lastmod'] = get_date_from_gmt( get_lastpostmodified( 'GMT', $subtype ), DATE_W3C );
-				}
+				$entry['lastmod'] = get_date_from_gmt( get_lastpostmodified( 'GMT', $subtype ), DATE_W3C );
 				break;
 
 			case 'term':
-				if ( '1' == $page ) {
-					$obj = get_taxonomy( $subtype );
-
+				$obj = get_taxonomy( $subtype );
+				if ( $obj ) {
 					$lastmodified = array();
 					foreach ( (array) $obj->object_type as $object_type ) {
 						$lastmodified[] = get_lastpostdate( 'GMT', $object_type );
@@ -186,9 +190,7 @@ class XML_Sitemaps_Manager
 				break;
 
 			case 'user':
-				if ( '1' == $page ) {
-					$entry['lastmod'] = get_date_from_gmt( get_lastpostdate( 'GMT', 'post' ), DATE_W3C ); // Absolute last post date.
-				}
+				$entry['lastmod'] = get_date_from_gmt( get_lastpostdate( 'GMT', 'post' ), DATE_W3C ); // Absolute last post date.
 				// TODO make this xmlsm_user_archive_post_type filter compatible.
 				break;
 

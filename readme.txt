@@ -5,7 +5,7 @@ Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 5.5
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable tag: 0.3
+Stable tag: 0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,16 +69,20 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 
 == Upgrade Notice ==
 
+= 0.4 =
+Polylang compatibility and bugfixes.
+
 = 0.3 =
-* Improve init and admin bugfix.
+Improve init and admin bugfix.
 
 = 0.2 =
-* Simplified admin and bug fixes.
+Simplified admin and bug fixes.
 
 
 == Changelog ==
 
 = 0.4 =
+* Basic Polylang compatibility
 * FIX failing wp_sitemaps_add_provider filter
 
 = 0.3 =
