@@ -15,11 +15,6 @@ class XML_Sitemaps_Manager
 	 */
 	function __construct()
 	{
-		// Abort here if we're in the admin.
-		if ( is_admin() ) {
-			return;
-		}
-
 		/**
 		 * Usage info for debugging.
 		 */

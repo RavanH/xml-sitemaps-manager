@@ -24,6 +24,11 @@ define( 'WPSM_VERSION', '0.4' );
  * @since 0.3
  */
 function xmlsm_init() {
+	// Skip this if we're in the admin.
+	if ( is_admin() ) {
+		return;
+	}
+
 	// Sitemaps fixes.
 	if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
 		include __DIR__ . '/includes/wp-sitemaps-fixes.php';
