@@ -1,65 +1,4 @@
 <?php
-/**
- * XML Sitemaps Manager: Fixes
- *
- * Patch bugs:
- * - 404 response code on certain sitemaps. @see https://core.trac.wordpress.org/ticket/51912
- * - don't set is_home() true. @see https://core.trac.wordpress.org/ticket/51542
- * - don't execute main query. @see https://core.trac.wordpress.org/ticket/51117
- * - ignore stickyness. @see https://core.trac.wordpress.org/ticket/55633
- *
- * Add features:
- * - is_sitemap() conditional tag. @see https://core.trac.wordpress.org/ticket/51543
- * - is_sitemap_stylesheet() conditional tag for good measure.
- *
- * Improve performance:
- * - Shave off 4 database queries from post type sitemap requests.
- * - Shave off 5 database queries from the sitemap index request.
- * - Shave off N database queries from taxonomy sitemap requests, where N is the number of terms in that taxonomy.
- * - Shave off 12 database queries from user sitemap requests.
- *
- * @package XML Sitemaps Manager
- * @since 1.0
- */
-
-if ( ! defined( 'WPINC' ) ) die;
-
-/**
- * Remove sticky posts from the first posts sitemap.
- * This patch should not be needed after WP 6.1 release.
- *
- * @see https://core.trac.wordpress.org/ticket/55633
- *
- * @param array[] $args Query Arguments
- *
- * @return array[]
- */
-function xmlsm_posts_query_args( $args ) {
-	// Ignore stickyness.
-	$args['ignore_sticky_posts'] = true;
-
-	return $args;
-}
-add_filter( 'wp_sitemaps_posts_query_args', 'xmlsm_posts_query_args' );
-
-/**
- * Reduce DB queries by fetching WP_Term objects, not an array of IDs.
- * This patch should not be needed after WP 6.0 release.
- *
- * @see https://core.trac.wordpress.org/ticket/55239
- * @see https://core.trac.wordpress.org/changeset/52834
- *
- * @param array[] $args Query Arguments
- *
- * @return array[]
- */
-function xmlsm_taxonomies_query_args( $args ) {
-	// Set the taxonomy query 'fields' argument back to 'all' as originally intended.
-	$args['fields'] = 'all';
-
-	return $args;
-}
-add_filter( 'wp_sitemaps_taxonomies_query_args', 'xmlsm_taxonomies_query_args' );
 
 if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 	/**
@@ -110,7 +49,6 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 		$wp_query->is_sitemap_stylesheet = false;
 		$wp_query->query_vars = $query_vars;
 	}
-	add_action( 'parse_request', 'wp_sitemaps_loaded' );
 endif;
 
 if ( ! function_exists( 'is_sitemap' ) ) :
