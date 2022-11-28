@@ -75,7 +75,7 @@ Bugfix: empty lastmod tags
 == Changelog ==
 
 = 0.5 =
-* FIX: empty lastmod when no posts
+* FIX: empty lastmod when no posts, thanks @ownerstorefly
 
 = 0.4 =
 * Basic Polylang compatibility
