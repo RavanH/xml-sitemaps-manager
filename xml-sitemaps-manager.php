@@ -26,7 +26,7 @@ define( 'WPSM_VERSION', '0.4' );
 function xmlsm_init() {
 	// Sitemaps fixes.
 	if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
-		include_once __DIR__ . '/includes/wp-sitemaps-fixes.php';
+		include __DIR__ . '/includes/wp-sitemaps-fixes.php';
 	}
 
 	// Load WP core sitemaps manager.
@@ -60,14 +60,11 @@ add_action( 'admin_init', 'xmlsm_admin_init' );
  *
  * @since 0.3
  */
-add_action(
-	'init',
-	function() {
-		// Maybe upgrade or install.
-		$db_version = get_option( 'xmlsm_version', null );
-		if ( ! version_compare( WPSM_VERSION, $db_version, '=' ) ) {
-			include_once __DIR__ . '/upgrade.php';
-		}
-	},
-	9
-);
+function xmlsm_maybe_upgrade() {
+	// Maybe upgrade or install.
+	$db_version = get_option( 'xmlsm_version', '0' );
+	if ( 0 !== version_compare( WPSM_VERSION, $db_version ) ) {
+		include_once __DIR__ . '/upgrade.php';
+	}
+}
+add_action(	'init',	'xmlsm_maybe_upgrade', 8 );
