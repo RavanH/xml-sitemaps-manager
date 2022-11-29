@@ -176,8 +176,7 @@ class Core
 	}
 
 	/**
-	 * Maybe exclude taxonomies.
-	 * Hooked into wp_sitemaps_taxonomies filter.
+	 * Maybe exclude taxonomies. Hooked into wp_sitemaps_taxonomies filter.
 	 *
 	 * @since 0.1
 	 *
@@ -196,6 +195,60 @@ class Core
 		}
 
 		return $taxonomies;
+	}
+
+	/**
+	 * Style rules for the sitemap. Hooked into wp_sitemaps_stylesheet_css filter.
+	 *
+	 * @since 0.6
+	 */
+	public static function stylesheet( $css ) {
+
+		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
+		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
+		//$which = \get_query_var( 'sitemap-stylesheet' ); // can be 'index' or 'sitemap'
+
+		$css .= <<<EOF
+
+		/* Style rules added by XML Sitemaps Manager */
+
+		#sitemap {
+			max-width: unset;
+		}
+
+		#sitemap__header h1 + p::after {
+			content: " {$intro}";
+		}
+
+		#sitemap__table {
+			border: none;
+		}
+
+		#sitemap__table tr th {
+			background: #444;
+			color: white;
+		}
+
+		#sitemap__table tr th.lastmod::after {
+			content: "*";
+		}
+
+		#sitemap__table tr td.lastmod {
+			white-space: nowrap;
+		}
+
+		#sitemap::after {
+			content: "*) {$note}";
+			display: block;
+			margin: 1em 0;
+			font-weight: 500;
+			font-style: italic;
+			font-size: smaller;
+		}
+
+EOF;
+
+		return $css;
 	}
 
 	/**
