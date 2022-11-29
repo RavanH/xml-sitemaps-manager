@@ -74,6 +74,9 @@ Bugfix: empty lastmod tags
 
 == Changelog ==
 
+= 0.6 =
+* Adapted stylesheet /w mention
+
 = 0.5 =
 * FIX: empty lastmod when no posts, thanks @ownerstorefly
 
