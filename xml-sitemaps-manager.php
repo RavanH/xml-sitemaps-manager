@@ -38,7 +38,7 @@ function xmlsm_init() {
 		 * - 404 response code on certain sitemaps. @see https://core.trac.wordpress.org/ticket/51912
 		 * - don't set is_home() true. @see https://core.trac.wordpress.org/ticket/51542
 		 * - don't execute main query. @see https://core.trac.wordpress.org/ticket/51117
-		 * - ignore stickyness. @see https://core.trac.wordpress.org/ticket/55633
+		 * - ignore stickyness. @see https://core.trac.wordpress.org/ticket/55633 (pre-6.1)
 		 *
 		 * Add features:
 		 * - is_sitemap() conditional tag. @see https://core.trac.wordpress.org/ticket/51543
@@ -58,18 +58,23 @@ function xmlsm_init() {
 			include __DIR__ . '/src/pluggable.php';
 
 			add_action( 'parse_request', 'wp_sitemaps_loaded' );
-			add_filter( 'wp_sitemaps_posts_query_args',       array( '\XMLSitemapsManager\Fixes', 'posts_query_args' )      );
+			global $wp_version;
+			if ( version_compare( $wp_version, '6.1', '<' ) ) {
+				add_filter( 'wp_sitemaps_posts_query_args',   array( '\XMLSitemapsManager\Fixes', 'posts_query_args' )      );
+			}
 			add_filter( 'wp_sitemaps_taxonomies_query_args',  array( '\XMLSitemapsManager\Fixes', 'taxonomies_query_args' ) );
 		}
 
 		// Maximum URLs per sitemap.
-		add_filter( 'wp_sitemaps_max_urls',     array( '\XMLSitemapsManager\Core', 'max_urls' ),         10, 2 );
+		add_filter( 'wp_sitemaps_max_urls',       array( '\XMLSitemapsManager\Core', 'max_urls' ),         10, 2 );
 		// Exclude sitemap providers.
-		add_filter( 'wp_sitemaps_add_provider', array( '\XMLSitemapsManager\Core', 'exclude_providers' ), 10, 2 );
+		add_filter( 'wp_sitemaps_add_provider',   array( '\XMLSitemapsManager\Core', 'exclude_providers' ), 10, 2 );
 		// Exclude post types. TODO Fix
-		add_filter( 'wp_sitemaps_post_types',   array( '\XMLSitemapsManager\Core', 'exclude_post_types' )       );
+		add_filter( 'wp_sitemaps_post_types',     array( '\XMLSitemapsManager\Core', 'exclude_post_types' )       );
 		// Exclude taxonomies. TODO Fix
-		add_filter( 'wp_sitemaps_taxonomies',   array( '\XMLSitemapsManager\Core', 'exclude_taxonomies' )       );
+		add_filter( 'wp_sitemaps_taxonomies',     array( '\XMLSitemapsManager\Core', 'exclude_taxonomies' )       );
+		// Filter stylesheet.
+		add_filter( 'wp_sitemaps_stylesheet_css', array( '\XMLSitemapsManager\Core', 'stylesheet' )               );
 
 		// Usage info for debugging.
 		if ( defined('WP_DEBUG') && WP_DEBUG ) {
