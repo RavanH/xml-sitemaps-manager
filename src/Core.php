@@ -203,13 +203,12 @@ class Core
 	 * @since 0.6
 	 */
 	public static function stylesheet( $css ) {
+		//$which = \get_query_var( 'sitemap-stylesheet' ); // can be 'index' or 'sitemap'
 
 		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
 		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
-		//$which = \get_query_var( 'sitemap-stylesheet' ); // can be 'index' or 'sitemap'
 
 		$css .= <<<EOF
-
 		/* Style rules added by XML Sitemaps Manager */
 
 		#sitemap {
@@ -221,7 +220,7 @@ class Core
 		}
 
 		#sitemap__table {
-			border: none;
+			border-width: 0 0 1px 0;
 		}
 
 		#sitemap__table tr th {
@@ -229,12 +228,22 @@ class Core
 			color: white;
 		}
 
-		#sitemap__table tr th.lastmod::after {
-			content: "*";
-		}
-
 		#sitemap__table tr td.lastmod {
 			white-space: nowrap;
+		}
+
+EOF;
+
+		// Return if Lastmod is not activated.
+		if ( ! \get_option( 'xmlsm_lastmod' ) ) {
+			return $css;
+		}
+
+		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
+
+		$css .= <<<EOF
+		#sitemap__table tr th.lastmod::after {
+			content: "*";
 		}
 
 		#sitemap::after {
