@@ -28,7 +28,7 @@ Fixes some core XML Sitemap bugs:
 - 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912).
 - Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542).
 - Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117).
-- Ignore stickyness, [ticket](https://core.trac.wordpress.org/ticket/55633).
+- Ignore stickyness in WP 6.0 and below, [ticket](https://core.trac.wordpress.org/ticket/55633) (fixed in WP 6.1).
 
 Improves core XML Sitemap performance by reducing the number of database queries for:
 - the sitemap index by 5;
