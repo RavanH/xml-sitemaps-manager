@@ -24,7 +24,6 @@ class Core
 	 *
 	 * @param  int    $max_urls
 	 * @param  string $object_type
-	 *
 	 * @return int    $max_urls
 	 */
 	public static function max_urls( $max_urls, $object_type = 'post' )
@@ -46,82 +45,13 @@ class Core
 	 *
 	 * @param  obj       $provider
 	 * @param  string    $name
-	 *
 	 * @return false|obj $provider or false if disabled
 	 */
 	public static function exclude_providers( $provider, $name )
 	{
-		if ( \is_admin() ) {
-			return $provider;
-		}
-
 		$enabled = (array) \get_option( 'xmlsm_sitemap_providers', array() );
 
 		return \in_array( $name, $enabled ) ? $provider : false;
-	}
-
-	/**
-	 * Add lastmod to index entries.
-	 * Hooked into wp_sitemaps_index_entry filter.
-	 *
-	 * @since 0.1
-	 *
-	 * @param array  $entry
-	 * @param string $type
-	 * @param string $subtype
-	 * @param int    $page
-	 *
-	 * @return array $entry
-	 */
-	public static function lastmod_index_entry( $entry, $type, $subtype, $page )
-	{
-		// Skip if this is not the first sitemap. TODO make this possible for subsequent sitemaps.
-		if ( $page > 1 ) {
-			return $entry;
-		}
-
-		$subtype = \apply_filters( 'xmlsm_index_entry_subtype', $subtype );
-
-		// Add lastmod.
-		switch( $type ) {
-			case 'post':
-				$lastmod = \get_lastpostmodified( 'GMT', $subtype );
-				if ( $lastmod ) {
-					$entry['lastmod'] = \get_date_from_gmt( $lastmod, DATE_W3C );
-				}
-				break;
-
-			case 'term':
-				$obj = \get_taxonomy( $subtype );
-				if ( $obj ) {
-					$lastmodified = array();
-					foreach ( (array) $obj->object_type as $object_type ) {
-						$lastmodified[] = \get_lastpostdate( 'GMT', $object_type );
-					}
-					sort( $lastmodified );
-					$lastmodified = \array_filter( $lastmodified );
-					$lastmod = \end( $lastmodified );
-
-					if ( $lastmod ) {
-						$entry['lastmod'] = \get_date_from_gmt( $lastmod, DATE_W3C );
-					}
-				}
-				break;
-
-			case 'user':
-				// Get absolute last post date.
-				$lastmod = \get_lastpostdate( 'GMT', 'post' );
-				if ( $lastmod ) {
-					$entry['lastmod'] = \get_date_from_gmt( $lastmod, DATE_W3C );
-				}
-				// TODO make this xmlsm_user_archive_post_type filter compatible.
-				break;
-
-			default:
-				// Do nothing.
-		}
-
-		return $entry;
 	}
 
 	/**
@@ -130,7 +60,6 @@ class Core
 	 * @since 0.1
 	 *
 	 * @param  array $post_types
-	 *
 	 * @return array $post_types
 	 */
 	public static function exclude_post_types( $post_types )
@@ -152,7 +81,6 @@ class Core
 	 * @since
 	 *
 	 * @param array $args
-	 *
 	 * @return array $args
 	 */
 	public static function posts_query_args( $args )
@@ -176,13 +104,11 @@ class Core
 	}
 
 	/**
-	 * Maybe exclude taxonomies.
-	 * Hooked into wp_sitemaps_taxonomies filter.
+	 * Maybe exclude taxonomies. Hooked into wp_sitemaps_taxonomies filter.
 	 *
 	 * @since 0.1
 	 *
 	 * @param array $taxonomies
-	 *
 	 * @return array $taxonomies
 	 */
 	public static function exclude_taxonomies( $taxonomies )
@@ -196,6 +122,69 @@ class Core
 		}
 
 		return $taxonomies;
+	}
+
+	/**
+	 * Style rules for the sitemap. Hooked into wp_sitemaps_stylesheet_css filter.
+	 *
+	 * @since 0.6
+	 */
+	public static function stylesheet( $css ) {
+		//$which = \get_query_var( 'sitemap-stylesheet' ); // can be 'index' or 'sitemap'
+
+		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
+		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
+
+		$css .= <<<EOF
+		/* Style rules added by XML Sitemaps Manager */
+
+		#sitemap {
+			max-width: unset;
+		}
+
+		#sitemap__header h1 + p::after {
+			content: " {$intro}";
+		}
+
+		#sitemap__table {
+			border-width: 0 0 1px 0;
+		}
+
+		#sitemap__table tr th {
+			background: #444;
+			color: white;
+		}
+
+		#sitemap__table tr td.lastmod {
+			white-space: nowrap;
+		}
+
+EOF;
+
+		// Return if Lastmod is not activated.
+		if ( ! \get_option( 'xmlsm_lastmod' ) ) {
+			return $css;
+		}
+
+		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
+
+		$css .= <<<EOF
+		#sitemap__table tr th.lastmod::after {
+			content: "*";
+		}
+
+		#sitemap::after {
+			content: "*) {$note}";
+			display: block;
+			margin: 1em 0;
+			font-weight: 500;
+			font-style: italic;
+			font-size: smaller;
+		}
+
+EOF;
+
+		return $css;
 	}
 
 	/**
@@ -223,10 +212,7 @@ class Core
 			}
 		}
 		// Get saved queries.
-		$saved = '';
-		if ( \defined( 'SAVEQUERIES' ) && SAVEQUERIES ) {
-			$saved = $wpdb->queries;
-		}
+		$saved = \defined( '\SAVEQUERIES' ) && \SAVEQUERIES ? $wpdb->queries : '';
 
 		// Get system load.
 		$load = \function_exists( 'sys_getloadavg' ) ? \sys_getloadavg() : false;

@@ -51,6 +51,7 @@ function uninstall( $blog_id = false ) {
 	$wpdb->delete( $wpdb->prefix.'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
 	// User meta.
 	$wpdb->delete( $wpdb->prefix.'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+	// TODO: add Polylang metadata removal.
 
 	/**
 	 * Remove plugin settings.

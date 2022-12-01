@@ -21,6 +21,7 @@ The light-weight XML Sitemaps Manager allows you to de/activate WordPress core X
 * Change the maximum number of URLs in the sitemaps.
 * Add **Last Modified** dates to posts, terms, users and the first sitemap of each type in the index.
 * Conditional **is_sitemap()**, [ticket](https://core.trac.wordpress.org/ticket/51543), and **is_sitemap_stylesheet()** for good measure.
+* Polylang compatible.
 * Multisite compatible: Can be network activated. On uninstallation, all sub-site options will be cleared from the database as long as not is_large_network().
 * Additional fixes and improvents to the core XML Sitemap.
 
@@ -28,12 +29,12 @@ Fixes some core XML Sitemap bugs:
 - 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912).
 - Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542).
 - Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117).
-- Ignore stickyness, [ticket](https://core.trac.wordpress.org/ticket/55633).
+- Ignore stickyness in WP 6.0 and below, [ticket](https://core.trac.wordpress.org/ticket/55633) (fixed in WP 6.1).
 
 Improves core XML Sitemap performance by reducing the number of database queries for:
 - the sitemap index by 5;
 - each post type sitemap by 4;
-- each taxonomy sitemap by the number of terms in that sitemap;
+- each taxonomy sitemap by the number of terms in that sitemap, [ticket](https://core.trac.wordpress.org/ticket/55239) (fixed in WP 6.0);
 - each user sitemap by the number of users in that sitemap.
 
 
@@ -73,6 +74,11 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 Bugfix: empty lastmod tags
 
 == Changelog ==
+
+= 0.6 =
+* Improved Polylang compatibility
+* Adapted stylesheet /w mention
+* Fix l18n issue, thanks @alexclassroom
 
 = 0.5 =
 * FIX: empty lastmod when no posts, thanks @ownerstorefly
