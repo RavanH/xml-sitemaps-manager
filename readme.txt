@@ -76,7 +76,9 @@ Bugfix: empty lastmod tags
 == Changelog ==
 
 = 0.6 =
+* Improved Polylang compatibility
 * Adapted stylesheet /w mention
+* Fix l18n issue, thanks @alexclassroom
 
 = 0.5 =
 * FIX: empty lastmod when no posts, thanks @ownerstorefly
