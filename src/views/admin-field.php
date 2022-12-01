@@ -1,6 +1,6 @@
 <fieldset id="xml_sitemaps">
 	<legend class="screen-reader-text">
-		<?php echo esc_html( translate( 'XML Sitemap' ) ); ?>
+		<?php esc_html_e( 'XML Sitemap', 'xml-sitemaps-manager' ); ?>
 	</legend>
 	<label>
 		<input name="xmlsm_sitemaps_enabled" type="checkbox" class="toggle-subsection" id="xmlsm_sitemaps_enabled" value="1"<?php checked( $sitemaps_enabled ); ?> />
@@ -10,7 +10,7 @@
 	<?php if ( $sitemaps_enabled ) : ?>
 		<span class="description">
 			&nbsp;&ndash;&nbsp;
-			<a href="<?php echo get_sitemap_url( 'index' ); ?>" target="_blank"><?php echo esc_html( translate( 'View' ) ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
+			<a href="<?php echo get_sitemap_url( 'index' ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 		</span>
 	<?php endif; ?>
 
@@ -38,14 +38,14 @@
 				<?php if ( $sitemaps_enabled && in_array( $type, $sitemap_providers ) && empty ( $subtypes ) ) : ?>
 					<span class="description">
 						&nbsp;&ndash;&nbsp;
-						<a href="<?php echo get_sitemap_url( $type ); ?>" target="_blank"><?php echo esc_html( translate( 'View' ) ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
+						<a href="<?php echo get_sitemap_url( $type ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 					</span>
 					<br>
 				<?php endif; ?>
 				<?php if ( ! empty ( $subtypes ) ) : ?>
 					<div class="subsection sitemap-provider <?php echo esc_attr( $type ); ?> <?php echo in_array( $type, $sitemap_providers ) ? '' : 'hidden'; ?>" style="margin-left:24px">
 						<p>
-							<?php echo esc_html( translate( 'Exclude:' ) ); ?>
+							<?php esc_html_e( 'Exclude:', 'xml-sitemaps-manager' ); ?>
 						</p>
 						<ul>
 							<?php foreach ( $subtypes as $subtype ) :
@@ -58,7 +58,7 @@
 								<?php if ( $sitemaps_enabled && ! $disabled_subtype ) : ?>
 									<span class="description">
 										&nbsp;&ndash;&nbsp;
-										<a href="<?php echo get_sitemap_url( $type, $subtype->name ); ?>" target="_blank"><?php echo esc_html( translate( 'View' ) ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
+										<a href="<?php echo get_sitemap_url( $type, $subtype->name ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 									</span>
 									<br>
 								<?php endif; ?>
@@ -93,10 +93,10 @@
 	<br>
 	<label>
 		<input name="xmlsm_lastmod" type="checkbox" id="xmlsm_lastmod" value="1"<?php checked( $lastmod ); ?> />
-		<?php echo esc_html( translate( 'Last Modified' ) ); ?>
+		<?php esc_html_e( 'Last Modified', 'xml-sitemaps-manager' ); ?>
 	</label>
 	<p class="description">
-		<?php  esc_html_e( 'Add Last Modified data to the sitemaps.', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'Add Last Modified data to the sitemaps.', 'xml-sitemaps-manager' ); ?>
 	</p>
 
 	<br>

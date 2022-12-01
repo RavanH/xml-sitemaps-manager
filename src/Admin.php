@@ -149,9 +149,9 @@ class Admin
 		$max_urls          =         \get_option( 'xmlsm_max_urls',          false   );
 		$disabled_subtypes = (array) \get_option( 'xmlsm_disabled_subtypes', array() );
 		$provider_nice_names = array(
-			'posts'      => \translate( 'Post types' ),
-			'taxonomies' => \translate( 'Taxonomies' ),
-			'users'      => \translate( 'Users' ),
+			'posts'      => __( 'Post types', 'xml-sitemaps-manager' ),
+			'taxonomies' => __( 'Taxonomies', 'xml-sitemaps-manager' ),
+			'users'      => __( 'Users', 'xml-sitemaps-manager' ),
 		);
 
 		// The actual fields for data entry
