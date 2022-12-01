@@ -4,7 +4,7 @@ Plugin Name: XML Sitemaps Manager
 Plugin URI: https://status301.net/wordpress-plugins/xml-sitemaps-manager/
 Description: Fix some bugs and add new options to manage the WordPress core XML Sitemaps. Happy with the results? Please leave me a <strong><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=XML%20Sitemaps%20Manager">tip</a></strong> for continued development and support. Thanks :)
 Text Domain: xml-sitemaps-manager
-Version: 0.6-alpha1
+Version: 0.6-alpha3
 Requires at least: 5.5
 Requires PHP: 5.6
 Author: RavanH
@@ -13,7 +13,7 @@ Author URI: https://status301.net/
 
 defined( 'WPINC' ) || die;
 
-define( 'WPSM_VERSION', '0.6-alpha1' );
+define( 'WPSM_VERSION', '0.6-alpha3' );
 
 /**
  * Plugin intitialization.
@@ -48,6 +48,7 @@ function xmlsm_init() {
 		 * - Shave off 4 database queries from post type sitemap requests.
 		 * - Shave off 5 database queries from the sitemap index request.
 		 * - Shave off N database queries from taxonomy sitemap requests, where N is the number of terms in that taxonomy.
+		 *   @see https://core.trac.wordpress.org/ticket/55239 (pre-6.0)
 		 * - Shave off 12 database queries from user sitemap requests.
 		 *
 		 * @package XML Sitemaps Manager
@@ -57,16 +58,20 @@ function xmlsm_init() {
 			// Include pluggable functions.
 			include __DIR__ . '/src/pluggable.php';
 
-			add_action( 'parse_request', 'wp_sitemaps_loaded' );
+			if ( ! function_exists( 'pll_languages_list' ) ) {
+				add_action( 'parse_request', 'wp_sitemaps_loaded' );
+			}
 			global $wp_version;
 			if ( version_compare( $wp_version, '6.1', '<' ) ) {
-				add_filter( 'wp_sitemaps_posts_query_args',   array( '\XMLSitemapsManager\Fixes', 'posts_query_args' )      );
+				add_filter( 'wp_sitemaps_posts_query_args', array( '\XMLSitemapsManager\Fixes', 'posts_query_args' ) );
 			}
-			add_filter( 'wp_sitemaps_taxonomies_query_args',  array( '\XMLSitemapsManager\Fixes', 'taxonomies_query_args' ) );
+			if ( version_compare( $wp_version, '6.0', '<' ) ) {
+				add_filter( 'wp_sitemaps_taxonomies_query_args', array( '\XMLSitemapsManager\Fixes', 'taxonomies_query_args' ) );
+			}
 		}
 
 		// Maximum URLs per sitemap.
-		add_filter( 'wp_sitemaps_max_urls',       array( '\XMLSitemapsManager\Core', 'max_urls' ),         10, 2 );
+		add_filter( 'wp_sitemaps_max_urls',       array( '\XMLSitemapsManager\Core', 'max_urls' ),          10, 2 );
 		// Exclude sitemap providers.
 		add_filter( 'wp_sitemaps_add_provider',   array( '\XMLSitemapsManager\Core', 'exclude_providers' ), 10, 2 );
 		// Exclude post types. TODO Fix
@@ -113,11 +118,13 @@ function xmlsm_init() {
 			add_filter( 'wp_sitemaps_users_entry',               array( '\XMLSitemapsManager\Lastmod', 'users_entry' ),               10, 2 );
 			add_action( 'transition_post_status',                array( '\XMLSitemapsManager\Lastmod', 'update_user_modified_meta' ), 10, 3 );
 			add_filter( 'wp_sitemaps_users_query_args',          array( '\XMLSitemapsManager\Lastmod', 'users_query_args' )                 );
-		}
-
-		// Compatibility.
-		if ( function_exists( 'pll_languages_list' ) ) {
-			include __DIR__ . '/src/compat/polylang.php';
+			// Compatibility.
+			if ( function_exists( 'pll_languages_list' ) ) {
+				include_once __DIR__ . '/src/compat/polylang.php';
+				add_filter( 'xmlsm_index_entry_subtype',   'xmlsm_polylang_index_entry_subtype'        );
+				add_filter( 'xmlsm_lastmod_user_meta_key', 'xmlsm_polylang_lastmod_meta_key',    10, 2 );
+				add_filter( 'xmlsm_lastmod_index_entry',   'xmlsm_polylang_lastmod_index_entry', 10, 3 );
+			}
 		}
 
 	} else {
@@ -143,6 +150,16 @@ function xmlsm_admin_init() {
 	 * Register settings.
 	 */
 	\XMLSitemapsManager\Admin::register_settings();
+
+	/**
+	 * Tools actions.
+	 */
+	// Compatibility.
+	if ( function_exists( 'pll_languages_list' ) ) {
+		include_once __DIR__ . '/src/compat/polylang.php';
+		add_action( 'xmlsm_clear_lastmod_meta',    'xmlsm_polylang_clear_lastmod_meta' );
+	}
+	\XMLSitemapsManager\Admin::tools_actions();
 
 	/**
 	 * Plugin action links.

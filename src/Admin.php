@@ -84,7 +84,6 @@ class Admin
 	 * @since 0.1
 	 *
 	 * @param array Checkbox options array
-	 *
 	 * @return array Array containing only checked option names
 	 */
 	public static function sanitize_checkbox_array_deep( $new )
@@ -111,7 +110,6 @@ class Admin
 	 * @since 0.1
 	 *
 	 * @param array Intval options array
-	 *
 	 * @return array Array containing option name as key and integer as value
 	 */
 	public static function sanitize_intval_array_deep( $new )
@@ -158,6 +156,31 @@ class Admin
 
 		// The actual fields for data entry
 		include __DIR__ . '/views/admin-field.php';
+	}
+
+	public static function tools_actions()
+	{
+		global $wpdb;
+
+		/**
+		 * Remove metadata.
+		 */
+		if ( isset( $_GET['xmlsm-clear-lastmod-meta'] ) ) {
+			// Terms meta.
+			$wpdb->delete( $wpdb->prefix.'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+			// User meta.
+			$wpdb->delete( $wpdb->prefix.'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+
+			do_action( 'xmlsm_clear_lastmod_meta' );
+
+			add_settings_error(
+				'clear_meta_notice',
+				'clear_meta_notice',
+				__( 'XML Sitemap lastmod meta cache has been cleared.', 'xml-sitemap-feed' ),
+				'updated'
+			);
+		}
+
 	}
 
 	/**

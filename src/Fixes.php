@@ -18,7 +18,6 @@ class Fixes
 	 * @see https://core.trac.wordpress.org/ticket/55633
 	 *
 	 * @param array[] $args Query Arguments
-	 *
 	 * @return array[]
 	 */
 	public static function posts_query_args( $args ) {
@@ -36,7 +35,6 @@ class Fixes
 	 * @see https://core.trac.wordpress.org/changeset/52834
 	 *
 	 * @param array[] $args Query Arguments
-	 *
 	 * @return array[]
 	 */
 	public static function taxonomies_query_args( $args ) {

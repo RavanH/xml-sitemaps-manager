@@ -10,7 +10,6 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 	 *
 	 * @param  WP       $wp       Current WordPress environment instance.
 	 * @global WP_Query	$wp_query WordPress Query.
-	 *
 	 * @return void
 	 */
 	function wp_sitemaps_loaded( $wp ) {
@@ -64,7 +63,6 @@ if ( ! function_exists( 'is_sitemap' ) ) :
 	 * @since 1.0
 	 *
 	 * @global WP_Query $wp_query WordPress Query object.
-	 *
 	 * @return bool Whether the query is for the sitemap.
 	 */
 	function is_sitemap() {
@@ -90,7 +88,6 @@ if ( ! function_exists( 'is_sitemap_stylesheet' ) ) :
 	 * @since 1.0
 	 *
 	 * @global WP_Query $wp_query WordPress Query object.
-	 *
 	 * @return bool Whether the query is for the sitemap stylesheet.
 	 */
 	function is_sitemap_stylesheet() {
