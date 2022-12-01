@@ -27,7 +27,7 @@ class Admin
 		// Field.
 		\add_settings_field(
 			'xml_sitemaps',
-			\translate( 'XML Sitemap' ),
+			\__( 'XML Sitemap', 'xml-sitemaps-manager' ),
 			array( __CLASS__, 'sitemaps_settings_field' ),
 			'reading'
 		);
@@ -176,7 +176,7 @@ class Admin
 			add_settings_error(
 				'clear_meta_notice',
 				'clear_meta_notice',
-				__( 'XML Sitemap lastmod meta cache has been cleared.', 'xml-sitemap-feed' ),
+				__( 'XML Sitemap lastmod meta cache has been cleared.', 'xml-sitemaps-manager' ),
 				'updated'
 			);
 		}
@@ -201,7 +201,7 @@ class Admin
 		\get_current_screen()->add_help_tab(
 			array(
 				'id'      => 'sitemap-settings',
-				'title'   => translate( 'XML Sitemap' ),
+				'title'   => \__( 'XML Sitemap', 'xml-sitemaps-manager' ),
 				'content' => $content,
 				'priority' => 11
 			)
@@ -214,7 +214,7 @@ class Admin
 	 * @since 0.1
 	 */
 	public static function add_action_link( $links ) {
-		$settings_link = '<a href="' . \admin_url( 'options-reading.php' ) . '#xml_sitemaps">' . \esc_html( \translate( 'Settings' ) ) . '</a>';
+		$settings_link = '<a href="' . \admin_url( 'options-reading.php' ) . '#xml_sitemaps">' . \esc_html__( 'Settings', 'xml-sitemaps-manager' ) . '</a>';
 		\array_unshift( $links, $settings_link );
 		return $links;
 	}
