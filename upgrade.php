@@ -52,7 +52,7 @@ foreach ( DEFAULTS as $option => $default ) {
 // Update DB version.
 \update_option( 'xmlsm_version', \WPSM_VERSION );
 
-//global $wpdb;
+global $wpdb;
 
 /**
  * Clear metadata.
