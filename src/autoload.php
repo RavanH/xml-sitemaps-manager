@@ -14,15 +14,15 @@ function xmlsm_autoloader( $class ) {
 		return;
 	}
 
-    // Replace namespace separators with directory separators in the relative
-    // class name, append with .php
-    $class_path = str_replace( array( 'XMLSitemapsManager\\', '\\' ), array( '', '/' ), $class);
+	// Replace namespace separators with directory separators in the relative
+	// class name, append with .php
+	$class_path = str_replace( array( 'XMLSitemapsManager\\', '\\' ), array( '', '/' ), $class);
 
-    $file =  __DIR__ . '/src/' . $class_path . '.php';
-    // if the file exists, require it
-    if ( file_exists( $file ) ) {
-        require $file;
-    }
+	$file =  __DIR__ . '/' . $class_path . '.php';
+	// if the file exists, require it
+	if ( file_exists( $file ) ) {
+		require $file;
+	}
 }
 
 spl_autoload_register( 'xmlsm_autoloader' );
