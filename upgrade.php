@@ -48,7 +48,6 @@ if ( '0' !== $db_version ) {
 		\add_option( 'xmlsm_lastmod', $lastmod );
 		\delete_option( 'xmlsm_sitemaps_lastmod' );
 	}
-
 }
 
 // Fill in missing options.
