@@ -1,16 +1,23 @@
 <?php
+/**
+ * WP Sitemaps Manager upgrade.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.2
+ */
 
 namespace XMLSitemapsManager;
 
 defined( '\WPINC' ) || die;
 
-CONST DEFAULTS = array(
-	'xmlsm_sitemaps_enabled'   => true,
-	'xmlsm_sitemaps_fixes'     => true,
-	'xmlsm_max_urls'           => '',
-	'xmlsm_lastmod'            => false,
-	'xmlsm_sitemap_providers'  => array( 'posts', 'taxonomies', 'users' ),
-	'xmlsm_disabled_subtypes'  => '',
+const DEFAULTS = array(
+	'xmlsm_sitemaps_enabled'  => true,
+	'xmlsm_sitemaps_fixes'    => true,
+	'xmlsm_max_urls'          => '',
+	'xmlsm_lastmod'           => false,
+	'xmlsm_sitemap_providers' => array( 'posts', 'taxonomies', 'users' ),
+	'xmlsm_disabled_subtypes' => '',
 );
 
 /**
@@ -58,9 +65,9 @@ global $wpdb;
  * Clear metadata.
  */
 // Terms meta.
-$wpdb->delete( $wpdb->prefix.'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
 // User meta.
-$wpdb->delete( $wpdb->prefix.'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
 
 // Kilroy was here.
 if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {

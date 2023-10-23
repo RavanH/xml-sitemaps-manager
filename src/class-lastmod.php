@@ -1,15 +1,24 @@
 <?php
+/**
+ * WP Sitemaps Manager Lastmod Class.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.1
+ */
 
 namespace XMLSitemapsManager;
 
-class Lastmod
-{
+/**
+ * Add lastmod to the sitemap.
+ *
+ * @since 0.1
+ */
+class Lastmod {
 	/**
-	 * class Lastmod constructor
-	 *
-	 * @since 0.1
+	 * Class Lastmod constructor
 	 */
-	function __construct() { }
+	public function __construct() { }
 
 	/**
 	 * Add lastmod to index entries.
@@ -17,14 +26,14 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array  $entry
-	 * @param string $type
-	 * @param string $subtype
-	 * @param int    $page
+	 * @param array  $entry   Sitemap entry.
+	 * @param string $type    Entry type.
+	 * @param string $subtype Subtype.
+	 * @param int    $page    Sitemap page number.
+	 *
 	 * @return array $entry
 	 */
-	public static function index_entry( $entry, $type, $subtype, $page )
-	{
+	public static function index_entry( $entry, $type, $subtype, $page ) {
 		// Skip if this is not the first sitemap. TODO make this possible for subsequent sitemaps.
 		if ( $page > 1 ) {
 			return $entry;
@@ -33,7 +42,7 @@ class Lastmod
 		$subtype = \apply_filters( 'xmlsm_index_entry_subtype', $subtype );
 
 		// Add lastmod.
-		switch( $type ) {
+		switch ( $type ) {
 
 			case 'post':
 				/**
@@ -62,7 +71,6 @@ class Lastmod
 				break;
 
 			case 'term':
-
 				$obj = \get_taxonomy( $subtype );
 
 				if ( $obj ) {
@@ -153,11 +161,11 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $args
+	 * @param array $args Arguments.
+	 *
 	 * @return array $args
 	 */
-	public static function posts_query_args( $args )
-	{
+	public static function posts_query_args( $args ) {
 		/**
 		 * Order by modified date.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
@@ -173,20 +181,20 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array  $entry
-	 * @param obj    $post_object
-	 * @param string $post_type
+	 * @param array  $entry       Sitemap entry.
+	 * @param obj    $post_object Post object.
+	 * @param string $post_type   Post type.
+	 *
 	 * @return array $entry
 	 */
-	public static function posts_entry( $entry, $post_object, $post_type )
-	{
+	public static function posts_entry( $entry, $post_object, $post_type ) {
 		// Get lastmod.
-		if ( 'page' === $post_type && 'page' === get_option( 'show_on_front' ) && $post_object->ID == \get_option( 'page_on_front' ) ) {
+		if ( 'page' === $post_type && 'page' === get_option( 'show_on_front' ) && \get_option( 'page_on_front' ) === $post_object->ID ) {
 			$post_type = \apply_filters( 'xmlsm_front_page_post_type', 'post' );
-			$lastmod = \get_lastpostdate( 'gmt', $post_type );
-		} elseif ( 'page' === $post_type && 'page' === get_option( 'show_on_front' ) && $post_object->ID == \get_option( 'page_for_posts' ) ) {
+			$lastmod   = \get_lastpostdate( 'gmt', $post_type );
+		} elseif ( 'page' === $post_type && 'page' === get_option( 'show_on_front' ) && \get_option( 'page_for_posts' ) === $post_object->ID ) {
 			$post_type = \apply_filters( 'xmlsm_blog_page_post_type', 'post' );
-			$lastmod = \get_lastpostdate( 'gmt', $post_type );
+			$lastmod   = \get_lastpostdate( 'gmt', $post_type );
 		} else {
 			// Regular post type.
 			$lastmod = $post_object->post_modified_gmt;
@@ -211,11 +219,11 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $entry
+	 * @param array $entry Sitemap entry.
+	 *
 	 * @return array $entry
 	 */
-	public static function posts_show_on_front_entry( $entry )
-	{
+	public static function posts_show_on_front_entry( $entry ) {
 		// Get last published post.
 		$post_type = \apply_filters( 'xmlsm_home_post_type', 'post' );
 		$lastmod = \get_lastpostdate( 'gmt', $post_type );
@@ -233,11 +241,11 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $args
+	 * @param array $args Arguments.
+	 *
 	 * @return array $args
 	 */
-	public static function taxonomies_query_args( $args )
-	{
+	public static function taxonomies_query_args( $args ) {
 		/**
 		 * Order by modified date.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
@@ -246,11 +254,11 @@ class Lastmod
 			'relation' => 'OR',
 			array(
 				'key' => 'term_modified_gmt',
-				'compare' => 'NOT EXISTS'
+				'compare' => 'NOT EXISTS',
 			),
 			array(
-				'key' => 'term_modified_gmt'
-			)
+				'key' => 'term_modified_gmt',
+			),
 		);
 		$args['meta_type'] = 'DATETIME';
 		$args['orderby']   = 'meta_value_datetime term_order';
@@ -265,14 +273,14 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array    $entry
-	 * @param int|obj  $term         Either the term ID or the WP_Term object depending on query arguments (WP 5.9)
-	 * @param string   $taxonomy
-	 * @param obj|null $term_object  The WP_Term object, available starting WP 6.0 otherwise null
+	 * @param array    $entry       Sitemap entry.
+	 * @param int|obj  $term_id     Either the term ID or the WP_Term object depending on query arguments (WP 5.9).
+	 * @param string   $taxonomy    Entry taxonomy.
+	 * @param obj|null $term_object The WP_Term object, available starting WP 6.0 otherwise null.
+	 *
 	 * @return array $entry
 	 */
-	public static function taxonomies_entry( $entry, $term_id, $taxonomy, $term_object = null )
-	{
+	public static function taxonomies_entry( $entry, $term_id, $taxonomy, $term_object = null ) {
 		// Make sure we have a WP_Term object.
 		if ( null === $term_object ) {
 			$term_object = \get_term( $term_id );
@@ -316,24 +324,24 @@ class Lastmod
 	 *
 	 * @param string $slug     The slug of the term to be queried.
 	 * @param string $taxonomy The term taxonomy.
+	 *
 	 * @return string Last publish date for user or empty string.
 	 */
-	private static function _term_lastmod( $slug, $taxonomy )
-	{
+	private static function _term_lastmod( $slug, $taxonomy ) {
 		$args = array(
-			'post_type' => 'any',
-			'post_status' => 'publish',
-			'posts_per_page' => 1,
+			'post_type'              => 'any',
+			'post_status'            => 'publish',
+			'posts_per_page'         => 1,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
-			'update_cache' => false,
-			'tax_query' => array(
+			'update_cache'           => false,
+			'tax_query'              => array(
 				array(
 					'taxonomy' => $taxonomy,
-					'field' => 'slug',
-					'terms' => $slug
-				)
-			)
+					'field'    => 'slug',
+					'terms'    => $slug,
+				),
+			),
 		);
 
 		/**
@@ -348,7 +356,7 @@ class Lastmod
 		$args = apply_filters( 'xmlsm_lastmod_term_args', $args );
 
 		// Get the latest post in this taxonomy item, to use its post_date as lastmod.
-		$posts = \get_posts ( $args );
+		$posts = \get_posts( $args );
 
 		return ! empty( $posts ) ? \get_post_field( 'post_date_gmt', $posts[0] ) : '';
 	}
@@ -358,30 +366,29 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param string  $new_status
-	 * @param string  $old_status
-	 * @param WP_Post $post
+	 * @param string  $new_status New post status.
+	 * @param string  $old_status Old post status.
+	 * @param WP_Post $post       Post object.
 	 */
-	public static function update_term_modified_meta( $new_status, $old_status, $post )
-	{
+	public static function update_term_modified_meta( $new_status, $old_status, $post ) {
 		// Bail when no status transition or not moving in or out of 'publish' status.
-		if ( $old_status == $new_status || ( 'publish' != $new_status && 'publish' != $old_status )	) {
+		if ( $old_status === $new_status || ( 'publish' !== $new_status && 'publish' !== $old_status ) ) {
 			return;
 		}
 
-		// TODO: maybe only for activated taxonomies
+		// TODO: maybe only for activated taxonomies.
 
-		$term_ids = array();
+		$term_ids   = array();
 		$taxonomies = \get_object_taxonomies( $post );
 
 		foreach ( $taxonomies as $slug ) {
-			$terms = \wp_get_post_terms( $post->ID, $slug, array( 'fields' => 'ids' ));
+			$terms = \wp_get_post_terms( $post->ID, $slug, array( 'fields' => 'ids' ) );
 			if ( ! \is_wp_error( $terms ) ) {
 				$term_ids = \array_merge( $term_ids, $terms );
 			}
 		}
 
-		$time = \date('Y-m-d H:i:s');
+		$time = \gmdate( 'Y-m-d H:i:s' );
 
 		/**
 		 * Filters the lastmod metadata key.
@@ -403,11 +410,11 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $args
+	 * @param array $args Arguments.
+	 *
 	 * @return array $args
 	 */
-	public static function users_query_args( $args )
-	{
+	public static function users_query_args( $args ) {
 		/**
 		 * Order by modified date.
 		 * This is needed to accomodate at least one correct lastmod in the Index.
@@ -415,12 +422,12 @@ class Lastmod
 		$args['meta_query'] = array(
 			'relation' => 'OR',
 			array(
-				'key' => 'user_modified_gmt',
-				'compare' => 'NOT EXISTS'
+				'key'     => 'user_modified_gmt',
+				'compare' => 'NOT EXISTS',
 			),
 			array(
-				'key' => 'user_modified_gmt'
-			)
+				'key' => 'user_modified_gmt',
+			),
 		);
 
 		$args['meta_type'] = 'DATETIME';
@@ -436,12 +443,12 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param array   $entry
-	 * @param WP_User $user_object
+	 * @param array   $entry       Sitemap entry.
+	 * @param WP_User $user_object User object.
+	 *
 	 * @return array
 	 */
-	public static function users_entry( $entry, $user_object )
-	{
+	public static function users_entry( $entry, $user_object ) {
 		/**
 		 * Filters the lastmod metadata key. Allows to change it depending on language for example.
 		 *
@@ -479,10 +486,10 @@ class Lastmod
 	 * @since 0.1
 	 *
 	 * @param int $user_id The user ID to be queried.
+	 *
 	 * @return string Last publish date for user or empty string.
 	 */
-	private static function _user_lastmod( $user_id )
-	{
+	private static function _user_lastmod( $user_id ) {
 		/**
 		 * Filters the post types present in the author archive. Must return a string or an array of multiple post types.
 		 * Allows to add or change post type when theme author archive page shows custom post types.
@@ -495,13 +502,13 @@ class Lastmod
 		$post_type = \apply_filters( 'xmlsm_user_archive_post_type', 'post' );
 
 		$args = array(
-			'author' => $user_id,
-			'post_type' => $post_type,
-			'post_status' => 'publish',
-			'posts_per_page' => 1,
+			'author'                 => $user_id,
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => 1,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
-			'update_cache' => false
+			'update_cache'           => false,
 		);
 
 		/**
@@ -525,18 +532,17 @@ class Lastmod
 	 *
 	 * @since 0.1
 	 *
-	 * @param string  $new_status
-	 * @param string  $old_status
-	 * @param WP_Post $post
+	 * @param string  $new_status New post status.
+	 * @param string  $old_status Old post status.
+	 * @param WP_Post $post       Post object.
 	 */
-	public static function update_user_modified_meta( $new_status, $old_status, $post )
-	{
+	public static function update_user_modified_meta( $new_status, $old_status, $post ) {
 		// Bail when no status transition or not moving in or out of 'publish' status.
-		if ( $old_status == $new_status || ( 'publish' != $new_status && 'publish' != $old_status )	) {
+		if ( $old_status === $new_status || ( 'publish' !== $new_status && 'publish' !== $old_status ) ) {
 			return;
 		}
 
-		$time = \date('Y-m-d H:i:s');
+		$time    = \gmdate( 'Y-m-d H:i:s' );
 		$user_id = \get_post_field( 'post_author', $post );
 
 		/**
@@ -551,5 +557,4 @@ class Lastmod
 
 		\update_user_meta( $user_id, $meta_key, $time );
 	}
-
 }

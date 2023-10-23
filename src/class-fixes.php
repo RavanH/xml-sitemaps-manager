@@ -1,15 +1,24 @@
 <?php
+/**
+ * WP Sitemaps Manager Fixes Class.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.5
+ */
 
 namespace XMLSitemapsManager;
 
-class Fixes
-{
+/**
+ * Apply core sitemap fixes.
+ *
+ * @since 0.5
+ */
+class Fixes {
 	/**
-	 * class Fixes constructor
-	 *
-	 * @since 0.5
+	 * Class Fixes constructor
 	 */
-	function __construct() { }
+	public function __construct() { }
 
 	/**
 	 * Remove sticky posts from the first posts sitemap.
@@ -17,7 +26,8 @@ class Fixes
 	 *
 	 * @see https://core.trac.wordpress.org/ticket/55633
 	 *
-	 * @param array[] $args Query Arguments
+	 * @param array[] $args Query Arguments.
+	 *
 	 * @return array[]
 	 */
 	public static function posts_query_args( $args ) {
@@ -34,7 +44,8 @@ class Fixes
 	 * @see https://core.trac.wordpress.org/ticket/55239
 	 * @see https://core.trac.wordpress.org/changeset/52834
 	 *
-	 * @param array[] $args Query Arguments
+	 * @param array[] $args Query Arguments.
+	 *
 	 * @return array[]
 	 */
 	public static function taxonomies_query_args( $args ) {
@@ -43,5 +54,4 @@ class Fixes
 
 		return $args;
 	}
-
 }
