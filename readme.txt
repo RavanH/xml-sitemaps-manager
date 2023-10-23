@@ -77,6 +77,7 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 
 = 0.6 =
 TODO tools action button to clear lastmod metadata (Admin::tools_actions())
+TODO nonce for tools actions
 TODO does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...
 TODO make static frontpage lastmod sync to last publication date optional
 TODO fix lastmods with Polylang
