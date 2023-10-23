@@ -84,7 +84,7 @@ class Lastmod
 
 						// Get absolute last post date for object.
 						if ( null === $lastmod ) {
-							$lastmod = \get_lastpostdate( 'GMT', $object_type );
+							$lastmod = \get_lastpostdate( 'gmt', $object_type );
 						}
 
 						$lastmodified[] = $lastmod;
@@ -131,7 +131,7 @@ class Lastmod
 
 				// Get absolute last post date.
 				if ( null === $lastmod ) {
-					$lastmod = \get_lastpostdate( 'GMT', $post_type );
+					$lastmod = \get_lastpostdate( 'gmt', $post_type );
 				}
 
 				// Add lastmod.
