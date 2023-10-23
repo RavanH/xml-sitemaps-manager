@@ -41,9 +41,6 @@ function xmlsm_init() {
 		return;
 	}
 
-	// Include autoloader.
-	require_once __DIR__ . '/src/autoload.php';
-
 	/**
 	 * XML Sitemaps Manager: Fixes
 	 *
@@ -95,8 +92,8 @@ function xmlsm_init() {
 	add_filter( 'wp_sitemaps_stylesheet_css', array( '\XMLSitemapsManager\Core', 'stylesheet' ) );
 
 	// Usage info for debugging.
-	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-		add_action( 'shutdown', array( '\XMLSitemapsManager\Core', 'usage' ) );
+	if ( WP_DEBUG ) {
+		include_once __DIR__ . '/src/debugging.php';
 	}
 
 	/**
