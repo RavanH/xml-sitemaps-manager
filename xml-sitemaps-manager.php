@@ -2,8 +2,6 @@
 /**
  * XML Sitemaps Manager
  *
- * @package           XML Sitemaps Manager
- *
  * Plugin Name:       XML Sitemaps Manager
  * Plugin URI:        https://status301.net/wordpress-plugins/xml-sitemaps-manager/
  * Description:       Fix some bugs and add new options to manage the WordPress core XML Sitemaps. Happy with the results? Please leave me a <strong><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=XML%20Sitemaps%20Manager">tip</a></strong> for continued development and support. Thanks :)
@@ -13,6 +11,8 @@
  * Requires PHP:      5.6
  * Author:            RavanH
  * Author URI:        https://status301.net/
+ *
+ * @package XML Sitemaps Manager
  */
 
 defined( 'WPINC' ) || die;
