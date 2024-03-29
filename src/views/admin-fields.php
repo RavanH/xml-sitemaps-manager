@@ -85,8 +85,15 @@
 		<input name="xmlsm_lastmod" type="checkbox" id="xmlsm_lastmod" value="1"<?php checked( $lastmod ); ?> />
 		<?php esc_html_e( 'Last Modified' ); ?>
 	</label>
+	&nbsp;
+	<form action="" method="post">
+		<?php wp_nonce_field( XMLSM_BASENAME . '-help', '_xmlsm_help_nonce' ); ?>
+		<?php // TODO add button(s) to prime medadata. ?>
+		<input type="submit" name="xmlsm-clear-lastmod-meta" class="button button-small" value="<?php esc_attr_e( 'Purge lastmod data caches', 'xml-sitemaps-manager' ); ?>" />
+	</form>
 	<p class="description">
 		<?php esc_html_e( 'Add latest modification dates to the sitemap index and various sitemaps.', 'xml-sitemaps-manager' ); ?>
+
 	</p>
 
 	<br>

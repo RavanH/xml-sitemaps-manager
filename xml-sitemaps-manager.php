@@ -17,7 +17,8 @@
 
 defined( 'WPINC' ) || die;
 
-define( 'WPSM_VERSION', '0.6-beta1' );
+define( 'XMLSM_VERSION', '0.6-beta1' );
+define( 'XMLSM_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * Plugin intitialization.
@@ -139,8 +140,6 @@ add_action( 'init', 'xmlsm_init', 9 );
  * @since 0.3
  */
 function xmlsm_admin_init() {
-	define( 'WPSM_BASENAME', plugin_basename( __FILE__ ) );
-
 	/**
 	 * Register settings.
 	 */
@@ -158,7 +157,7 @@ function xmlsm_admin_init() {
 	/**
 	 * Plugin action links.
 	 */
-	add_filter( 'plugin_action_links_' . WPSM_BASENAME, array( 'XMLSitemapsManager\Admin', 'add_action_link' ) );
+	add_filter( 'plugin_action_links_' . XMLSM_BASENAME, array( 'XMLSitemapsManager\Admin', 'add_action_link' ) );
 	add_filter( 'plugin_row_meta', array( 'XMLSitemapsManager\Admin', 'plugin_meta_links' ), 10, 2 );
 }
 
@@ -172,7 +171,7 @@ add_action( 'admin_init', 'xmlsm_admin_init' );
 function xmlsm_maybe_upgrade() {
 	// Maybe upgrade or install.
 	$db_version = get_option( 'xmlsm_version', '0' );
-	if ( 0 !== version_compare( WPSM_VERSION, $db_version ) ) {
+	if ( 0 !== version_compare( XMLSM_VERSION, $db_version ) ) {
 		include_once __DIR__ . '/upgrade.php';
 	}
 }

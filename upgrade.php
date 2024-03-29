@@ -56,7 +56,7 @@ foreach ( DEFAULTS as $option => $default ) {
 }
 
 // Update DB version.
-\update_option( 'xmlsm_version', \WPSM_VERSION );
+\update_option( 'xmlsm_version', \XMLSM_VERSION );
 
 /**
  * Clear metadata.
@@ -69,8 +69,8 @@ delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 // Kilroy was here.
 if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 	if ( '0' === $db_version ) {
-		\error_log( 'WP Sitemaps Manager version ' . \WPSM_VERSION . ' installed.' );
+		\error_log( 'WP Sitemaps Manager version ' . \XMLSM_VERSION . ' installed.' );
 	} else {
-		\error_log( 'WP Sitemaps Manager upgraded from ' . $db_version . ' to ' . \WPSM_VERSION );
+		\error_log( 'WP Sitemaps Manager upgraded from ' . $db_version . ' to ' . \XMLSM_VERSION );
 	}
 }

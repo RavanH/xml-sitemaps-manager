@@ -14,15 +14,17 @@
 		<?php esc_html_e( 'Learn more about XML sitemaps.', 'xml-sitemaps-manager' ); ?>
 	</a>
 </p>
-<p>
-	<?php esc_html_e( 'When your site is public, all XML sitemaps are enabled by default. You can disable the main sitemap index or disable different types of sitemaps.', 'xml-sitemaps-manager' ); ?>
-</p>
-<p>
-	<?php esc_html_e( 'You can adapt the maximum number of URLs per sitemap. Decrease it if you encounter errors, increase it if your sitemap index contains too many sitemaps.', 'xml-sitemaps-manager' ); ?>
-</p>
-<p>
-	<?php esc_html_e( 'You can add Last Modified data to the sitemaps. Note that this will cause some additional database queries for certain sitemaps. If you encounter errors, try decreasing the maximum number of URLs per sitemap or disable this option.', 'xml-sitemaps-manager' ); ?>
-</p>
+<ul>
+	<li>
+		<?php esc_html_e( 'When your site is public, all XML sitemaps are enabled by default. You can disable the main sitemap index or disable individual sitemaps.', 'xml-sitemaps-manager' ); ?>
+	</li>
+	<li>
+		<?php esc_html_e( 'You can adapt the maximum number of URLs per sitemap. Decrease that number if you encounter errors, increase it if your sitemap index contains too many sitemaps.', 'xml-sitemaps-manager' ); ?>
+	</li>
+	<li>
+		<?php esc_html_e( 'You can add Last Modified data to the sitemaps. Note that this will cause some additional database queries for certain sitemaps. If you encounter errors, try decreasing the maximum number of URLs per sitemap or disable this option.', 'xml-sitemaps-manager' ); ?>
+	</li>
+</ul>
 <hr />
 <p class="description">
 	<?php
@@ -36,7 +38,7 @@
 	<?php
 	printf(
 		/* translators: %1$s Review, %2$s Translations, both linked to their respective page on WordPress.org */
-		esc_html__( 'If you would like to contribute and share with the rest of the WordPress community, please consider writing a quick %1$ or help out with %2$s!', 'xml-sitemaps-manager' ),
+		esc_html__( 'If you would like to contribute and share with the rest of the WordPress community, please consider writing a quick %1$s or help out with %2$s!', 'xml-sitemaps-manager' ),
 		'<a href="https://wordpress.org/support/plugin/xml-sitemaps-manager/reviews/?filter=5#new-posts" target="_blank">' . esc_html__( 'Review', 'xml-sitemaps-manager' ) . '</a>',
 		'<a href="https://translate.wordpress.org/projects/wp-plugins/xml-sitemaps-manager/" target="_blank">' . esc_html__( 'Translations' ) . '</a>'
 	);

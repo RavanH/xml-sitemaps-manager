@@ -151,7 +151,7 @@ class Admin {
 		);
 
 		// The actual fields for data entry.
-		include __DIR__ . '/views/admin-field.php';
+		include __DIR__ . '/views/admin-fields.php';
 	}
 
 	/**
@@ -164,11 +164,11 @@ class Admin {
 			return;
 		}
 
-		if ( ! \wp_verify_nonce( \sanitize_key( $_POST['_xmlsm_help_nonce'] ), WPSM_BASENAME . '-help' ) ) {
+		if ( ! \wp_verify_nonce( \sanitize_key( $_POST['_xmlsm_help_nonce'] ), XMLSM_BASENAME . '-help' ) ) {
 			\add_settings_error(
 				'not_allowed_notice',
 				'not_allowed_notice',
-				\translate( 'Something went wrong.' ),
+				\__( 'Something went wrong.' ),
 				'warning'
 			);
 
@@ -178,7 +178,7 @@ class Admin {
 		/**
 		 * Remove metadata.
 		 */
-		if ( isset( $_GET['xmlsm-clear-lastmod-meta'] ) ) {
+		if ( isset( $_POST['xmlsm-clear-lastmod-meta'] ) ) {
 			// Terms meta.
 			\delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 			// User meta.
@@ -189,7 +189,7 @@ class Admin {
 			\add_settings_error(
 				'clear_meta_notice',
 				'clear_meta_notice',
-				__( 'XML Sitemap lastmod meta cache has been cleared.', 'xml-sitemaps-manager' ),
+				\__( 'XML Sitemap lastmod meta caches have been cleared.', 'xml-sitemaps-manager' ),
 				'updated'
 			);
 		}
@@ -245,7 +245,7 @@ class Admin {
 	 * @return array $links
 	 */
 	public static function plugin_meta_links( $links, $file ) {
-		if ( WPSM_BASENAME === $file ) {
+		if ( XMLSM_BASENAME === $file ) {
 			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/xml-sitemaps-manager/">' . \esc_html__( 'Support', 'xml-sitemaps-manager' ) . '</a>';
 			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/xml-sitemaps-manager/reviews/?filter=5#new-post">' . \esc_html__( 'Rate ★★★★★', 'xml-sitemaps-manager' ) . '</a>';
 		}
