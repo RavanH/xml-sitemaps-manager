@@ -99,14 +99,8 @@ function xmlsm_init() {
 	/**
 	 * Add sitemaps.
 	 */
-	// TODO
-	// Maybe add dedicated Media sitemap if image tags are (still) not possible OR completely replace the renderer?
 
-	// TODO
-	// add custom post type root pages?
-	// Maybe with wp_sitemaps_posts_pre_url_list (replacing the whole posts provider url_list)
-	// With $post_type_archive_url = get_post_type_archive_link( $post_type )
-	// And then if ( $post_type_archive_url ) { $url_list[] = array( 'loc' => $post_type_archive_url ); }.
+	// TODO.
 
 	/**
 	 * Add lastmod.
