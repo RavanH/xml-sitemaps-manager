@@ -116,13 +116,13 @@
 
 </fieldset>
 <script>
-jQuery( 'document' ).ready( function( $ ) {
-	if ( window.location.hash ) {
-		let loc = $( window.location.hash );
-		if (loc.length) {
-			$( 'html, body' ).animate( { scrollTop: loc.offset().top-40 }, 800, 'swing', function(){ loc.closest( 'td' ).addClass( 'highlight' ); } );
-		}
+if ( window.location.hash ) {
+	let loc = jQuery( window.location.hash );
+	if (loc.length) {
+		jQuery( 'html, body' ).animate( { scrollTop: loc.offset().top-40 }, 400, 'swing', function(){ loc.closest( 'td' ).addClass( 'highlight' ); } );
 	}
+}
+jQuery( 'document' ).ready( function( $ ) {
 	$('input.toggle-subsection').change( function() {
 		console.log('toggle');
 		$( this ).parents('fieldset').first().find('.subsection').first().toggle('fast');
