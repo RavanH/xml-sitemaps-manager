@@ -84,14 +84,14 @@ class Admin {
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $new Checkbox options array.
+	 * @param array $save Checkbox options array.
 	 *
 	 * @return array Array containing only checked option names.
 	 */
-	public static function sanitize_checkbox_array_deep( $new ) {
+	public static function sanitize_checkbox_array_deep( $save ) {
 		$sanitized_array = array();
 
-		foreach ( (array) $new as $option => $value ) {
+		foreach ( (array) $save as $option => $value ) {
 			if ( empty( $value ) ) {
 				continue;
 			}
@@ -110,14 +110,14 @@ class Admin {
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $new Intval options array.
+	 * @param array $save Intval options array.
 	 *
 	 * @return array Array containing option name as key and integer as value.
 	 */
-	public static function sanitize_intval_array_deep( $new ) {
+	public static function sanitize_intval_array_deep( $save ) {
 		$sanitized_array = array();
 
-		foreach ( (array) $new as $option => $value ) {
+		foreach ( (array) $save as $option => $value ) {
 			if ( is_array( $value ) ) {
 				$sanitized_array[ $option ] = self::sanitize_intval_array_deep( $value );
 			} else {
@@ -164,16 +164,14 @@ class Admin {
 	 * @since 0.6
 	 */
 	public static function tools_actions() {
-		global $wpdb;
-
 		/**
 		 * Remove metadata.
 		 */
 		if ( isset( $_GET['xmlsm-clear-lastmod-meta'] ) ) {
 			// Terms meta.
-			$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+			delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 			// User meta.
-			$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+			delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 
 			do_action( 'xmlsm_clear_lastmod_meta' );
 

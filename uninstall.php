@@ -52,15 +52,13 @@ if ( \is_multisite() ) {
  * @param int $_id Blog ID.
  */
 function uninstall( $_id = false ) {
-	global $wpdb;
-
 	/**
 	 * Remove metadata.
 	 */
 	// Terms meta.
-	$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+	delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 	// User meta.
-	$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+	delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 	// TODO: add Polylang metadata removal.
 
 	/**

@@ -58,15 +58,13 @@ foreach ( DEFAULTS as $option => $default ) {
 // Update DB version.
 \update_option( 'xmlsm_version', \WPSM_VERSION );
 
-global $wpdb;
-
 /**
  * Clear metadata.
  */
 // Terms meta.
-$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 // User meta.
-$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 
 // Kilroy was here.
 if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
