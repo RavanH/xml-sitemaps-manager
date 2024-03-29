@@ -1,6 +1,6 @@
 <?php
 /**
- * XML Sitemaps Manager
+ * XML Sitemaps Manager admin fields.
  *
  * @package XML Sitemaps Manager
  */
@@ -10,24 +10,27 @@
 	<legend class="screen-reader-text">
 		<?php esc_html_e( 'XML Sitemap', 'xml-sitemaps-manager' ); ?>
 	</legend>
+
 	<label>
-		<input name="xmlsm_sitemaps_enabled" type="checkbox" class="toggle-subsection" id="xmlsm_sitemaps_enabled" value="1"<?php checked( $sitemaps_enabled ); ?> />
+		<input name="xmlsm_sitemaps_enabled" type="checkbox" class="toggle-subsection" id="xmlsm_sitemaps_enabled" value="1"<?php checked( $sitemaps_enabled && 1 === (int) get_option( 'blog_public' ) ); ?><?php disabled( 1 !== (int) get_option( 'blog_public' ) ); ?> />
 		<?php esc_html_e( 'XML Sitemaps enabled', 'xml-sitemaps-manager' ); ?>
 	</label>
 
-	<?php if ( $sitemaps_enabled ) : ?>
+	<?php if ( 1 === (int) get_option( 'blog_public' ) ) : ?>
+
+		<?php if ( $sitemaps_enabled ) : ?>
 		<span class="description">
 			&nbsp;&ndash;&nbsp;
-			<a href="<?php echo esc_url( get_sitemap_url( 'index' ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
+			<a href="<?php echo esc_url( get_sitemap_url( 'index' ) ); ?>" target="_blank"><?php esc_html_e( 'View' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 		</span>
-	<?php endif; ?>
+		<?php endif; ?>
 
 	<br>
 
 	<ul class="subsection sitemap-providers <?php echo $sitemaps_enabled ? '' : 'hidden'; ?>" style="margin:0 0 0 24px">
 		<?php
 		foreach ( wp_get_sitemap_providers() as $sitemap => $provider ) :
-			$subtypes = $provider->get_object_subtypes();
+			$subtypes           = $provider->get_object_subtypes();
 			$provider_nice_name = array_key_exists( $sitemap, $provider_nice_names ) ? $provider_nice_names[ $sitemap ] : sprintf( /* translators: %s: Sitemap slug. */ __( 'Sitemap provider: %s', 'xml-sitemaps-manager' ), $sitemap );
 			?>
 		<li>
@@ -37,45 +40,27 @@
 				</legend>
 
 				<label>
-					<input name="xmlsm_sitemap_providers[<?php echo esc_attr( $sitemap ); ?>]" type="checkbox" class="toggle-subsection" id="xmlsm_sitemap_providers_<?php echo esc_attr( $sitemap ); ?>" value="1"<?php checked( in_array( $sitemap, $sitemap_providers ) ); ?> />
+					<input name="xmlsm_sitemap_providers[<?php echo esc_attr( $sitemap ); ?>]" type="checkbox" class="toggle-subsection" id="xmlsm_sitemap_providers_<?php echo esc_attr( $sitemap ); ?>" value="1"<?php checked( in_array( $sitemap, $sitemap_providers, true ) ); ?> />
 					<strong>
 						<?php echo esc_html( $provider_nice_name ); ?>
 					</strong>
 				</label>
 
-				<?php if ( $sitemaps_enabled && in_array( $sitemap, $sitemap_providers ) && empty( $subtypes ) ) : ?>
-					<span class="description">
-						&nbsp;&ndash;&nbsp;
-						<a href="<?php echo esc_url( get_sitemap_url( $sitemap ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
-					</span>
-					<br>
-				<?php endif; ?>
 				<?php if ( ! empty( $subtypes ) ) : ?>
-					<div class="subsection sitemap-provider <?php echo esc_attr( $sitemap ); ?> <?php echo in_array( $sitemap, $sitemap_providers ) ? '' : 'hidden'; ?>" style="margin-left:24px">
-						<p>
-							<?php esc_html_e( 'Exclude', 'xml-sitemaps-manager' ); ?>
-						</p>
-						<ul>
+					<fieldset class="subsection sitemap-provider <?php echo esc_attr( $sitemap ); ?> <?php echo in_array( $sitemap, $sitemap_providers, true ) ? '' : 'hidden'; ?>" style="margin-left:24px">
+							<?php esc_html_e( 'Exclude:' ); ?>
+
 							<?php
 							foreach ( $subtypes as $subtype ) :
-								$disabled_subtype = ! empty( $disabled_subtypes[ $sitemap ] ) && is_array( $disabled_subtypes[ $sitemap ] ) && in_array( $subtype->name, $disabled_subtypes[ $sitemap ] );
+								$disabled_subtype = ! empty( $disabled_subtypes[ $sitemap ] ) && is_array( $disabled_subtypes[ $sitemap ] ) && in_array( $subtype->name, $disabled_subtypes[ $sitemap ], true );
 								?>
-							<li style="margin:0;">
+								&nbsp; &nbsp;
 								<label>
 									<input name="xmlsm_disabled_subtypes[<?php echo esc_attr( $sitemap ); ?>][<?php echo esc_attr( $subtype->name ); ?>]" type="checkbox" id="xmlsm_disabled_subtypes_<?php echo esc_attr( $sitemap ); ?>_<?php echo esc_attr( $subtype->name ); ?>" value="1"<?php checked( $disabled_subtype ); ?> />
 									<?php echo esc_html( $subtype->label ); ?>
 								</label>
-								<?php if ( $sitemaps_enabled && ! $disabled_subtype ) : ?>
-									<span class="description">
-										&nbsp;&ndash;&nbsp;
-										<a href="<?php echo esc_url( get_sitemap_url( $sitemap, $subtype->name ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'xml-sitemaps-manager' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
-									</span>
-									<br>
-								<?php endif; ?>
-							</li>
 							<?php endforeach; ?>
-						</ul>
-					</div>
+					</fieldset>
 				<?php endif; ?>
 
 			</fieldset>
@@ -91,27 +76,35 @@
 		<?php esc_html_e( 'Apply bug fixes and optimizations', 'xml-sitemaps-manager' ); ?>
 	</label>
 	<p class="description">
-		<?php esc_html__( 'Recommended patches and optimizations, provided by the WordPress community.', 'xml-sitemaps-manager' ); ?>
-		<a href="https://wordpress.org/plugins/xml-sitemaps-manager/#tab-description"><?php echo esc_html( translate( 'Learn more' ) ); ?></a>
+		<?php esc_html_e( 'Recommended patches and optimizations, provided by the WordPress community.', 'xml-sitemaps-manager' ); ?>
+		<a href="https://wordpress.org/plugins/xml-sitemaps-manager/#tab-description"><?php esc_html_e( 'Learn more' ); ?></a>
 	</p>
 
 	<br>
 	<label>
 		<input name="xmlsm_lastmod" type="checkbox" id="xmlsm_lastmod" value="1"<?php checked( $lastmod ); ?> />
-		<?php esc_html_e( 'Last Modified', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'Last Modified' ); ?>
 	</label>
 	<p class="description">
-		<?php esc_html_e( 'Add Last Modified data to the sitemaps.', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'Add latest modification dates to the sitemap index and various sitemaps.', 'xml-sitemaps-manager' ); ?>
 	</p>
 
 	<br>
 	<label>
-		<?php esc_html_e( 'Maximum number of URLs:', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'Maximum entries:', 'xml-sitemaps-manager' ); ?>
 		<input name="xmlsm_max_urls" type="number" step="1000" min="1000" id="xmlsm_max_urls" value="<?php echo is_numeric( $max_urls ) && $max_urls > 0 ? esc_attr( $max_urls ) : ''; ?>" class="small-text">
 	</label>
 	<p class="description">
-		<?php esc_html_e( 'The maximum number of URLs included in a sitemap. Default 2000.', 'xml-sitemaps-manager' ); ?>
+		<?php esc_html_e( 'The maximum number of URLs per sitemap. Default 2000.', 'xml-sitemaps-manager' ); ?>
 	</p>
+
+	<?php else : ?>
+
+	<p class="description">
+		<?php printf( /* translators: Search engine visibility */ esc_html__( 'The XML Sitemaps are disabled because of your site\'s %s setting.', 'xml-sitemaps-manager' ), '<strong>' . esc_html__( 'Search engine visibility' ) . '</strong>' ); ?>
+	</p>
+
+	<?php endif; ?>
 
 
 </fieldset>

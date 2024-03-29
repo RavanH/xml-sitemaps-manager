@@ -8,7 +8,7 @@
 namespace XMLSitemapsManager;
 
 /**
- * Apply core sitemap fixes.
+ * Sitemap admin.
  *
  * @since 0.1
  */
@@ -137,10 +137,6 @@ class Admin {
 	 * @since 0.1
 	 */
 	public static function sitemaps_settings_field() {
-		if ( 1 !== (int) \get_option( 'blog_public' ) ) {
-			\esc_html_e( 'The XML Sitemap is disabled because of your site&#8217;s visibility settings (above).', 'xml-sitemaps-manager' );
-			return;
-		}
 
 		$sitemaps_enabled    = (bool) \get_option( 'xmlsm_sitemaps_enabled', true );
 		$sitemaps_fixes      = (bool) \get_option( 'xmlsm_sitemaps_fixes', true );
@@ -151,7 +147,7 @@ class Admin {
 		$provider_nice_names = array(
 			'posts'      => __( 'Post types', 'xml-sitemaps-manager' ),
 			'taxonomies' => __( 'Taxonomies', 'xml-sitemaps-manager' ),
-			'users'      => __( 'Users', 'xml-sitemaps-manager' ),
+			'users'      => __( 'Users' ),
 		);
 
 		// The actual fields for data entry.
@@ -164,18 +160,33 @@ class Admin {
 	 * @since 0.6
 	 */
 	public static function tools_actions() {
+		if ( ! isset( $_POST['_xmlsm_help_nonce'] ) ) {
+			return;
+		}
+
+		if ( ! \wp_verify_nonce( \sanitize_key( $_POST['_xmlsm_help_nonce'] ), WPSM_BASENAME . '-help' ) ) {
+			\add_settings_error(
+				'not_allowed_notice',
+				'not_allowed_notice',
+				\translate( 'Something went wrong.' ),
+				'warning'
+			);
+
+			return;
+		}
+
 		/**
 		 * Remove metadata.
 		 */
 		if ( isset( $_GET['xmlsm-clear-lastmod-meta'] ) ) {
 			// Terms meta.
-			delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
+			\delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 			// User meta.
-			delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
+			\delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 
-			do_action( 'xmlsm_clear_lastmod_meta' );
+			\do_action( 'xmlsm_clear_lastmod_meta' );
 
-			add_settings_error(
+			\add_settings_error(
 				'clear_meta_notice',
 				'clear_meta_notice',
 				__( 'XML Sitemap lastmod meta cache has been cleared.', 'xml-sitemaps-manager' ),
