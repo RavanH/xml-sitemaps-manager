@@ -1,4 +1,11 @@
 <?php
+/**
+ * WP Sitemaps Manager plugable functions.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.1
+ */
 
 if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 	/**
@@ -8,8 +15,8 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 	 *
 	 * @since 1.0
 	 *
-	 * @param  WP       $wp       Current WordPress environment instance.
-	 * @global WP_Query	$wp_query WordPress Query.
+	 * @param  WP $wp             Current WordPress environment instance.
+	 * @global WP_Query $wp_query WordPress Query.
 	 * @return void
 	 */
 	function wp_sitemaps_loaded( $wp ) {
@@ -37,16 +44,16 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 		}
 
 		// Prepare query variables.
-		$query_vars = $wp_query->query_vars;
+		$query_vars           = $wp_query->query_vars;
 		$wp_query->query_vars = $wp->query_vars;
 
 		// Render the sitemap.
 		wp_sitemaps_get_server()->render_sitemaps();
 
 		// Still here? Then it was an invalid sitemap request after all. Undo everything and carry on...
-		$wp_query->is_sitemap = false;
+		$wp_query->is_sitemap            = false;
 		$wp_query->is_sitemap_stylesheet = false;
-		$wp_query->query_vars = $query_vars;
+		$wp_query->query_vars            = $query_vars;
 	}
 endif;
 
@@ -69,7 +76,7 @@ if ( ! function_exists( 'is_sitemap' ) ) :
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, translate( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
 			return false;
 		}
 
@@ -94,7 +101,7 @@ if ( ! function_exists( 'is_sitemap_stylesheet' ) ) :
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, translate( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.' ), '3.1.0' );
 			return false;
 		}
 

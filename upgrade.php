@@ -1,16 +1,23 @@
 <?php
+/**
+ * WP Sitemaps Manager upgrade.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.2
+ */
 
 namespace XMLSitemapsManager;
 
 defined( '\WPINC' ) || die;
 
-CONST DEFAULTS = array(
-	'xmlsm_sitemaps_enabled'   => true,
-	'xmlsm_sitemaps_fixes'     => true,
-	'xmlsm_max_urls'           => '',
-	'xmlsm_lastmod'            => false,
-	'xmlsm_sitemap_providers'  => array( 'posts', 'taxonomies', 'users' ),
-	'xmlsm_disabled_subtypes'  => '',
+const DEFAULTS = array(
+	'xmlsm_sitemaps_enabled'  => true,
+	'xmlsm_sitemaps_fixes'    => true,
+	'xmlsm_max_urls'          => '',
+	'xmlsm_lastmod'           => false,
+	'xmlsm_sitemap_providers' => array( 'posts', 'taxonomies', 'users' ),
+	'xmlsm_disabled_subtypes' => '',
 );
 
 /**
@@ -41,7 +48,6 @@ if ( '0' !== $db_version ) {
 		\add_option( 'xmlsm_lastmod', $lastmod );
 		\delete_option( 'xmlsm_sitemaps_lastmod' );
 	}
-
 }
 
 // Fill in missing options.
@@ -50,23 +56,21 @@ foreach ( DEFAULTS as $option => $default ) {
 }
 
 // Update DB version.
-\update_option( 'xmlsm_version', \WPSM_VERSION );
-
-//global $wpdb;
+\update_option( 'xmlsm_version', \XMLSM_VERSION );
 
 /**
  * Clear metadata.
  */
 // Terms meta.
-$wpdb->delete( $wpdb->prefix.'termmeta', array( 'meta_key' => 'term_modified_gmt' ) );
+delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 // User meta.
-$wpdb->delete( $wpdb->prefix.'usermeta', array( 'meta_key' => 'user_modified_gmt' ) );
+delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 
 // Kilroy was here.
 if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 	if ( '0' === $db_version ) {
-		\error_log( 'WP Sitemaps Manager version ' . \WPSM_VERSION . ' installed.' );
+		\error_log( 'WP Sitemaps Manager version ' . \XMLSM_VERSION . ' installed.' );
 	} else {
-		\error_log( 'WP Sitemaps Manager upgraded from ' . $db_version . ' to ' . \WPSM_VERSION );
+		\error_log( 'WP Sitemaps Manager upgraded from ' . $db_version . ' to ' . \XMLSM_VERSION );
 	}
 }
