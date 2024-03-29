@@ -1,10 +1,18 @@
 <?php
 /**
+ * WP Sitemaps Manager plugable functions.
+ *
+ * @package WP Sitemaps Manager
+ *
+ * @since 0.4
+ */
+
+/**
  * Filter subtype to fix issue with Lastmod in sitemap index.
  *
  * @since 0.4
  *
- * @param  string $subtype
+ * @param  string $subtype Subtype.
  *
  * @return string $subtype
  */
@@ -23,7 +31,8 @@ function xmlsm_polylang_index_entry_subtype( $subtype ) {
  *
  * @since 0.6
  *
- * @param  string $meta_key
+ * @param  string $meta_key Meta key.
+ * @param  obj    $post     Post object.
  *
  * @return string $meta_key
  */
@@ -35,7 +44,7 @@ function xmlsm_polylang_lastmod_meta_key( $meta_key, $post = false ) {
 		$lang = pll_current_language();
 	}
 
-	if ( $lang != pll_default_language() ) {
+	if ( pll_default_language() !== $lang ) {
 		$meta_key .= '_' . $lang;
 	}
 
@@ -47,23 +56,25 @@ function xmlsm_polylang_lastmod_meta_key( $meta_key, $post = false ) {
  *
  * @since 0.6
  *
- * @param  string $meta_key
+ * @param  string $lastmod   Last mod date, not used.
+ * @param  array  $entry     Entry data array.
+ * @param  string $post_type Post type.
  *
  * @return string $meta_key
  */
 function xmlsm_polylang_lastmod_index_entry( $lastmod, $entry, $post_type = 'post' ) {
 	$languages = pll_languages_list( array( 'fields' => 'slug' ) );
-	$default = pll_default_language();
-	unset( $languages[$default] );
+	$default   = pll_default_language();
+	unset( $languages[ $default ] );
 
-	$url_parts = parse_url( $entry['loc'] );
+	$url_parts = wp_parse_url( $entry['loc'] );
 
 	// Try to identify language from index entry URL.
 	foreach ( $languages as $lang ) {
 		if (
-			0 === strpos( $url_parts['path'], '/'.$lang.'/' ) ||
-			0 === strpos( $url_parts['host'], $lang.'.' ) ||
-			( ! empty( $url_parts['query'] ) && str_contains( $url_parts['query'], 'lang='.$lang ) )
+			0 === strpos( $url_parts['path'], '/' . $lang . '/' ) ||
+			0 === strpos( $url_parts['host'], $lang . '.' ) ||
+			( ! empty( $url_parts['query'] ) && str_contains( $url_parts['query'], 'lang=' . $lang ) )
 		) {
 			// Got one!
 			$found = $lang;
@@ -72,15 +83,17 @@ function xmlsm_polylang_lastmod_index_entry( $lastmod, $entry, $post_type = 'pos
 	}
 
 	// Get last post based on language.
-	$posts = get_posts ( array(
-		'post_type' => $post_type,
-		'post_status' => 'publish',
-		'posts_per_page' => 1,
-		'update_post_meta_cache' => false,
-		'update_post_term_cache' => false,
-		'update_cache' => false,
-		'lang' => isset( $found ) ? $found : $default
-	) );
+	$posts = get_posts(
+		array(
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => 1,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'update_cache'           => false,
+			'lang'                   => isset( $found ) ? $found : $default,
+		)
+	);
 
 	return ! empty( $posts ) ? get_post_field( 'post_date_gmt', $posts[0] ) : null;
 }
@@ -90,22 +103,20 @@ function xmlsm_polylang_lastmod_index_entry( $lastmod, $entry, $post_type = 'pos
  *
  * @since 0.6
  *
- * @param  void
  * @return void
  */
 function xmlsm_polylang_clear_lastmod_meta() {
 	global $wpdb;
 
 	$languages = pll_languages_list( array( 'fields' => 'slug' ) );
-	$default = pll_default_language();
-	unset( $languages[$default] );
+	$default   = pll_default_language();
+	unset( $languages[ $default ] );
 
 	/**
 	 * Remove metadata.
 	 */
 	foreach ( $languages as $lang ) {
 		// User meta.
-		$wpdb->delete( $wpdb->prefix.'usermeta', array( 'meta_key' => 'user_modified_gmt_'.$lang ) );
+		$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => 'user_modified_gmt_' . $lang ) );
 	}
-
 }
