@@ -73,23 +73,23 @@ function xmlsm_init() {
 		}
 		global $wp_version;
 		if ( version_compare( $wp_version, '6.1', '<' ) ) {
-			add_filter( 'wp_sitemaps_posts_query_args', array( '\XMLSitemapsManager\Fixes', 'posts_query_args' ) );
+			add_filter( 'wp_sitemaps_posts_query_args', array( 'XMLSitemapsManager\Fixes', 'posts_query_args' ) );
 		}
 		if ( version_compare( $wp_version, '6.0', '<' ) ) {
-			add_filter( 'wp_sitemaps_taxonomies_query_args', array( '\XMLSitemapsManager\Fixes', 'taxonomies_query_args' ) );
+			add_filter( 'wp_sitemaps_taxonomies_query_args', array( 'XMLSitemapsManager\Fixes', 'taxonomies_query_args' ) );
 		}
 	}
 
 	// Maximum URLs per sitemap.
-	add_filter( 'wp_sitemaps_max_urls', array( '\XMLSitemapsManager\Core', 'max_urls' ), 10, 2 );
+	add_filter( 'wp_sitemaps_max_urls', array( 'XMLSitemapsManager\Core', 'max_urls' ), 10, 2 );
 	// Exclude sitemap providers.
-	add_filter( 'wp_sitemaps_add_provider', array( '\XMLSitemapsManager\Core', 'exclude_providers' ), 10, 2 );
+	add_filter( 'wp_sitemaps_add_provider', array( 'XMLSitemapsManager\Core', 'exclude_providers' ), 10, 2 );
 	// Exclude post types. TODO Fix.
-	add_filter( 'wp_sitemaps_post_types', array( '\XMLSitemapsManager\Core', 'exclude_post_types' ) );
+	add_filter( 'wp_sitemaps_post_types', array( 'XMLSitemapsManager\Core', 'exclude_post_types' ) );
 	// Exclude taxonomies. TODO Fix.
-	add_filter( 'wp_sitemaps_taxonomies', array( '\XMLSitemapsManager\Core', 'exclude_taxonomies' ) );
+	add_filter( 'wp_sitemaps_taxonomies', array( 'XMLSitemapsManager\Core', 'exclude_taxonomies' ) );
 	// Filter stylesheet.
-	add_filter( 'wp_sitemaps_stylesheet_css', array( '\XMLSitemapsManager\Core', 'stylesheet' ) );
+	add_filter( 'wp_sitemaps_stylesheet_css', array( 'XMLSitemapsManager\Core', 'stylesheet' ) );
 
 	// Usage info for debugging.
 	if ( WP_DEBUG ) {
@@ -107,19 +107,19 @@ function xmlsm_init() {
 	 */
 	if ( get_option( 'xmlsm_lastmod' ) ) {
 		// Add lastmod to the index.
-		add_filter( 'wp_sitemaps_index_entry', array( '\XMLSitemapsManager\Lastmod', 'index_entry' ), 10, 4 );
+		add_filter( 'wp_sitemaps_index_entry', array( 'XMLSitemapsManager\Lastmod', 'index_entry' ), 10, 4 );
 		// To post entries.
-		add_filter( 'wp_sitemaps_posts_entry', array( '\XMLSitemapsManager\Lastmod', 'posts_entry' ), 10, 3 );
-		add_filter( 'wp_sitemaps_posts_show_on_front_entry', array( '\XMLSitemapsManager\Lastmod', 'posts_show_on_front_entry' ) );
-		add_filter( 'wp_sitemaps_posts_query_args', array( '\XMLSitemapsManager\Lastmod', 'posts_query_args' ) );
+		add_filter( 'wp_sitemaps_posts_entry', array( 'XMLSitemapsManager\Lastmod', 'posts_entry' ), 10, 3 );
+		add_filter( 'wp_sitemaps_posts_show_on_front_entry', array( 'XMLSitemapsManager\Lastmod', 'posts_show_on_front_entry' ) );
+		add_filter( 'wp_sitemaps_posts_query_args', array( 'XMLSitemapsManager\Lastmod', 'posts_query_args' ) );
 		// To term entries.
-		add_filter( 'wp_sitemaps_taxonomies_entry', array( '\XMLSitemapsManager\Lastmod', 'taxonomies_entry' ), 10, 4 );
-		add_action( 'transition_post_status', array( '\XMLSitemapsManager\Lastmod', 'update_term_modified_meta' ), 10, 3 );
-		add_filter( 'wp_sitemaps_taxonomies_query_args', array( '\XMLSitemapsManager\Lastmod', 'taxonomies_query_args' ) );
+		add_filter( 'wp_sitemaps_taxonomies_entry', array( 'XMLSitemapsManager\Lastmod', 'taxonomies_entry' ), 10, 4 );
+		add_action( 'transition_post_status', array( 'XMLSitemapsManager\Lastmod', 'update_term_modified_meta' ), 10, 3 );
+		add_filter( 'wp_sitemaps_taxonomies_query_args', array( 'XMLSitemapsManager\Lastmod', 'taxonomies_query_args' ) );
 		// To user entries.
-		add_filter( 'wp_sitemaps_users_entry', array( '\XMLSitemapsManager\Lastmod', 'users_entry' ), 10, 2 );
-		add_action( 'transition_post_status', array( '\XMLSitemapsManager\Lastmod', 'update_user_modified_meta' ), 10, 3 );
-		add_filter( 'wp_sitemaps_users_query_args', array( '\XMLSitemapsManager\Lastmod', 'users_query_args' ) );
+		add_filter( 'wp_sitemaps_users_entry', array( 'XMLSitemapsManager\Lastmod', 'users_entry' ), 10, 2 );
+		add_action( 'transition_post_status', array( 'XMLSitemapsManager\Lastmod', 'update_user_modified_meta' ), 10, 3 );
+		add_filter( 'wp_sitemaps_users_query_args', array( 'XMLSitemapsManager\Lastmod', 'users_query_args' ) );
 		// Compatibility.
 		if ( function_exists( 'pll_languages_list' ) ) {
 			include_once __DIR__ . '/src/compat/polylang.php';
@@ -145,7 +145,7 @@ function xmlsm_admin_init() {
 	/**
 	 * Register settings.
 	 */
-	\XMLSitemapsManager\Admin::register_settings();
+	XMLSitemapsManager\Admin::register_settings();
 
 	/**
 	 * Tools actions.
@@ -155,13 +155,13 @@ function xmlsm_admin_init() {
 		include_once __DIR__ . '/src/compat/polylang.php';
 		add_action( 'xmlsm_clear_lastmod_meta', 'xmlsm_polylang_clear_lastmod_meta' );
 	}
-	\XMLSitemapsManager\Admin::tools_actions();
+	XMLSitemapsManager\Admin::tools_actions();
 
 	/**
 	 * Plugin action links.
 	 */
-	add_filter( 'plugin_action_links_' . WPSM_BASENAME, array( '\XMLSitemapsManager\Admin', 'add_action_link' ) );
-	add_filter( 'plugin_row_meta', array( '\XMLSitemapsManager\Admin', 'plugin_meta_links' ), 10, 2 );
+	add_filter( 'plugin_action_links_' . WPSM_BASENAME, array( 'XMLSitemapsManager\Admin', 'add_action_link' ) );
+	add_filter( 'plugin_row_meta', array( 'XMLSitemapsManager\Admin', 'plugin_meta_links' ), 10, 2 );
 }
 
 add_action( 'admin_init', 'xmlsm_admin_init' );
