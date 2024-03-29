@@ -41,7 +41,7 @@ class Admin {
 		);
 
 		// Don't register settings when blog not public.
-		if ( '1' !== \get_option( 'blog_public' ) ) {
+		if ( 1 !== (int) \get_option( 'blog_public' ) ) {
 			return;
 		}
 
@@ -137,7 +137,7 @@ class Admin {
 	 * @since 0.1
 	 */
 	public static function sitemaps_settings_field() {
-		if ( '1' !== get_option( 'blog_public' ) ) {
+		if ( 1 !== (int) \get_option( 'blog_public' ) ) {
 			\esc_html_e( 'The XML Sitemap is disabled because of your site&#8217;s visibility settings (above).', 'xml-sitemaps-manager' );
 			return;
 		}
@@ -192,7 +192,7 @@ class Admin {
 	 * @since 0.1
 	 */
 	public static function sitemaps_help() {
-		if ( '1' !== \get_option( 'blog_public' ) ) {
+		if ( 1 !== (int) \get_option( 'blog_public' ) ) {
 			return;
 		}
 
