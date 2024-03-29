@@ -99,8 +99,8 @@ class Lastmod {
 					}
 
 					sort( $lastmodified );
-					$lastmodified = array_filter( $lastmodified );
-					$lastmod = \end( $lastmodified );
+					$lastmodified = \array_filter( $lastmodified );
+					$lastmod      = \end( $lastmodified );
 
 					// Add lastmod.
 					if ( $lastmod ) {
@@ -226,7 +226,7 @@ class Lastmod {
 	public static function posts_show_on_front_entry( $entry ) {
 		// Get last published post.
 		$post_type = \apply_filters( 'xmlsm_home_post_type', 'post' );
-		$lastmod = \get_lastpostdate( 'gmt', $post_type );
+		$lastmod   = \get_lastpostdate( 'gmt', $post_type );
 
 		// Add lastmod.
 		if ( $lastmod ) {
@@ -294,7 +294,7 @@ class Lastmod {
 		 * @param string $meta_key.
 		 * @return string
 		 */
-		$meta_key = apply_filters( 'xmlsm_lastmod_term_meta_key', 'term_modified_gmt' );
+		$meta_key = \apply_filters( 'xmlsm_lastmod_term_meta_key', 'term_modified_gmt' );
 
 		/**
 		 * Get lastmod from term_modified meta data.
@@ -353,7 +353,7 @@ class Lastmod {
 		 * @param array $args.
 		 * @return array
 		 */
-		$args = apply_filters( 'xmlsm_lastmod_term_args', $args );
+		$args = \apply_filters( 'xmlsm_lastmod_term_args', $args );
 
 		// Get the latest post in this taxonomy item, to use its post_date as lastmod.
 		$posts = \get_posts( $args );
@@ -398,7 +398,7 @@ class Lastmod {
 		 * @param string $meta_key.
 		 * @return string
 		 */
-		$meta_key = apply_filters( 'xmlsm_lastmod_term_meta_key', 'term_modified_gmt', $post );
+		$meta_key = \apply_filters( 'xmlsm_lastmod_term_meta_key', 'term_modified_gmt', $post );
 
 		foreach ( $term_ids as $id ) {
 			\update_term_meta( $id, $meta_key, $time );
@@ -457,7 +457,7 @@ class Lastmod {
 		 * @param string $meta_key.
 		 * @return string
 		 */
-		$meta_key = apply_filters( 'xmlsm_lastmod_user_meta_key', 'user_modified_gmt' );
+		$meta_key = \apply_filters( 'xmlsm_lastmod_user_meta_key', 'user_modified_gmt' );
 
 		/**
 		 * Get lastmod from user_modified meta data.
@@ -553,7 +553,7 @@ class Lastmod {
 		 * @param string $meta_key.
 		 * @return string
 		 */
-		$meta_key = apply_filters( 'xmlsm_lastmod_user_meta_key', 'user_modified_gmt', $post );
+		$meta_key = \apply_filters( 'xmlsm_lastmod_user_meta_key', 'user_modified_gmt', $post );
 
 		\update_user_meta( $user_id, $meta_key, $time );
 	}
