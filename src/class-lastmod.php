@@ -253,16 +253,16 @@ class Lastmod {
 		$args['meta_query'] = array(
 			'relation' => 'OR',
 			array(
-				'key' => 'term_modified_gmt',
+				'key'     => 'term_modified_gmt',
 				'compare' => 'NOT EXISTS',
 			),
 			array(
 				'key' => 'term_modified_gmt',
 			),
 		);
-		$args['meta_type'] = 'DATETIME';
-		$args['orderby']   = 'meta_value_datetime term_order';
-		$args['order']     = 'DESC';
+		$args['meta_type']  = 'DATETIME';
+		$args['orderby']    = 'meta_value_datetime term_order';
+		$args['order']      = 'DESC';
 
 		return $args;
 	}
