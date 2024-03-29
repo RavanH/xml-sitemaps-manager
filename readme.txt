@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 5.5
 Requires PHP: 5.6
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: 0.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -72,19 +72,17 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 
 = 0.6 =
 
+Lastmod for tax term and Polylang compatibility improvements, stylesheet, bugfixes.
 
 == Changelog ==
 
 = 0.6 =
-TODO tools action button to clear lastmod metadata (Admin::tools_actions())
-TODO nonce for tools actions
-TODO does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...
-TODO make static frontpage lastmod sync to last publication date optional
-TODO fix lastmods with Polylang
 * Taxonomy term sitemaps lastmod based on post type
 * Improved Polylang compatibility
 * Adapted stylesheet /w mention
+* Namespacing & autoloader
 * Fix l18n issue, thanks @alexclassroom
+* Fix blog public check failing with object cache
 
 = 0.5 =
 * FIX: empty lastmod when no posts, thanks @ownerstorefly
