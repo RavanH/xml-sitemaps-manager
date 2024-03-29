@@ -1,7 +1,6 @@
 TODO exclude users by group
 TODO make static frontpage lastmod sync to last publication date optional
 
-
 CONSIDER:
  - allow inclusion of empty tax archives
  - optionally calculate lastmod for first page sitemap and homepage when blogpage by either last post modified date or by last post date (core vs. plugin)

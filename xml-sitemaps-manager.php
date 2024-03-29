@@ -205,8 +205,6 @@ function xmlsm_autoloader( $class_name ) {
 	// If the file exists, inlcude it.
 	if ( file_exists( $file ) ) {
 		include $file;
-	} else {
-		error_log( $file );
 	}
 }
 
