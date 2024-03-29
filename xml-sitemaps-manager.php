@@ -28,6 +28,8 @@ define( 'WPSM_VERSION', '0.6-beta1' );
  * @since 0.3
  */
 function xmlsm_init() {
+	global $wp_version;
+
 	// Skip this if we're in the admin.
 	if ( is_admin() ) {
 		return;
@@ -68,10 +70,8 @@ function xmlsm_init() {
 		// Include pluggable functions.
 		include __DIR__ . '/src/pluggable.php';
 
-		if ( ! function_exists( 'pll_languages_list' ) ) {
-			add_action( 'parse_request', 'wp_sitemaps_loaded' );
-		}
-		global $wp_version;
+		add_action( 'parse_request', 'wp_sitemaps_loaded' );
+
 		if ( version_compare( $wp_version, '6.1', '<' ) ) {
 			add_filter( 'wp_sitemaps_posts_query_args', array( 'XMLSitemapsManager\Fixes', 'posts_query_args' ) );
 		}
@@ -108,10 +108,10 @@ function xmlsm_init() {
 	if ( get_option( 'xmlsm_lastmod' ) ) {
 		// Add lastmod to the index.
 		add_filter( 'wp_sitemaps_index_entry', array( 'XMLSitemapsManager\Lastmod', 'index_entry' ), 10, 4 );
+		add_filter( 'wp_sitemaps_posts_query_args', array( 'XMLSitemapsManager\Lastmod', 'posts_query_args' ) );
 		// To post entries.
 		add_filter( 'wp_sitemaps_posts_entry', array( 'XMLSitemapsManager\Lastmod', 'posts_entry' ), 10, 3 );
 		add_filter( 'wp_sitemaps_posts_show_on_front_entry', array( 'XMLSitemapsManager\Lastmod', 'posts_show_on_front_entry' ) );
-		add_filter( 'wp_sitemaps_posts_query_args', array( 'XMLSitemapsManager\Lastmod', 'posts_query_args' ) );
 		// To term entries.
 		add_filter( 'wp_sitemaps_taxonomies_entry', array( 'XMLSitemapsManager\Lastmod', 'taxonomies_entry' ), 10, 4 );
 		add_action( 'transition_post_status', array( 'XMLSitemapsManager\Lastmod', 'update_term_modified_meta' ), 10, 3 );
@@ -122,10 +122,9 @@ function xmlsm_init() {
 		add_filter( 'wp_sitemaps_users_query_args', array( 'XMLSitemapsManager\Lastmod', 'users_query_args' ) );
 		// Compatibility.
 		if ( function_exists( 'pll_languages_list' ) ) {
-			include_once __DIR__ . '/src/compat/polylang.php';
-			add_filter( 'xmlsm_index_entry_subtype', 'xmlsm_polylang_index_entry_subtype' );
-			add_filter( 'xmlsm_lastmod_user_meta_key', 'xmlsm_polylang_lastmod_meta_key', 10, 2 );
-			add_filter( 'xmlsm_lastmod_index_entry', 'xmlsm_polylang_lastmod_index_entry', 10, 3 );
+			add_filter( 'xmlsm_index_entry_subtype', array( 'XMLSitemapsManager\Compat\Polylang', 'index_entry_subtype' ) );
+			add_filter( 'xmlsm_lastmod_user_meta_key', array( 'XMLSitemapsManager\Compat\Polylang', 'lastmod_meta_key' ), 10, 2 );
+			add_filter( 'xmlsm_lastmod_index_entry', array( 'XMLSitemapsManager\Compat\Polylang', 'lastmod_index_entry' ), 10, 3 );
 		}
 	}
 }
@@ -152,8 +151,7 @@ function xmlsm_admin_init() {
 	 */
 	// Compatibility.
 	if ( function_exists( 'pll_languages_list' ) ) {
-		include_once __DIR__ . '/src/compat/polylang.php';
-		add_action( 'xmlsm_clear_lastmod_meta', 'xmlsm_polylang_clear_lastmod_meta' );
+		add_action( 'xmlsm_clear_lastmod_meta', array( 'XMLSitemapsManager\Compat\Polylang', 'clear_lastmod_meta' ) );
 	}
 	XMLSitemapsManager\Admin::tools_actions();
 
@@ -199,14 +197,17 @@ function xmlsm_autoloader( $class_name ) {
 	// Replace namespace separators with directory separators in the relative
 	// class name, prepend with class-, append with .php, build our file path.
 	$class_name = str_replace( 'XMLSitemapsManager', 'src', $class_name );
+	$class_name = strtolower( $class_name );
 	$path_array = explode( '\\', $class_name );
 	$file_name  = array_pop( $path_array );
-	$file_name  = 'class-' . strtolower( $file_name ) . '.php';
+	$file_name  = 'class-' . $file_name . '.php';
 	$file       = __DIR__ . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $path_array ) . DIRECTORY_SEPARATOR . $file_name;
 
 	// If the file exists, inlcude it.
 	if ( file_exists( $file ) ) {
 		include $file;
+	} else {
+		error_log( $file );
 	}
 }
 
