@@ -20,7 +20,7 @@
 
 		<?php if ( $sitemaps_enabled ) : ?>
 		<span class="description">
-			&nbsp;&ndash;&nbsp;
+			&nbsp;&rarr;&nbsp;
 			<a href="<?php echo esc_url( get_sitemap_url( 'index' ) ); ?>" target="_blank"><?php esc_html_e( 'View' ); ?><span class="dashicons dashicons-external" style="font-size:inherit;vertical-align:inherit;text-align:inherit"></span></a>
 		</span>
 		<?php endif; ?>
@@ -47,19 +47,21 @@
 				</label>
 
 				<?php if ( ! empty( $subtypes ) ) : ?>
-					<fieldset class="subsection sitemap-provider <?php echo esc_attr( $sitemap ); ?> <?php echo in_array( $sitemap, $sitemap_providers, true ) ? '' : 'hidden'; ?>" style="margin-left:24px">
-							<?php esc_html_e( 'Exclude:' ); ?>
+					<fieldset class="subsection sitemap-provider<?php echo esc_attr( $sitemap ); ?> <?php echo in_array( $sitemap, $sitemap_providers, true ) ? '' : ' hidden'; ?>" style="margin-left:24px">
+						&rdca;&nbsp;
+						<?php esc_html_e( 'Exclude:' ); ?>
 
-							<?php
-							foreach ( $subtypes as $subtype ) :
-								$disabled_subtype = ! empty( $disabled_subtypes[ $sitemap ] ) && is_array( $disabled_subtypes[ $sitemap ] ) && in_array( $subtype->name, $disabled_subtypes[ $sitemap ], true );
-								?>
-								&nbsp; &nbsp;
-								<label>
-									<input name="xmlsm_disabled_subtypes[<?php echo esc_attr( $sitemap ); ?>][<?php echo esc_attr( $subtype->name ); ?>]" type="checkbox" id="xmlsm_disabled_subtypes_<?php echo esc_attr( $sitemap ); ?>_<?php echo esc_attr( $subtype->name ); ?>" value="1"<?php checked( $disabled_subtype ); ?> />
-									<?php echo esc_html( $subtype->label ); ?>
-								</label>
-							<?php endforeach; ?>
+						<?php
+						foreach ( $subtypes as $subtype ) :
+							$disabled_subtype = ! empty( $disabled_subtypes[ $sitemap ] ) && is_array( $disabled_subtypes[ $sitemap ] ) && in_array( $subtype->name, $disabled_subtypes[ $sitemap ], true );
+							?>
+							&nbsp;
+							<label>
+								<input name="xmlsm_disabled_subtypes[<?php echo esc_attr( $sitemap ); ?>][<?php echo esc_attr( $subtype->name ); ?>]" type="checkbox" id="xmlsm_disabled_subtypes_<?php echo esc_attr( $sitemap ); ?>_<?php echo esc_attr( $subtype->name ); ?>" value="1"<?php checked( $disabled_subtype ); ?> />
+								<?php echo esc_html( $subtype->label ); ?>
+							</label>
+							&nbsp;
+						<?php endforeach; ?>
 					</fieldset>
 				<?php endif; ?>
 
