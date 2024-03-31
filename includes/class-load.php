@@ -17,20 +17,21 @@ class Load {
 
 	/**
 	 * Plugin intitialization.
-	 *
 	 * Must run before priority 10 for the wp_sitemaps_add_provider filter to work.
-	 * Can be disabled with remove_action('init','xmlsm_init',9).
 	 *
 	 * @since 0.3
 	 */
 	public static function front() {
-		global $wp_version;
+		self::maybe_upgrade();
 
-		// Skip this if we're in the admin.
-		if ( is_admin() ) {
+		// Load only on front and when backward compatibility action exists.
+		if ( ! is_admin() || ! has_action( 'init', 'xmlsm_init' ) ) {
 			return;
 		}
 
+		/*
+		 * Make sure sitemaps are enabled.
+		 */
 		if ( ! get_option( 'xmlsm_sitemaps_enabled', true ) ) {
 			// Disable all sitemaps.
 			add_action( 'wp_sitemaps_enabled', '__return_false' );
@@ -63,6 +64,8 @@ class Load {
 		 * @since 1.0
 		 */
 		if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
+			global $wp_version;
+
 			// Include pluggable functions.
 			include __DIR__ . '/pluggable.php';
 
@@ -86,11 +89,6 @@ class Load {
 		add_filter( 'wp_sitemaps_taxonomies', array( 'XMLSitemapsManager\Core', 'exclude_taxonomies' ) );
 		// Filter stylesheet.
 		add_filter( 'wp_sitemaps_stylesheet_css', array( 'XMLSitemapsManager\Core', 'stylesheet' ) );
-
-		// Usage info for debugging.
-		if ( WP_DEBUG ) {
-			include_once __DIR__ . '/debugging.php';
-		}
 
 		/**
 		 * Add sitemaps.
@@ -123,16 +121,24 @@ class Load {
 				add_filter( 'xmlsm_lastmod_index_entry', array( 'XMLSitemapsManager\Compat\Polylang', 'lastmod_index_entry' ), 10, 3 );
 			}
 		}
+
+		// Usage info for debugging.
+		if ( WP_DEBUG ) {
+			include_once __DIR__ . '/debugging.php';
+		}
 	}
 
 	/**
 	 * Plugin admin intitialization.
 	 *
-	 * Can be disabled with remove_action('admin_init','xmlsm_admin_init').
-	 *
 	 * @since 0.3
 	 */
 	public static function admin() {
+		// Load only when backward compatibility action exists.
+		if ( ! has_action( 'init', 'xmlsm_init' ) ) {
+			return;
+		}
+
 		/**
 		 * Register settings.
 		 */
@@ -160,8 +166,9 @@ class Load {
 	 * @since 0.3
 	 */
 	public static function maybe_upgrade() {
-		// Maybe upgrade or install.
 		$db_version = get_option( 'xmlsm_version', '0' );
+
+		// Maybe upgrade or install.
 		if ( 0 !== version_compare( XMLSM_VERSION, $db_version ) ) {
 			include_once __DIR__ . '/upgrade.php';
 		}

@@ -134,6 +134,8 @@ class Core {
 	 * @return string $css
 	 */
 	public static function stylesheet( $css ) {
+		global $wp_version;
+
 		// If we need rules for sitemap type then use $which = \get_query_var( 'sitemap-stylesheet' ); can be 'index' or 'sitemap'.
 
 		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
