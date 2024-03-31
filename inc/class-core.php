@@ -1,6 +1,6 @@
 <?php
 /**
- * XML_Sitemaps_Manager class
+ * XML Sitemaps Manager Core class
  *
  * @package XML Sitemap Manager
  * @since 0.1
@@ -14,10 +14,6 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Core {
-	/**
-	 * Class Core constructor
-	 */
-	public function __construct() { }
 
 	/**
 	 * Filter maximum urls per sitemap. Hooked into wp_sitemaps_max_urls filter.

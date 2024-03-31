@@ -1,8 +1,8 @@
 <?php
 /**
- * WP Sitemaps Manager Debugging.
+ * XML Sitemaps Manager Debugging.
  *
- * @package WP Sitemaps Manager
+ * @package XML Sitemaps Manager
  *
  * @since 0.1
  */

@@ -13,12 +13,6 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Admin {
-	/**
-	 * Class XML_Sitemaps_Manager_Admin constructor.
-	 *
-	 * @since 0.1
-	 */
-	public function __construct() { }
 
 	/**
 	 * Register settings.

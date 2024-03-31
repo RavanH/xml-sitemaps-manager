@@ -1,8 +1,8 @@
 <?php
 /**
- * WP Sitemaps Manager plugable functions.
+ * XML Sitemaps Manager plugable functions.
  *
- * @package WP Sitemaps Manager
+ * @package XML Sitemaps Manager
  *
  * @since 0.1
  */

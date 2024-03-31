@@ -1,8 +1,8 @@
 <?php
 /**
- * WP Sitemaps Manager Fixes Class.
+ * XML Sitemaps Manager Fixes Class.
  *
- * @package WP Sitemaps Manager
+ * @package XML Sitemaps Manager
  *
  * @since 0.5
  */
@@ -15,10 +15,6 @@ namespace XMLSitemapsManager;
  * @since 0.5
  */
 class Fixes {
-	/**
-	 * Class Fixes constructor
-	 */
-	public function __construct() { }
 
 	/**
 	 * Remove sticky posts from the first posts sitemap.

@@ -1,8 +1,8 @@
 <?php
 /**
- * WP Sitemaps Manager Lastmod Class.
+ * XML Sitemaps Manager Lastmod Class.
  *
- * @package WP Sitemaps Manager
+ * @package XML Sitemaps Manager
  *
  * @since 0.1
  */
@@ -15,10 +15,6 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Lastmod {
-	/**
-	 * Class Lastmod constructor
-	 */
-	public function __construct() { }
 
 	/**
 	 * Add lastmod to index entries.

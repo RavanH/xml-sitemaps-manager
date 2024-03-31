@@ -10,6 +10,8 @@ CONSIDER:
 	With $post_type_archive_url = get_post_type_archive_link( $post_type )
 	And then if ( $post_type_archive_url ) { $url_list[] = array( 'loc' => $post_type_archive_url ); }.
 
+CONSIDER xmlsm_exclude_posts option with _xml_sitemap_exclude meta data and Core::posts_query_args()
+
 TEST:
  - does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...
 
