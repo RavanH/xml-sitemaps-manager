@@ -22,16 +22,16 @@ class Fixes {
 		global $wp_version;
 
 		// Include pluggable functions.
-		include dirname( __DIR__ ) . '/pluggable.php';
+		include \dirname( __DIR__ ) . '/pluggable.php';
 
 		// Make sitemap load early.
-		add_action( 'parse_request', 'wp_sitemaps_loaded' );
+		\add_action( 'parse_request', 'wp_sitemaps_loaded' );
 
-		if ( version_compare( $wp_version, '6.1', '<' ) ) {
-			add_filter( 'wp_sitemaps_posts_query_args', array( __CLASS__, 'posts_query_args' ) );
+		if ( \version_compare( $wp_version, '6.1', '<' ) ) {
+			\add_filter( 'wp_sitemaps_posts_query_args', array( __CLASS__, 'posts_query_args' ) );
 		}
-		if ( version_compare( $wp_version, '6.0', '<' ) ) {
-			add_filter( 'wp_sitemaps_taxonomies_query_args', array( __CLASS__, 'taxonomies_query_args' ) );
+		if ( \version_compare( $wp_version, '6.0', '<' ) ) {
+			\add_filter( 'wp_sitemaps_taxonomies_query_args', array( __CLASS__, 'taxonomies_query_args' ) );
 		}
 	}
 

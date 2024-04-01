@@ -77,6 +77,10 @@ Lastmod for tax term and Polylang compatibility improvements, stylesheet, bugfix
 
 == Changelog ==
 
+= 0.7 =
+* Improved multisite compatibility
+*
+
 = 0.6 =
 * Improved blog/home page lastmod date calculation for WP 6.5+
 * Taxonomy term sitemaps lastmod based on post type

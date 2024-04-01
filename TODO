@@ -1,4 +1,6 @@
-TODO exclude users by group
+
+TODO bulble all subtype deactivation to sitemap provider type deactivation
+
 TODO make static frontpage lastmod sync to last publication date optional
 
 CONSIDER:
@@ -11,6 +13,8 @@ CONSIDER:
 	And then if ( $post_type_archive_url ) { $url_list[] = array( 'loc' => $post_type_archive_url ); }.
 
 CONSIDER xmlsm_exclude_posts option with _xml_sitemap_exclude meta data and Core::posts_query_args()
+
+CONSIDER exclude users by group
 
 TEST:
  - does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...

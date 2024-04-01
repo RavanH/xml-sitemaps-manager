@@ -26,16 +26,16 @@ class Load {
 		self::maybe_upgrade();
 
 		// Load only on front and when backward compatibility action exists.
-		if ( is_admin() || ! has_action( 'init', 'xmlsm_init' ) ) {
+		if ( \is_admin() || ! \has_action( 'init', 'xmlsm_init' ) ) {
 			return;
 		}
 
 		/*
 		 * Make sure sitemaps are enabled. If not, then...
 		 */
-		if ( ! get_option( 'xmlsm_sitemaps_enabled', true ) ) {
+		if ( ! \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) ) ) {
 			// Disable all sitemaps.
-			add_action( 'wp_sitemaps_enabled', '__return_false' );
+			\add_action( 'wp_sitemaps_enabled', '__return_false' );
 
 			// And abort.
 			return;
@@ -69,21 +69,21 @@ class Load {
 		 * @package XML Sitemaps Manager
 		 * @since 1.0
 		 */
-		if ( get_option( 'xmlsm_sitemaps_fixes', true ) ) {
+		if ( \get_option( 'xmlsm_sitemaps_fixes', true ) ) {
 			Modules\Fixes::load();
 		}
 
 		/*
 		 * Load Lastmod Module if activated.
 		 */
-		if ( get_option( 'xmlsm_lastmod' ) ) {
+		if ( \get_option( 'xmlsm_lastmod' ) ) {
 			Modules\Lastmod::load();
 		}
 
 		/*
 		 * Compatibility.
 		 */
-		if ( function_exists( 'pll_languages_list' ) ) {
+		if ( \function_exists( 'pll_languages_list' ) ) {
 			Compat\Polylang::front();
 		}
 
@@ -102,7 +102,7 @@ class Load {
 	 */
 	public static function admin() {
 		// Load only when backward compatibility action exists.
-		if ( ! has_action( 'init', 'xmlsm_init' ) ) {
+		if ( ! \has_action( 'init', 'xmlsm_init' ) ) {
 			return;
 		}
 
@@ -119,13 +119,13 @@ class Load {
 		/**
 		 * Plugin action links.
 		 */
-		add_filter( 'plugin_action_links_' . XMLSM_BASENAME, array( __NAMESPACE__ . '\Admin', 'add_action_link' ) );
-		add_filter( 'plugin_row_meta', array( __NAMESPACE__ . '\Admin', 'plugin_meta_links' ), 10, 2 );
+		\add_filter( 'plugin_action_links_' . XMLSM_BASENAME, array( __NAMESPACE__ . '\Admin', 'add_action_link' ) );
+		\add_filter( 'plugin_row_meta', array( __NAMESPACE__ . '\Admin', 'plugin_meta_links' ), 10, 2 );
 
 		/*
 		 * Compatibility.
 		 */
-		if ( function_exists( 'pll_languages_list' ) ) {
+		if ( \function_exists( 'pll_languages_list' ) ) {
 			Compat\Polylang::admin();
 		}
 	}
@@ -136,10 +136,10 @@ class Load {
 	 * @since 0.3
 	 */
 	public static function maybe_upgrade() {
-		$db_version = get_option( 'xmlsm_version', '0' );
+		$db_version = \get_option( 'xmlsm_version', '0' );
 
 		// Maybe upgrade or install.
-		if ( 0 !== version_compare( XMLSM_VERSION, $db_version ) ) {
+		if ( 0 !== \version_compare( XMLSM_VERSION, $db_version ) ) {
 			include_once __DIR__ . '/upgrade.php';
 		}
 	}

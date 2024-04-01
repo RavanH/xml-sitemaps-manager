@@ -10,7 +10,7 @@
 namespace XMLSitemapsManager;
 
 // Exit if uninstall not called from WordPress.
-defined( '\WP_UNINSTALL_PLUGIN' ) || exit();
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit();
 
 // Check if it is a multisite and not a large one.
 if ( \is_multisite() ) {
@@ -18,7 +18,7 @@ if ( \is_multisite() ) {
 		\error_log( 'Clearing XML Sitemaps Manager settings from each site before uninstall:' );
 	}
 
-	if ( wp_is_large_network() ) {
+	if ( \wp_is_large_network() ) {
 		if ( WP_DEBUG && WP_DEBUG_LOG ) {
 			\error_log( 'Aborting multisite uninstall. Too many sites in your network.' );
 		}
@@ -55,17 +55,12 @@ function uninstall( $_id = false ) {
 	/**
 	 * Remove metadata.
 	 */
-	// Terms meta.
-	delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
-	// User meta.
-	delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
-	// TODO: add Polylang metadata removal.
+	// Already done on plugin deactivation.
 
 	/**
 	 * Remove plugin settings.
 	 */
 	\delete_option( 'xmlsm_version' );
-	\delete_option( 'xmlsm_sitemaps_enabled' );
 	\delete_option( 'xmlsm_sitemaps_fixes' );
 	\delete_option( 'xmlsm_max_urls' );
 	\delete_option( 'xmlsm_lastmod' );
