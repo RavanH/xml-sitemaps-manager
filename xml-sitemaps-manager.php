@@ -28,7 +28,7 @@ add_action( 'admin_init', array( 'XMLSitemapsManager\Load', 'admin' ) );
 /**
  * Old pugin intitialization. Keep for backward compatibility.
  *
- * Allows to disable the plugin with remove_action( 'init', 'xmlsm_init', 9 ).
+ * Allows to completely disable this plugin with remove_action( 'init', 'xmlsm_init', 9 ).
  *
  * @since 0.3
  */
