@@ -67,7 +67,7 @@ delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
 delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
 
 // Kilroy was here.
-if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+if ( WP_DEBUG && WP_DEBUG_LOG ) {
 	if ( '0' === $db_version ) {
 		\error_log( 'WP Sitemaps Manager version ' . \XMLSM_VERSION . ' installed.' );
 	} else {
