@@ -119,8 +119,8 @@ class Load {
 		/**
 		 * Plugin action links.
 		 */
-		add_filter( 'plugin_action_links_' . XMLSM_BASENAME, array( 'XMLSitemapsManager\Admin', 'add_action_link' ) );
-		add_filter( 'plugin_row_meta', array( 'XMLSitemapsManager\Admin', 'plugin_meta_links' ), 10, 2 );
+		add_filter( 'plugin_action_links_' . XMLSM_BASENAME, array( __NAMESPACE__ . '\Admin', 'add_action_link' ) );
+		add_filter( 'plugin_row_meta', array( __NAMESPACE__ . '\Admin', 'plugin_meta_links' ), 10, 2 );
 
 		/*
 		 * Compatibility.

@@ -49,4 +49,4 @@ function usage() {
 	<?php
 }
 
-\add_action( 'shutdown', 'XMLSitemapsManager\usage' );
+\add_action( 'shutdown', __NAMESPACE__ . '\usage' );
