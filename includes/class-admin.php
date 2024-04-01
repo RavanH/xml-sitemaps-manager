@@ -253,11 +253,11 @@ class Admin {
 	}
 
 	/**
-	 * Plugindeactivation.
+	 * Plugin deactivation.
 	 *
 	 * @since 0.7
 	 *
-	 * @param bool $network_deactivating Wheter the plugin is network deactivated or not.
+	 * @param bool $network_deactivating Whether the plugin is network deactivated or not.
 	 */
 	public static function deactivate( $network_deactivating = false ) {
 		if ( $network_deactivating && ! \wp_is_large_network() ) {
