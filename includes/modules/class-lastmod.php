@@ -1,13 +1,13 @@
 <?php
 /**
- * XML Sitemaps Manager Lastmod Class.
+ * XML Sitemaps Manager Lastmod Module.
  *
  * @package XML Sitemaps Manager
  *
  * @since 0.1
  */
 
-namespace XMLSitemapsManager;
+namespace XMLSitemapsManager\Modules;
 
 /**
  * Add lastmod to the sitemap.
@@ -15,6 +15,25 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Lastmod {
+	/**
+	 * Load lastmod module actions and filters.
+	 */
+	public static function load() {
+		// Add lastmod to the index.
+		add_filter( 'wp_sitemaps_index_entry', array( __CLASS__, 'index_entry' ), 10, 4 );
+		add_filter( 'wp_sitemaps_posts_query_args', array( __CLASS__, 'posts_query_args' ) );
+		// To post entries.
+		add_filter( 'wp_sitemaps_posts_entry', array( __CLASS__, 'posts_entry' ), 10, 3 );
+		add_filter( 'wp_sitemaps_posts_show_on_front_entry', array( __CLASS__, 'posts_show_on_front_entry' ) );
+		// To term entries.
+		add_filter( 'wp_sitemaps_taxonomies_entry', array( __CLASS__, 'taxonomies_entry' ), 10, 4 );
+		add_action( 'transition_post_status', array( __CLASS__, 'update_term_modified_meta' ), 10, 3 );
+		add_filter( 'wp_sitemaps_taxonomies_query_args', array( __CLASS__, 'taxonomies_query_args' ) );
+		// To user entries.
+		add_filter( 'wp_sitemaps_users_entry', array( __CLASS__, 'users_entry' ), 10, 2 );
+		add_action( 'transition_post_status', array( __CLASS__, 'update_user_modified_meta' ), 10, 3 );
+		add_filter( 'wp_sitemaps_users_query_args', array( __CLASS__, 'users_query_args' ) );
+	}
 
 	/**
 	 * Add lastmod to index entries.

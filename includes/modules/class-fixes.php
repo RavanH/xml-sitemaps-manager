@@ -1,13 +1,13 @@
 <?php
 /**
- * XML Sitemaps Manager Fixes Class.
+ * XML Sitemaps Manager Fixes Module.
  *
  * @package XML Sitemaps Manager
  *
  * @since 0.5
  */
 
-namespace XMLSitemapsManager;
+namespace XMLSitemapsManager\Modules;
 
 /**
  * Apply core sitemap fixes.
@@ -15,6 +15,25 @@ namespace XMLSitemapsManager;
  * @since 0.5
  */
 class Fixes {
+	/**
+	 * Load fixes module hooks.
+	 */
+	public static function load() {
+		global $wp_version;
+
+		// Include pluggable functions.
+		include dirname( __DIR__ ) . '/pluggable.php';
+
+		// Make sitemap load early.
+		add_action( 'parse_request', 'wp_sitemaps_loaded' );
+
+		if ( version_compare( $wp_version, '6.1', '<' ) ) {
+			add_filter( 'wp_sitemaps_posts_query_args', array( __CLASS__, 'posts_query_args' ) );
+		}
+		if ( version_compare( $wp_version, '6.0', '<' ) ) {
+			add_filter( 'wp_sitemaps_taxonomies_query_args', array( __CLASS__, 'taxonomies_query_args' ) );
+		}
+	}
 
 	/**
 	 * Remove sticky posts from the first posts sitemap.

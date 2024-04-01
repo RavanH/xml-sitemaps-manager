@@ -1,12 +1,12 @@
 <?php
 /**
- * XML Sitemaps Manager Core class
+ * XML Sitemaps Manager Core Module.
  *
  * @package XML Sitemap Manager
  * @since 0.1
  */
 
-namespace XMLSitemapsManager;
+namespace XMLSitemapsManager\Modules;
 
 /**
  * Sitemap core class.
@@ -14,6 +14,21 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Core {
+	/**
+	 * Load core module hooks.
+	 */
+	public static function load() {
+		// Maximum URLs per sitemap.
+		add_filter( 'wp_sitemaps_max_urls', array( __CLASS__, 'max_urls' ), 10, 2 );
+		// Exclude sitemap providers.
+		add_filter( 'wp_sitemaps_add_provider', array( __CLASS__, 'exclude_providers' ), 10, 2 );
+		// Exclude post types. TODO Fix.
+		add_filter( 'wp_sitemaps_post_types', array( __CLASS__, 'exclude_post_types' ) );
+		// Exclude taxonomies. TODO Fix.
+		add_filter( 'wp_sitemaps_taxonomies', array( __CLASS__, 'exclude_taxonomies' ) );
+		// Filter stylesheet.
+		add_filter( 'wp_sitemaps_stylesheet_css', array( __CLASS__, 'stylesheet' ) );
+	}
 
 	/**
 	 * Filter maximum urls per sitemap. Hooked into wp_sitemaps_max_urls filter.

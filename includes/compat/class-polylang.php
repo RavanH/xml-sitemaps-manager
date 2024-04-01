@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Sitemaps Manager plugable functions.
+ * WP Sitemaps Manager Polylang compatibility module.
  *
  * @package WP Sitemaps Manager
  *
@@ -10,11 +10,35 @@
 namespace XMLSitemapsManager\Compat;
 
 /**
- * Add lastmod to the sitemap.
+ * Polylang class.
  *
- * @since 0.1
+ * @since 0.6
  */
-class Polylang {
+class Polylang extends Plugin {
+	/**
+	 * Polylang compat module front end actions and filters.
+	 *
+	 * @since 0.7
+	 */
+	public static function front() {
+		// Lastmod module filters.
+		if ( get_option( 'xmlsm_lastmod' ) ) {
+			add_filter( 'xmlsm_index_entry_subtype', array( __CLASS__, 'index_entry_subtype' ) );
+			add_filter( 'xmlsm_lastmod_user_meta_key', array( __CLASS__, 'lastmod_meta_key' ), 10, 2 );
+			add_filter( 'xmlsm_lastmod_index_entry', array( __CLASS__, 'lastmod_index_entry' ), 10, 3 );
+		}
+	}
+
+	/**
+	 * Polylang compat module admin actions and filters.
+	 *
+	 * @since 0.7
+	 */
+	public static function admin() {
+		// Clear lastmod metadata action.
+		add_action( 'xmlsm_clear_lastmod_meta', array( __CLASS__, 'clear_lastmod_meta' ) );
+	}
+
 	/**
 	 * Filter subtype to fix issue with Lastmod in sitemap index.
 	 *
