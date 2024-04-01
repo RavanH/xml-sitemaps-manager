@@ -27,9 +27,8 @@ function xmlsm_autoloader( $class_name ) {
 	$class_name = str_replace( 'XMLSitemapsManager', '', $class_name );
 	$class_name = strtolower( $class_name );
 	$path_array = explode( '\\', $class_name );
-	$file_name  = array_pop( $path_array );
-	$file_name  = 'class-' . $file_name . '.php';
-	$file       = __DIR__ . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $path_array ) . DIRECTORY_SEPARATOR . $file_name;
+	$file_name  = 'class-' . array_pop( $path_array ) . '.php';
+	$file       = __DIR__ . implode( DIRECTORY_SEPARATOR, $path_array ) . DIRECTORY_SEPARATOR . $file_name;
 
 	// If the file exists, inlcude it.
 	if ( file_exists( $file ) ) {
