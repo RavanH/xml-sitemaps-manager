@@ -25,8 +25,8 @@ class Load {
 		// Maybe upgrade.
 		self::maybe_upgrade();
 
-		// Load only on front and when backward compatibility action exists.
-		if ( \is_admin() || ! \has_action( 'init', 'xmlsm_init' ) ) {
+		// Load only on front.
+		if ( \is_admin() ) {
 			return;
 		}
 
@@ -101,11 +101,6 @@ class Load {
 	 * @since 0.7
 	 */
 	public static function admin() {
-		// Load only when backward compatibility action exists.
-		if ( ! \has_action( 'init', 'xmlsm_init' ) ) {
-			return;
-		}
-
 		/**
 		 * Register settings.
 		 */

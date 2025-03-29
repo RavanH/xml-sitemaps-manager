@@ -3,6 +3,8 @@ TODO bulble all subtype deactivation to sitemap provider type deactivation
 
 TODO make static frontpage lastmod sync to last publication date optional
 
+TODO settings plugin action link
+
 CONSIDER:
  - allow inclusion of empty tax archives
  - optionally calculate lastmod for first page sitemap and homepage when blogpage by either last post modified date or by last post date (core vs. plugin)
