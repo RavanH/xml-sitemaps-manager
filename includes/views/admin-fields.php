@@ -99,7 +99,7 @@
 				</form>
 			</p>
 			<p class="description">
-				<?php esc_html_e( 'Add latest modification dates to the sitemap index and various sitemaps.', 'xml-sitemaps-manager' ); ?>
+				<?php esc_html_e( 'Add latest modification dates to the sitemap index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' ); ?>
 			</p>
 			<br>
 			<p>
