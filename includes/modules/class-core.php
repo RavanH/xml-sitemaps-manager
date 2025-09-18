@@ -154,7 +154,6 @@ class Core {
 		// If we need rules for sitemap type then use $which = \get_query_var( 'sitemap-stylesheet' ); can be 'index' or 'sitemap'.
 
 		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
-		$note  = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
 
 		$css .= <<<EOF
 		/* Style rules added by XML Sitemaps Manager */
@@ -178,29 +177,6 @@ class Core {
 
 		#sitemap__table tr td.lastmod {
 			white-space: nowrap;
-		}
-
-EOF;
-
-		// Return if Lastmod is not activated.
-		if ( ! \get_option( 'xmlsm_lastmod' ) ) {
-			return $css;
-		}
-
-		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
-
-		$css .= <<<EOF
-		#sitemap__table tr th.lastmod::after {
-			content: "*";
-		}
-
-		#sitemap::after {
-			content: "*) {$note}";
-			display: block;
-			margin: 1em 0;
-			font-weight: 500;
-			font-style: italic;
-			font-size: smaller;
 		}
 
 EOF;
