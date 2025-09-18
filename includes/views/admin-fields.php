@@ -100,7 +100,7 @@
 			</p>
 			<p class="description">
 				<?php 
-				if ( version_compare( $wp_version, '6.5', '<' ) ) {
+				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
 					esc_html_e( 'Add latest modification dates to the sitemap index and various sitemaps.', 'xml-sitemaps-manager' );
 				} else {
 					esc_html_e( 'Add latest modification dates to the index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' );
