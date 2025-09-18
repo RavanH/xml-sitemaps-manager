@@ -99,13 +99,13 @@
 				</form>
 			</p>
 			<p class="description">
-				<?php esc_html_e( 'Add latest modification dates to the sitemap index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' ); ?>
+				<?php esc_html_e( 'Add latest modification dates to the index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' ); ?>
 			</p>
 			<br>
 			<p>
 				<label>
 					<?php esc_html_e( 'Maximum entries:', 'xml-sitemaps-manager' ); ?>
-					<input name="xmlsm_max_urls" type="number" step="1000" min="1000" id="xmlsm_max_urls" value="<?php echo is_numeric( $max_urls ) && $max_urls > 0 ? esc_attr( $max_urls ) : ''; ?>" class="small-text">
+					<input name="xmlsm_max_urls" type="number" step="100" min="100" id="xmlsm_max_urls" value="<?php echo is_numeric( $max_urls ) && $max_urls > 0 ? esc_attr( $max_urls ) : ''; ?>" class="small-text">
 				</label>
 			</p>
 			<p class="description">
