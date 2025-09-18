@@ -20,9 +20,38 @@ defined( 'WPINC' ) || die;
 define( 'XMLSM_VERSION', '0.7-alpha5' );
 define( 'XMLSM_BASENAME', plugin_basename( __FILE__ ) );
 
-require_once __DIR__ . '/includes/autoload.php';
-
 add_action( 'init', array( 'XMLSitemapsManager\Load', 'front' ), 9 );
 add_action( 'admin_init', array( 'XMLSitemapsManager\Load', 'admin' ) );
 
 register_deactivation_hook( __FILE__, array( 'XMLSitemapsManager\Admin', 'deactivate' ) );
+
+/**
+ * XML Sitemap Manager Autoloader.
+ *
+ * @since 0.5
+ *
+ * @param string $class_name The fully-qualified class name.
+ *
+ * @return void
+ */
+\spl_autoload_register(
+    function ( $class_name ) {
+        // Skip this if not in our namespace.
+        if ( 0 !== \strpos( $class_name, __NAMESPACE__ ) ) {
+            return;
+        }
+
+        // Replace namespace separators with directory separators in the relative
+        // class name, prepend with class-, append with .php, build our file path.
+        $class_name = \str_replace( __NAMESPACE__, '', $class_name );
+        $class_name = \strtolower( $class_name );
+        $path_array = \explode( '\\', $class_name );
+        $file_name  = 'class-' . \array_pop( $path_array ) . '.php';
+        $file       = __DIR__ . \implode( \DIRECTORY_SEPARATOR, $path_array ) . \DIRECTORY_SEPARATOR . $file_name;
+
+        // If the file exists, inlcude it.
+        if ( \file_exists( $file ) ) {
+            include $file;
+        }
+    }
+);

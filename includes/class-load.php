@@ -14,7 +14,6 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Load {
-
 	/**
 	 * Plugin front end intitialization.
 	 * Must run before priority 10 for the wp_sitemaps_add_provider filter to work.
