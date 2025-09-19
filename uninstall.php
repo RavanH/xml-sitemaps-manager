@@ -10,16 +10,16 @@
 namespace XMLSitemapsManager;
 
 // Exit if uninstall not called from WordPress.
-defined( '\WP_UNINSTALL_PLUGIN' ) || exit();
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit();
 
 // Check if it is a multisite and not a large one.
 if ( \is_multisite() ) {
-	if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+	if ( WP_DEBUG && WP_DEBUG_LOG ) {
 		\error_log( 'Clearing XML Sitemaps Manager settings from each site before uninstall:' );
 	}
 
-	if ( wp_is_large_network() ) {
-		if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+	if ( \wp_is_large_network() ) {
+		if ( WP_DEBUG && WP_DEBUG_LOG ) {
 			\error_log( 'Aborting multisite uninstall. Too many sites in your network.' );
 		}
 		uninstall();
@@ -55,17 +55,12 @@ function uninstall( $_id = false ) {
 	/**
 	 * Remove metadata.
 	 */
-	// Terms meta.
-	delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
-	// User meta.
-	delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
-	// TODO: add Polylang metadata removal.
+	// Already done on plugin deactivation.
 
 	/**
 	 * Remove plugin settings.
 	 */
 	\delete_option( 'xmlsm_version' );
-	\delete_option( 'xmlsm_sitemaps_enabled' );
 	\delete_option( 'xmlsm_sitemaps_fixes' );
 	\delete_option( 'xmlsm_max_urls' );
 	\delete_option( 'xmlsm_lastmod' );
@@ -73,7 +68,7 @@ function uninstall( $_id = false ) {
 	\delete_option( 'xmlsm_disabled_subtypes' );
 
 	// Kilroy was here.
-	if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+	if ( WP_DEBUG && WP_DEBUG_LOG ) {
 		if ( $_id ) {
 			\error_log( 'XML Sitemaps Manager settings cleared for blog ID:' . $_id );
 		} else {

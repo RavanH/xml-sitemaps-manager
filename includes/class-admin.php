@@ -13,12 +13,6 @@ namespace XMLSitemapsManager;
  * @since 0.1
  */
 class Admin {
-	/**
-	 * Class XML_Sitemaps_Manager_Admin constructor.
-	 *
-	 * @since 0.1
-	 */
-	public function __construct() { }
 
 	/**
 	 * Register settings.
@@ -29,7 +23,7 @@ class Admin {
 		// Field.
 		\add_settings_field(
 			'xml_sitemaps',
-			\__( 'XML Sitemap', 'xml-sitemaps-manager' ),
+			\__( 'XML Sitemap' ),
 			array( __CLASS__, 'sitemaps_settings_field' ),
 			'reading'
 		);
@@ -45,28 +39,25 @@ class Admin {
 			return;
 		}
 
-		// Settings.
-		\register_setting(
-			'reading',
-			'xmlsm_sitemaps_enabled',
-			'boolval'
-		);
+		if ( \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) ) ) {
+			// Settings.
+			\register_setting(
+				'reading',
+				'xmlsm_sitemaps_fixes',
+				'boolval'
+			);
+			\register_setting(
+				'reading',
+				'xmlsm_lastmod',
+				'boolval'
+			);
+			\register_setting(
+				'reading',
+				'xmlsm_max_urls',
+				'intval'
+			);
+		}
 
-		\register_setting(
-			'reading',
-			'xmlsm_sitemaps_fixes',
-			'boolval'
-		);
-		\register_setting(
-			'reading',
-			'xmlsm_lastmod',
-			'boolval'
-		);
-		\register_setting(
-			'reading',
-			'xmlsm_max_urls',
-			'intval'
-		);
 		\register_setting(
 			'reading',
 			'xmlsm_sitemap_providers',
@@ -138,9 +129,8 @@ class Admin {
 	 */
 	public static function sitemaps_settings_field() {
 
-		$sitemaps_enabled    = (bool) \get_option( 'xmlsm_sitemaps_enabled', true );
 		$sitemaps_fixes      = (bool) \get_option( 'xmlsm_sitemaps_fixes', true );
-		$sitemap_providers   = (array) \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
+		$active_providers    = \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
 		$lastmod             = \get_option( 'xmlsm_lastmod', false );
 		$max_urls            = \get_option( 'xmlsm_max_urls', false );
 		$disabled_subtypes   = (array) \get_option( 'xmlsm_disabled_subtypes', array() );
@@ -179,12 +169,7 @@ class Admin {
 		 * Remove metadata.
 		 */
 		if ( isset( $_POST['xmlsm-clear-lastmod-meta'] ) ) {
-			// Terms meta.
-			\delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
-			// User meta.
-			\delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
-
-			\do_action( 'xmlsm_clear_lastmod_meta' );
+			self::clear_lastmod_meta();
 
 			\add_settings_error(
 				'clear_meta_notice',
@@ -193,6 +178,21 @@ class Admin {
 				'updated'
 			);
 		}
+	}
+
+	/**
+	 * Clear lastmod metadata.
+	 *
+	 * @since 0.7
+	 */
+	public static function clear_lastmod_meta() {
+		// Terms meta.
+		\delete_metadata( 'term', 0, 'term_modified_gmt', '', true );
+
+		// User meta.
+		\delete_metadata( 'user', 0, 'user_modified_gmt', '', true );
+
+		\do_action( 'xmlsm_clear_lastmod_meta' );
 	}
 
 	/**
@@ -212,7 +212,7 @@ class Admin {
 		\get_current_screen()->add_help_tab(
 			array(
 				'id'       => 'sitemap-settings',
-				'title'    => \__( 'XML Sitemap', 'xml-sitemaps-manager' ),
+				'title'    => \__( 'XML Sitemap' ),
 				'content'  => $content,
 				'priority' => 11,
 			)
@@ -250,5 +250,33 @@ class Admin {
 			$links[] = '<a target="_blank" href="https://wordpress.org/support/plugin/xml-sitemaps-manager/reviews/?filter=5#new-post">' . \esc_html__( 'Rate ★★★★★', 'xml-sitemaps-manager' ) . '</a>';
 		}
 		return $links;
+	}
+
+	/**
+	 * Plugin deactivation.
+	 *
+	 * @since 0.7
+	 *
+	 * @param bool $network_deactivating Whether the plugin is network deactivated or not.
+	 */
+	public static function deactivate( $network_deactivating = false ) {
+		if ( $network_deactivating && ! \wp_is_large_network() ) {
+			$_ids = get_sites(
+				array(
+					'fields' => 'ids',
+					'number' => -1,
+				)
+			); // TEST number = -1..1000.
+
+			foreach ( $_ids as $_id ) {
+				\switch_to_blog( $_id );
+
+				self::clear_lastmod_meta();
+
+				\restore_current_blog();
+			}
+		} else {
+			self::clear_lastmod_meta();
+		}
 	}
 }

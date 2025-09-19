@@ -1,12 +1,12 @@
 <?php
 /**
- * XML_Sitemaps_Manager class
+ * XML Sitemaps Manager Core Module.
  *
  * @package XML Sitemap Manager
  * @since 0.1
  */
 
-namespace XMLSitemapsManager;
+namespace XMLSitemapsManager\Modules;
 
 /**
  * Sitemap core class.
@@ -15,9 +15,20 @@ namespace XMLSitemapsManager;
  */
 class Core {
 	/**
-	 * Class Core constructor
+	 * Load core module hooks.
 	 */
-	public function __construct() { }
+	public static function load() {
+		// Maximum URLs per sitemap.
+		add_filter( 'wp_sitemaps_max_urls', array( __CLASS__, 'max_urls' ), 10, 2 );
+		// Exclude sitemap providers.
+		add_filter( 'wp_sitemaps_add_provider', array( __CLASS__, 'exclude_providers' ), 10, 2 );
+		// Exclude post types. TODO Fix.
+		add_filter( 'wp_sitemaps_post_types', array( __CLASS__, 'exclude_post_types' ) );
+		// Exclude taxonomies. TODO Fix.
+		add_filter( 'wp_sitemaps_taxonomies', array( __CLASS__, 'exclude_taxonomies' ) );
+		// Filter stylesheet.
+		add_filter( 'wp_sitemaps_stylesheet_css', array( __CLASS__, 'stylesheet' ) );
+	}
 
 	/**
 	 * Filter maximum urls per sitemap. Hooked into wp_sitemaps_max_urls filter.
@@ -138,10 +149,11 @@ class Core {
 	 * @return string $css
 	 */
 	public static function stylesheet( $css ) {
+		global $wp_version;
+
 		// If we need rules for sitemap type then use $which = \get_query_var( 'sitemap-stylesheet' ); can be 'index' or 'sitemap'.
 
 		$intro = \esc_html__( 'Managed and extended by XML Sitemaps Manager to improve performance and search engine visibility.', 'xml-sitemaps-manager' );
-		$note  = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
 
 		$css .= <<<EOF
 		/* Style rules added by XML Sitemaps Manager */
@@ -165,29 +177,6 @@ class Core {
 
 		#sitemap__table tr td.lastmod {
 			white-space: nowrap;
-		}
-
-EOF;
-
-		// Return if Lastmod is not activated.
-		if ( ! \get_option( 'xmlsm_lastmod' ) ) {
-			return $css;
-		}
-
-		$note = \esc_html__( 'Added by XML Sitemaps Manager.', 'xml-sitemaps-manager' );
-
-		$css .= <<<EOF
-		#sitemap__table tr th.lastmod::after {
-			content: "*";
-		}
-
-		#sitemap::after {
-			content: "*) {$note}";
-			display: block;
-			margin: 1em 0;
-			font-weight: 500;
-			font-style: italic;
-			font-size: smaller;
 		}
 
 EOF;
