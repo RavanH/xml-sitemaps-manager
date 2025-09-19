@@ -1,5 +1,5 @@
 
-TODO bulble all subtype deactivation to sitemap provider type deactivation
+TODO bubble all subtype deactivation to sitemap provider type deactivation
 
 TODO make static frontpage lastmod sync to last publication date optional
 
@@ -20,4 +20,5 @@ CONSIDER exclude users by group
 
 TEST:
  - does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...
+ - is the fix "Improved blog/home page lastmod date calculation for WP 6.5+" still working?
 
