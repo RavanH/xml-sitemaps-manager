@@ -5,6 +5,18 @@
  * @package XML Sitemaps Manager
  */
 
+$sitemaps_fixes      = (bool) \get_option( 'xmlsm_sitemaps_fixes', true );
+$active_providers    = \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
+$lastmod             = \get_option( 'xmlsm_lastmod', false );
+$lastmod_blog_fix    = \get_option( 'xmlsm_lastmod_blog_fix', false );
+$lastmod_home_fix    = \get_option( 'xmlsm_lastmod_home_fix', false );
+$max_urls            = \get_option( 'xmlsm_max_urls', false );
+$disabled_subtypes   = (array) \get_option( 'xmlsm_disabled_subtypes', array() );
+$provider_nice_names = array(
+	'posts'      => __( 'Post types', 'xml-sitemaps-manager' ),
+	'taxonomies' => __( 'Taxonomies', 'xml-sitemaps-manager' ),
+	'users'      => __( 'Users' ),
+);
 ?>
 <fieldset id="xml_sitemaps">
 	<legend class="screen-reader-text">
@@ -99,13 +111,17 @@
 				</form>
 			</p>
 			<p class="description">
-				<?php 
-				if ( version_compare( $wp_version, '6.5', '>=' ) ) {
-					esc_html_e( 'Add latest modification dates to the sitemap index and various sitemaps.', 'xml-sitemaps-manager' );
-				} else {
-					esc_html_e( 'Add latest modification dates to the index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' );
-				}
-				?>
+				<?php esc_html_e( 'Add last modification dates to the index, taxonomy and user sitemaps.', 'xml-sitemaps-manager' ); ?>
+			</p>
+			<br>
+			<p>
+				<label>
+					<input name="xmlsm_lastmod_home_fix" type="checkbox" id="xmlsm_lastmod_home_fix" value="1"<?php checked( $lastmod_home_fix ); ?> />
+					<?php esc_html_e( 'Fix homepage last modification date' ); ?>
+				</label>
+			</p>
+			<p class="description">
+				<?php esc_html_e( 'Overrides the homepage last modified date with the latest post date. Useful if your static homepage includes your latest posts.', 'xml-sitemaps-manager' ); ?>
 			</p>
 			<br>
 			<p>

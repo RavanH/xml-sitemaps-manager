@@ -2,10 +2,10 @@
 Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=WP%20Sitemaps%Manager
 Tags: sitemap, xml sitemap, sitemap.xml
-Requires at least: 5.5
+Requires at least: 6.5
 Requires PHP: 5.6
 Tested up to: 7.0
-Stable tag: 0.7
+Stable tag: 0.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,7 +26,7 @@ The light-weight XML Sitemaps Manager allows you to de/activate WordPress core X
 * Additional fixes and improvents to the core XML Sitemap.
 
 Fixes some core XML Sitemap bugs:
-- Blog page lastmod in WP 6.5 (use last post date instead of last modified date)
+- Blog page lastmod in WP 6.5+ (use last post date instead of page last modified date)
 - 404 Response code on certain sitemaps, [ticket](https://core.trac.wordpress.org/ticket/51912).
 - Don't set is_home() true, [ticket](https://core.trac.wordpress.org/ticket/51542).
 - Don't execute main query, [ticket](https://core.trac.wordpress.org/ticket/51117).
@@ -71,11 +71,16 @@ A selection of community proposed fixes to reported [Sitemap component bugs](htt
 
 == Upgrade Notice ==
 
-= 0.7 =
+= 0.8 =
 
-Improved multisite compatibility.
+New option and bugfix.
 
 == Changelog ==
+
+= 0.8 =
+Date: 20260706
+* New option to overwrite front page lastmod with last post date
+* Fix possible empty lastmod for front page
 
 = 0.7 =
 * Improved multisite compatibility
