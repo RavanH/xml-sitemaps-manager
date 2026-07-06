@@ -1,13 +1,8 @@
 
 TODO bubble all subtype deactivation to sitemap provider type deactivation
 
-TODO make static frontpage lastmod sync to last publication date optional
-
-TODO settings plugin action link
-
 CONSIDER:
  - allow inclusion of empty tax archives
- - optionally calculate lastmod for first page sitemap and homepage when blogpage by either last post modified date or by last post date (core vs. plugin)
  - Maybe add dedicated Media sitemap if image tags are (still) not possible OR completely replace the renderer?
  - Add custom post type root pages?
 	Maybe with wp_sitemaps_posts_pre_url_list (replacing the whole posts provider url_list)
@@ -20,7 +15,6 @@ CONSIDER exclude users by group
 
 TEST:
  - does tax term lastmod ever change after being set as metadata? if not: clear specific metadata on post publication...
- - is the fix "Improved blog/home page lastmod date calculation for WP 6.5+" still working?
 
 PAYPAL DONATION LINK
 https://www.paypal.com/donate/?hosted_button_id=5UVXZVN5HDKBS
