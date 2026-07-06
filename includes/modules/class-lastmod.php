@@ -23,10 +23,6 @@ class Lastmod {
 		\add_filter( 'wp_sitemaps_index_entry', array( __CLASS__, 'index_entry' ), 10, 4 );
 		\add_filter( 'wp_sitemaps_posts_query_args', array( __CLASS__, 'posts_query_args' ) );
 
-		// To post entries.
-		\add_filter( 'wp_sitemaps_posts_entry', array( __CLASS__, 'posts_entry' ), 10, 3 );
-		\add_filter( 'wp_sitemaps_posts_show_on_front_entry', array( __CLASS__, 'posts_show_on_front_entry' ) );
-
 		// To term entries.
 		\add_filter( 'wp_sitemaps_taxonomies_entry', array( __CLASS__, 'taxonomies_entry' ), 10, 4 );
 		\add_action( 'transition_post_status', array( __CLASS__, 'update_term_modified_meta' ), 10, 3 );
@@ -196,69 +192,6 @@ class Lastmod {
 		$args['order']   = 'DESC';
 
 		return $args;
-	}
-
-	/**
-	 * Add lastmod to posts entries.
-	 * Hooked into wp_sitemaps_posts_entry filter.
-	 *
-	 * @since 0.1
-	 *
-	 * @param array  $entry       Sitemap entry.
-	 * @param obj    $post_object Post object.
-	 * @param string $post_type   Post type.
-	 *
-	 * @return array $entry
-	 */
-	public static function posts_entry( $entry, $post_object, $post_type ) {
-		if ( ! isset( $entry['lastmod'] ) ) {
-			$entry['lastmod'] = \wp_date( DATE_W3C, \strtotime( $post_object->post_modified_gmt ) );
-		}
-
-		/*
-		 * Recalculate lastmod for exeptional cases:
-		 * - for blogpage;
-		 * - for homepage;
-		 * - when modified date is older than post date.
-		 */
-		if ( 'page' === $post_type ) {
-			if ( 'page' === get_option( 'show_on_front' ) && (int) \get_option( 'page_on_front' ) === $post_object->ID ) {
-				$home_post_type   = \apply_filters( 'xmlsm_front_page_post_type', 'post' );
-				$entry['lastmod'] = wp_date( DATE_W3C, \strtotime( \get_lastpostdate( 'gmt', $home_post_type ) ) );
-			} elseif ( (int) \get_option( 'page_for_posts' ) === $post_object->ID ) {
-				$blog_post_type   = \apply_filters( 'xmlsm_blog_page_post_type', 'post' );
-				$entry['lastmod'] = \wp_date( DATE_W3C, \strtotime( \get_lastpostdate( 'gmt', $blog_post_type ) ) );
-			}
-		} elseif ( isset( $post_object->post_date_gmt ) && $post_object->post_date_gmt > $post_object->post_modified_gmt ) {
-			$entry['lastmod'] = \wp_date( DATE_W3C, \strtotime( $post_object->post_date_gmt ) );
-		}
-
-		return $entry;
-	}
-
-	/**
-	 * Add lastmod to posts show on front entry.
-	 * Hooked into wp_sitemaps_posts_show_on_front_entry filter.
-	 *
-	 * Overrides lastmod in WP 6.5+ with last post date instead of last modified date.
-	 *
-	 * @since 0.1
-	 *
-	 * @param array $entry Sitemap entry.
-	 *
-	 * @return array $entry
-	 */
-	public static function posts_show_on_front_entry( $entry ) {
-		// Get last published post.
-		$post_type = \apply_filters( 'xmlsm_blog_page_post_type', 'post' );
-		$lastmod   = \get_lastpostdate( 'gmt', $post_type );
-
-		// Add lastmod.
-		if ( $lastmod ) {
-			$entry['lastmod'] = \wp_date( DATE_W3C, \strtotime( $lastmod ) );
-		}
-
-		return $entry;
 	}
 
 	/**

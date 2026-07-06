@@ -64,6 +64,7 @@ function uninstall( $_id = false ) {
 	\delete_option( 'xmlsm_sitemaps_fixes' );
 	\delete_option( 'xmlsm_max_urls' );
 	\delete_option( 'xmlsm_lastmod' );
+	\delete_option( 'xmlsm_lastmod_home_fix' );
 	\delete_option( 'xmlsm_sitemap_providers' );
 	\delete_option( 'xmlsm_disabled_subtypes' );
 

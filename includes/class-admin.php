@@ -53,6 +53,16 @@ class Admin {
 			);
 			\register_setting(
 				'reading',
+				'xmlsm_lastmod_blog_fix',
+				'boolval'
+			);
+			\register_setting(
+				'reading',
+				'xmlsm_lastmod_home_fix',
+				'boolval'
+			);
+			\register_setting(
+				'reading',
 				'xmlsm_max_urls',
 				'intval'
 			);
@@ -128,18 +138,6 @@ class Admin {
 	 * @since 0.1
 	 */
 	public static function sitemaps_settings_field() {
-
-		$sitemaps_fixes      = (bool) \get_option( 'xmlsm_sitemaps_fixes', true );
-		$active_providers    = \get_option( 'xmlsm_sitemap_providers', array( 'posts', 'taxonomies', 'users' ) );
-		$lastmod             = \get_option( 'xmlsm_lastmod', false );
-		$max_urls            = \get_option( 'xmlsm_max_urls', false );
-		$disabled_subtypes   = (array) \get_option( 'xmlsm_disabled_subtypes', array() );
-		$provider_nice_names = array(
-			'posts'      => __( 'Post types', 'xml-sitemaps-manager' ),
-			'taxonomies' => __( 'Taxonomies', 'xml-sitemaps-manager' ),
-			'users'      => __( 'Users' ),
-		);
-
 		// The actual fields for data entry.
 		include __DIR__ . '/views/admin-fields.php';
 	}

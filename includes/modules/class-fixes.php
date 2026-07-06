@@ -16,6 +16,12 @@ namespace XMLSitemapsManager\Modules;
  */
 class Fixes {
 	/**
+	 * Page for posts id.
+	 * @var null|int
+	 */
+	private static $page_for_posts = null;
+
+	/**
 	 * Load fixes module hooks.
 	 */
 	public static function load() {
@@ -32,6 +38,11 @@ class Fixes {
 		}
 		if ( \version_compare( $wp_version, '6.0', '<' ) ) {
 			\add_filter( 'wp_sitemaps_taxonomies_query_args', array( __CLASS__, 'taxonomies_query_args' ) );
+		}
+
+		if ( \get_option( 'page_for_posts' ) ) {
+			self::$page_for_posts = (int) \get_option( 'page_for_posts' );
+			\add_filter( 'wp_sitemaps_posts_entry', array( __CLASS__, 'posts_entry' ), 10, 3 );
 		}
 	}
 
@@ -68,5 +79,29 @@ class Fixes {
 		$args['fields'] = 'all';
 
 		return $args;
+	}
+
+	/**
+	 * Overwrite blog page lastmod.
+	 * Hooked into wp_sitemaps_posts_entry filter.
+	 *
+	 * @since 0.8
+	 *
+	 * @param array  $entry       Sitemap entry.
+	 * @param object $post_object Post object.
+	 * @param string $post_type   Post type.
+	 *
+	 * @return array $entry
+	 */
+	public static function posts_entry( $entry, $post_object, $post_type ) {
+		if ( 'page' === $post_type && $post_object->ID === self::$page_for_posts ) {
+			$blog_post_type = \apply_filters( 'xmlsm_blog_page_post_type', 'post' );
+			$last_post_date = \get_lastpostdate( 'gmt', $blog_post_type );
+			if ( $last_post_date ) {
+				$entry['lastmod'] = \wp_date( DATE_W3C, \strtotime( $last_post_date ) );
+			}
+		}
+
+		return $entry;
 	}
 }

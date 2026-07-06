@@ -73,6 +73,13 @@ class Load {
 		}
 
 		/*
+		 * Load Lastmod for Home fix Module.
+		 */
+		if ( \get_option( 'xmlsm_lastmod_home_fix' ) ) {
+			Modules\Lastmod_Home::load();
+		}
+
+		/*
 		 * Load Lastmod Module if activated.
 		 */
 		if ( \get_option( 'xmlsm_lastmod' ) ) {

@@ -47,7 +47,7 @@ if ( '0' !== $db_version ) {
 		\delete_option( 'xmlsm_sitemaps_lastmod' );
 	}
 
-	// Upgrading to 0.7.
+	// Upgrading from before 0.7.
 	if ( \version_compare( '0.7', $db_version, '>' ) ) {
 		if ( '' === \get_option( 'xmlsm_sitemaps_enabled' ) ) {
 			\update_option( 'xmlsm_sitemap_providers', '' );
