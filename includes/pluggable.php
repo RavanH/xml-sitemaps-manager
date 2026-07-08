@@ -29,7 +29,7 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 		 * @since 1.0
 		 * @var bool
 		 */
-		$wp_query->is_sitemap = ! empty( $wp->query_vars['sitemap'] );
+		property_exists( $wp_query, 'is_sitemap' ) || $wp_query->is_sitemap = ! empty( $wp->query_vars['sitemap'] );
 
 		/**
 		 * Whether this is a Sitemap Stylesheet Request.
@@ -37,7 +37,7 @@ if ( ! function_exists( 'wp_sitemaps_loaded' ) ) :
 		 * @since 1.0
 		 * @var bool
 		 */
-		$wp_query->is_sitemap_stylesheet = ! empty( $wp->query_vars['sitemap-stylesheet'] );
+		property_exists( $wp_query, 'is_sitemap_stylesheet' ) || $wp_query->is_sitemap_stylesheet = ! empty( $wp->query_vars['sitemap-stylesheet'] );
 
 		if ( ! $wp_query->is_sitemap && ! $wp_query->is_sitemap_stylesheet ) {
 			return;
