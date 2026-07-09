@@ -1,6 +1,6 @@
 === XML Sitemaps Manager ===
 Contributors: RavanH
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=WP%20Sitemaps%Manager
+Donate link: https://donate.stripe.com/6oUbJ10Nz8xYfF7b5qdEs01
 Tags: sitemap, xml sitemap, sitemap.xml
 Requires at least: 6.5
 Requires PHP: 5.6
